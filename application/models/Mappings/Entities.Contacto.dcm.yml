@@ -1,0 +1,25 @@
+Entities\Contacto:
+  type: entity
+  table: contacto
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nombre:
+      type: string
+      nullable: false
+    email:
+      type: text
+      nullable: false
+    asunto:
+      type: string
+      nullable: false
+    comentarios:
+      type: text
+      nullable: false
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime

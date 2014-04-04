@@ -1,0 +1,21 @@
+Entities\Tag:
+  repositoryClass: Repositories\Tag
+  type: entity
+  table: tag
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nombre:
+      type: string
+      nullable: false
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  manyToMany:
+    datasets:
+      targetEntity: Dataset
+      mappedBy: tags

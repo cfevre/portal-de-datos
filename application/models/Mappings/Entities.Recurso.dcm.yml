@@ -1,0 +1,46 @@
+Entities\Recurso:
+  repositoryClass: Repositories\Recurso
+  type: entity
+  table: recurso
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    codigo:
+      type: integer
+      nullable: false
+    descripcion:
+      type: text
+      nullable: false
+    url:
+      type: string
+      nullable: false
+    mime:
+      type: string
+      nullable: true
+    junar_guid:
+      type: string
+      nullable: true
+    size:
+      type: integer
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  oneToMany:
+    descargas:
+      targetEntity: Descarga
+      mappedBy: recurso
+      orderBy:
+        id: desc
+  manyToOne:
+    dataset:
+      targetEntity: Dataset
+      inversedBy: recursos
+      joinColumn:
+        onDelete: CASCADE
+        name: dataset_id
+        referencedColumnName: id

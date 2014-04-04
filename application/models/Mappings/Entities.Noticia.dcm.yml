@@ -1,0 +1,29 @@
+Entities\Noticia:
+  repositoryClass: Repositories\Noticia
+  type: entity
+  table: noticia
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    titulo:
+      type: string
+    resumen:
+      type: text
+    contenido:
+      type: text
+    foto:
+      type: string
+    publicado:
+      type: boolean
+    publicado_at:
+      type: datetime
+      nullable: true
+    created_at:
+      type: datetime
+      nullable: true
+    updated_at:
+      type: datetime
+      nullable: true

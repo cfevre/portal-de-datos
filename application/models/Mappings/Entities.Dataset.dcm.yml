@@ -1,0 +1,170 @@
+Entities\Dataset:
+  repositoryClass: Repositories\Dataset
+  type: entity
+  table: dataset
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    titulo:
+      type: string
+    descripcion:
+      type: text
+    frecuencia:
+      type: string
+      nullable: true
+    granularidad:
+      type: string
+      nullable: true
+    cobertura_temporal:
+      type: string
+      nullable: true
+    ndescargas:
+      type: integer
+      nullable: true
+    rating:
+      type: float
+      nullable: true
+    maestro:
+      type: boolean
+      nullable: true
+    publicado:
+      type: boolean
+      nullable: true
+    publicado_at:
+      type: datetime
+      nullable: true
+    hits:
+      type: integer
+      nullable: true
+    created_at:
+      type: datetime
+      nullable: true
+    updated_at:
+      type: datetime
+      nullable: true
+    maestro_id:
+      type: integer
+      nullable: true
+    servicio_codigo:
+      type: string
+      length: 8
+    licencia_id:
+      type: integer
+    actualizable:
+      type: boolean
+      nullable: true
+    primera_version_publicada:
+        type: integer
+        nullable: true
+    integracion_junar:
+        type: datetime
+        nullable: true
+    coordenadas:
+        type: string
+        nullable: true
+    doc_id:
+        type: string
+        nullable: true
+  oneToOne:
+    primeraVersionPublicada:
+      targetEntity: Dataset
+      joinColumn:
+        name: primera_version_publicada
+        referencedColumnName: id
+  oneToMany:
+    datasetVersion:
+      targetEntity: Dataset
+      mappedBy: datasetMaestro
+      orderBy:
+        id: desc
+    logMaestro:
+      targetEntity: Log
+      mappedBy: datasetMaestro
+      orderBy:
+        id: desc
+    logVersion:
+      targetEntity: Log
+      mappedBy: datasetVersion
+    recursos:
+      targetEntity: Recurso
+      mappedBy: dataset
+      orderBy:
+        id: asc
+    documentos:
+      targetEntity: Documento
+      mappedBy: dataset
+      orderBy:
+        id: asc
+    evaluaciones:
+      targetEntity: Evaluacion
+      mappedBy: dataset
+      orderBy:
+        id: asc
+    reportes:
+      targetEntity: Reporte
+      mappedBy: dataset
+    vistas:
+      targetEntity: Vista
+      mappedBy: dataset
+      orderBy:
+        id: desc
+  manyToOne:
+    servicio:
+      targetEntity: Servicio
+      inversedBy: dataset
+      joinColumn:
+        name: servicio_codigo
+        referencedColumnName: codigo
+    licencia:
+      targetEntity: Licencia
+      inversedBy: dataset
+      joinColumn:
+        name: licencia_id
+        referencedColumnName: id
+    datasetMaestro:
+      targetEntity: Dataset
+      inversedBy: datasetVersion
+      joinColumn:
+        onDelete: CASCADE
+        name: maestro_id
+        referencedColumnName: id
+  manyToMany:
+    sectores:
+      targetEntity: Sector
+      inversedBy: datasets
+      joinTable:
+        name: dataset_has_sector
+        joinColumns:
+          dataset_id:
+            referencedColumnName: id
+            onDelete: CASCADE
+        inverseJoinColumns:
+          sector_codigo:
+            referencedColumnName: codigo
+    tags:
+      targetEntity: Tag
+      inversedBy: datasets
+      joinTable:
+        name: dataset_has_tag
+        joinColumns:
+          dataset_id:
+            referencedColumnName: id
+            onDelete: CASCADE
+        inverseJoinColumns:
+          tag_id:
+            referencedColumnName: id
+    categorias:
+      targetEntity: Categoria
+      inversedBy: datasets
+      joinTable:
+        name: dataset_has_categoria
+        joinColumns:
+          dataset_id:
+            referencedColumnName: id
+            onDelete: CASCADE
+        inverseJoinColumns:
+          categoria_id:
+            referencedColumnName: id

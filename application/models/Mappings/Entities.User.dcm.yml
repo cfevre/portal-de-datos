@@ -1,0 +1,67 @@
+Entities\User:
+  repositoryClass: Repositories\User
+  type: entity
+  table: users
+  uniqueConstraints:
+    email_index:
+      columns:
+        - email
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    password:
+      type: string
+      length: 128
+      nullable: false
+    email:
+      type: string
+      nullable: false
+    fullname:
+      type: string
+      length: 255
+    ministerial:
+      type: boolean
+    interministerial:
+      type: boolean
+    reset_code:
+      type: string
+      nullable: true
+    reset_expiration:
+      type: datetime
+      nullable: true
+    api_token:
+      type: string
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  oneToMany:
+    logDataset:
+      targetEntity: Dataset
+      mappedBy: usuario
+    reportes:
+      targetEntity: Reporte
+      mappedBy: usuario
+  manyToOne:
+    servicio:
+      targetEntity: Servicio
+      inversedBy: user
+      joinColumn:
+        name: servicio_codigo
+        referencedColumnName: codigo
+  manyToMany:
+    rols:
+      targetEntity: Rol
+      inversedBy: users
+      joinTable:
+        name: user_has_rol
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          rol_id:
+            referencedColumnName: id

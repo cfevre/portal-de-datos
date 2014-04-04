@@ -1,0 +1,42 @@
+Entities\Sector:
+  repositoryClass: Repositories\Sector
+  type: entity
+  table: sector
+  fields:
+    codigo:
+      type: string
+      id: true
+    tipo:
+      type: string
+      nullable: false
+    nombre:
+      type: string
+      nullable: false
+    lat:
+      type: float
+    lng:
+      type: float
+    url:
+      type: string
+    sector_padre_codigo:
+      type: string
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  oneToMany:
+    children:
+      targetEntity: Sector
+      mappedBy: parent
+  manyToOne:
+    parent:
+      targetEntity: Sector
+      inversedBy: children
+      joinColumn:
+        name: sector_padre_codigo
+        referencedColumnName: codigo
+  manyToMany:
+    datasets:
+      targetEntity: Dataset
+      mappedBy: sectores

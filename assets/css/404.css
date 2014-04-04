@@ -1,0 +1,128 @@
+@charset "UTF-8";
+/* CSS Document */
+@font-face {
+    font-family: 'gobCLRegular';
+    src: url('font/gobcl_regular-webfont.eot');
+    src: url('font/gobcl_regular-webfont.eot?#iefix') format('embedded-opentype'),
+        url('font/gobcl_regular-webfont.ttf') format('truetype'),
+        url('font/gobcl_regular-webfont.svg#gobCLRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html, body {
+	height: 100%;
+	background-color: #161a38;
+	font-family: 'gobCLRegular';
+}
+
+header {
+	margin-top: 80px;
+}
+
+header .brand {
+	font-family: 'gobCLRegular';
+	background-image: url(../img/logo.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+	color: #7b6d7e;
+	font-size: 35px;
+	line-height: 80px;
+	margin-left: 0px;
+	padding:35px 90px;
+}
+
+header a.brand:hover {
+	color: #7b6d7e;
+	text-decoration: none;
+}
+
+header .brand span {
+	color: #E03943;
+	font-weight: bold;
+}
+
+hr {
+	margin: 15px 0;
+	border: 0;
+	border-top: 1px solid #1a1e3b;
+	border-bottom: 1px solid #393c56;
+}
+
+footer {
+  background: url(../img/fondo_footer.png) left top repeat-x;
+  height: 240px;
+  min-height:240px;
+}
+footer a {
+  color: #999;
+}
+footer a:hover {
+  color: #efefef;
+}
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -240px;
+}
+.push {
+    height: 240px;
+}
+
+.info-error h2 {
+	color: #fff;
+}
+
+.info-error p {
+	color:#fff;
+	font-size:20px;
+	padding:0;
+	margin: 5px 0;
+}
+
+.info-error p.strong {
+	font-size: 50px;
+	line-height: 50px;
+}
+
+.form{
+	position: relative;
+	margin-top: 20px;
+}
+
+.form input#q {
+	width:89%;
+	height:60px;
+	line-height: 60px;
+	font-size: 30px;
+	border-radius:5px; 
+	-webkit-box-shadow:0 0 10px #999 inset; 
+	-moz-box-shadow:0 0 10px #999 inset; 
+	box-shadow:0 0 10px #999 inset;
+	background-image: url(../img/lupa-grande.png);
+	background-position: 98% 20px;
+	background-repeat: no-repeat;
+	padding-right: 40px;
+	padding-left: 20px;
+}
+.form input.buscar {
+	position: absolute;
+	right:0;
+	top:0;
+	width:50px;
+	height:70px;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+}
+
+.link-datos .nav li a {
+	color: #367db9;
+}
+
+.link-datos .nav li a:hover {
+	color:#fff;
+	background-color: #20395b;
+}

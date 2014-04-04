@@ -1,0 +1,16 @@
+Entities\GradoReporte:
+  repositoryClass: Repositories\GradoReporte
+  type: entity
+  table: grado_reporte
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nombre:
+      type: string
+  oneToMany:
+    tiposReporte:
+      targetEntity: TipoReporte
+      mappedBy: gradoReporte

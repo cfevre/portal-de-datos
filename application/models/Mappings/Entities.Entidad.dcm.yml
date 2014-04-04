@@ -1,0 +1,22 @@
+Entities\Entidad:
+  repositoryClass: Repositories\Entidad
+  type: entity
+  table: entidad
+  fields:
+    codigo:
+      type: string
+      id: true
+    nombre:
+      type: string
+      nullable: false
+    sigla:
+      type: string
+      nullable: false
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  oneToMany:
+    servicio:
+      targetEntity: Servicio
+      mappedBy: entidad

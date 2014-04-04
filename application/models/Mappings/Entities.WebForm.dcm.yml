@@ -1,0 +1,14 @@
+Entities\WebForm:
+  type: entity
+  table: webforms
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    campo:
+      type: string
+      nullable: false
+    created:
+      type: datetime

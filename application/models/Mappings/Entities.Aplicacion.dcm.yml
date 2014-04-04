@@ -1,0 +1,33 @@
+Entities\Aplicacion:
+  repositoryClass: Repositories\Aplicacion
+  type: entity
+  table: aplicacion
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nombre:
+      type: string
+    acceso:
+      type: string
+    plataforma:
+      type: string
+    descripcion:
+      type: string
+    autor:
+      type: string
+    url:
+      type: string
+    publicado:
+      type: boolean
+    publicado_at:
+      type: datetime
+      nullable: true
+    created_at:
+      type: datetime
+      nullable: true
+    updated_at:
+      type: datetime
+      nullable: true

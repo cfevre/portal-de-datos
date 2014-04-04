@@ -1,0 +1,6 @@
+/*Print*/
+@media print {
+	.footer, #iframeBarra, .header, .breadcrumb {
+		display:none;
+	}
+}

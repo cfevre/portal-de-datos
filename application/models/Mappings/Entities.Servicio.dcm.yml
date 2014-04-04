@@ -1,0 +1,52 @@
+Entities\Servicio:
+  repositoryClass: Repositories\Servicio
+  type: entity
+  table: servicio
+  fields:
+    codigo:
+      type: string
+      id: true
+    nombre:
+      type: string
+      nullable: false
+    sigla:
+      type: string
+      nullable: false
+    url:
+      type: string
+      nullable: false
+    publicado:
+      type: boolean
+      nullable: true
+    oficial:
+      type: boolean
+      nullable: true
+    codigo_servicio_oficial:
+      type: string
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+    entidad_codigo:
+      type: string
+  oneToOne:
+    servicioOficial:
+      targetEntity: Servicio
+      joinColumn:
+        name: codigo_servicio_oficial
+        referencedColumnName: codigo
+  manyToOne:
+    entidad:
+      targetEntity: Entidad
+      inversedBy: servicio
+      joinColumn:
+        name: entidad_codigo
+        referencedColumnName: codigo
+  oneToMany:
+    user:
+      targetEntity: User
+      mappedBy: servicio
+    dataset:
+      targetEntity: Dataset
+      mappedBy: servicio

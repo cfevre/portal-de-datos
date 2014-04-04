@@ -1,0 +1,22 @@
+Entities\Vista:
+  repositoryClass: Repositories\Vista
+  type: entity
+  table: vista
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    fecha:
+      type: date
+    count:
+      type: integer
+  manyToOne:
+    dataset:
+      targetEntity: Dataset
+      inversedBy: vistas
+      joinColumn:
+        onDelete: CASCADE
+        name: dataset_id
+        referencedColumnName: id

@@ -1,0 +1,22 @@
+Entities\Rol:
+  type: entity
+  table: rol
+  fields:
+    id:
+      type: string
+      id: true
+      length: 16
+    nombre:
+      type: string
+      nullable: false
+    descripcion:
+      type: text
+      nullable: false
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  manyToMany:
+    users:
+      targetEntity: User
+      mappedBy: rols

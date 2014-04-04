@@ -1,0 +1,37 @@
+Entities\Documento:
+  repositoryClass: Repositories\Documento
+  type: entity
+  table: documento
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    titulo:
+      type: string
+      nullable: false
+    descripcion:
+      type: text
+      nullable: false
+    url:
+      type: string
+      nullable: false
+    mime:
+      type: string
+      nullable: true
+    size:
+      type: integer
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  manyToOne:
+    dataset:
+      targetEntity: Dataset
+      inversedBy: documentos
+      joinColumn:
+        onDelete: CASCADE
+        name: dataset_id
+        referencedColumnName: id

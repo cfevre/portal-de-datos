@@ -1,0 +1,27 @@
+Entities\Page:
+  type: entity
+  table: pages
+  uniqueConstraints:
+    alias_index:
+      columns:
+        - alias
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    title:
+      type: string
+      nullable: false
+    alias:
+      type: string
+      nullable: false
+    restricted:
+      type: boolean
+    content:
+      type: text
+  oneToMany:
+    navitem:
+      targetEntity: NavItem
+      mappedBy: page

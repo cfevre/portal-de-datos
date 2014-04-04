@@ -1,0 +1,62 @@
+.well .nav {
+	margin-top:0px;
+}
+.navbar-fixed-top .brand.loged-user{
+	float:right;
+	font-size: 12px;
+}
+
+.label-categorias { 
+	float:left;
+	width:180px;
+}
+
+#formNoticia input#foto {
+	margin-left: 20px;
+}
+
+/*Redactor*/
+.redactor_editor {
+	min-height: 120px;
+}
+
+/*Modal*/
+#modal-backend {
+	width:720px;
+	margin:-280px 0 0 -360px;
+}
+
+#modal-backend .modal-body {
+	max-height: 450px;
+}
+
+.chzn-container {
+    max-width: 100%;
+}
+
+/*Upload File*/
+div.uploadify-input {
+	float: left;
+	margin-left: 20px;
+}
+
+.tagit-item a:hover{
+	color: #000
+}
+
+input.error {
+    border-color:#f00!important;
+}
+
+.btn-warning:disabled i.icon-refresh.icon-white,
+.btn-warning:disabled i.icon-upload.icon-white{
+    background: url('../img/loader_icon_white.gif') left top no-repeat;
+}
+
+.btn-accion-ajax:disabled i.icon-loader-disabled{
+    background: url('../img/loader_icon_white.gif') left top no-repeat;
+}
+
+.cont-seleecionar-todos-paginas {
+    display: none;
+}

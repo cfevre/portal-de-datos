@@ -1,0 +1,28 @@
+Entities\Participacion:
+  repositoryClass: Repositories\Participacion
+  type: entity
+  table: participacion
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nombre:
+      type: string
+    apellidos:
+      type: string
+    email:
+      type: string
+    titulo:
+      type: string
+    categoria:
+      type: string
+    mensaje:
+      type: text
+    publicado:
+      type: boolean
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime

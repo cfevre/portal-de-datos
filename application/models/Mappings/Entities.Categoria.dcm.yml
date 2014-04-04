@@ -1,0 +1,23 @@
+Entities\Categoria:
+  repositoryClass: Repositories\Categoria
+  type: entity
+  table: categoria
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nombre:
+      type: string
+      nullable: false
+    created_at:
+      type: datetime
+      nullable: true
+    updated_at:
+      type: datetime
+      nullable: true
+  manyToMany:
+    datasets:
+      targetEntity: Dataset
+      mappedBy: categorias

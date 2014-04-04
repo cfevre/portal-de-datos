@@ -1,0 +1,52 @@
+Entities\Reporte:
+  repositoryClass: Repositories\Reporte
+  type: entity
+  table: reporte
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    estado:
+      type: string
+      length: 1
+    origen_publico:
+      type: boolean
+    comentarios:
+      type: text
+      nullable: true
+    nombre:
+      type: string
+      nullable: true
+    email:
+      type: string
+      nullable: true
+    created_at:
+      type: datetime
+      nullable: true
+    updated_at:
+      type: datetime
+      nullable: true
+  manyToOne:
+    tipoReporte:
+      targetEntity: TipoReporte
+      inversedBy: reportes
+      joinColumn:
+        onDelete: CASCADE
+        name: tipo_reporte_id
+        referencedColumnName: id
+    usuario:
+      targetEntity: User
+      inversedBy: reportes
+      joinColumn:
+        onDelete: CASCADE
+        name: user_id
+        referencedColumnName: id
+    dataset:
+      targetEntity: Dataset
+      inversedBy: reportes
+      joinColumn:
+        onDelete: CASCADE
+        name: dataset_id
+        referencedColumnName: id

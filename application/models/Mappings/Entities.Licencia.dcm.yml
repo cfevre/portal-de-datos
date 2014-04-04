@@ -1,0 +1,23 @@
+Entities\Licencia:
+  type: entity
+  table: licencia
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nombre:
+      type: string
+      nullable: false
+    url:
+      type: string
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  oneToMany:
+    dataset:
+      targetEntity: Dataset
+      mappedBy: licencia

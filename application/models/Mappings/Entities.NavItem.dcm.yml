@@ -1,0 +1,54 @@
+Entities\NavItem:
+  type: entity
+  table: navitems
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    title:
+      type: string
+      nullable: false
+    alias:
+      type: string
+      nullable: false
+    layout:
+      type: string
+      nullable: false
+    homepage:
+      type: boolean
+    customurl:
+      type: string
+      nullable: true
+    target:
+      type: string
+      nullable: true
+    ordering:
+      type: integer
+    published:
+      type: boolean
+      nullable: true
+    published_at:
+      type: datetime
+      nullable: true
+  oneToMany:
+    children:
+      targetEntity: NavItem
+      mappedBy: parent
+  manyToOne:
+    nav:
+      targetEntity: Nav
+      inversedBy: items
+      joinColumn:
+        name: nav_id
+        referencedColumnName: id
+    parent:
+      targetEntity: NavItem
+      inversedBy: children
+    page:
+      targetEntity: Page
+      inversedBy: navitem
+      joinColumn:
+        name: page_id
+        referencedColumnName: id

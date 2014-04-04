@@ -1,0 +1,22 @@
+Entities\Descarga:
+  repositoryClass: Repositories\Descarga
+  type: entity
+  table: descarga
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    fecha:
+      type: date
+    count:
+      type: integer
+  manyToOne:
+    recurso:
+      targetEntity: Recurso
+      inversedBy: descargas
+      joinColumn:
+        onDelete: CASCADE
+        name: recurso_id
+        referencedColumnName: id

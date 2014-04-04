@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /uploads/
+Disallow: /recursos/
+Disallow: /recursos/download/
+Disallow: /buscar/
+Disallow: /backend/
+Disallow: /auth/
+Disallow: /participa/add/

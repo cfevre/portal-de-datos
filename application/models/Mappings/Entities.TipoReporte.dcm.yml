@@ -1,0 +1,31 @@
+Entities\TipoReporte:
+  repositoryClass: Repositories\TipoReporte
+  type: entity
+  table: tipo_reporte
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    titulo:
+      type: string
+    comentario_sugerido:
+      type: text
+    publico:
+      type: boolean
+    campo_dataset:
+      type: string
+      nullable: true
+  oneToMany:
+    reportes:
+      targetEntity: Reporte
+      mappedBy: tipoReporte
+  manyToOne:
+    gradoReporte:
+      targetEntity: GradoReporte
+      inversedBy: tiposReporte
+      joinColumn:
+        onDelete: CASCADE
+        name: grado_reporte_id
+        referencedColumnName: id
