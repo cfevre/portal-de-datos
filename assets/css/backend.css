@@ -60,3 +60,42 @@ input.error {
 .cont-seleecionar-todos-paginas {
     display: none;
 }
+
+.main-vistas-junar .tabla-recursos td p {
+    margin: 0;
+    padding: 0;
+}
+.main-vistas-junar .tabla-recursos .col-vistas {
+    width: 70%;
+}
+
+.main-vistas-junar .tabla-recursos .vistas-junar-acciones {
+    white-space: nowrap;
+}
+
+.main-vistas-junar .tabla-recursos .cont-mensajes-ajax {
+    display: none;
+}
+
+.main-vistas-junar .tabla-recursos .vistas-junar-acciones .btn-mini {
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+.main-vistas-junar .tabla-recursos .tr-vista-junar td {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    background-color: inherit;
+    color: inherit;
+}
+
+.main-vistas-junar .tabla-recursos .tr-vista-junar.actualizado td{
+    background-color: #3a87ad;
+    color: white;
+}
+
+.main-vistas-junar .tabla-recursos .vistas-junar-acciones .btn-success:disabled .icon-refresh {
+    background: url('../img/loader_icon_white.gif') left top no-repeat;
+}

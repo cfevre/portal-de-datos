@@ -159,6 +159,24 @@ class Recurso extends \Entities\Recurso implements \Doctrine\ORM\Proxy\Proxy
         return parent::getDataset();
     }
 
+    public function addVistasJunar(\Entities\VistaJunar $vistasJunar)
+    {
+        $this->__load();
+        return parent::addVistasJunar($vistasJunar);
+    }
+
+    public function removeVistasJunar(\Entities\VistaJunar $vistasJunar)
+    {
+        $this->__load();
+        return parent::removeVistasJunar($vistasJunar);
+    }
+
+    public function getVistasJunar()
+    {
+        $this->__load();
+        return parent::getVistasJunar();
+    }
+
     public function getCopy()
     {
         $this->__load();
@@ -177,10 +195,16 @@ class Recurso extends \Entities\Recurso implements \Doctrine\ORM\Proxy\Proxy
         return parent::validate();
     }
 
+    public function validateJunarData($junarData)
+    {
+        $this->__load();
+        return parent::validateJunarData($junarData);
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'codigo', 'descripcion', 'url', 'mime', 'size', 'created_at', 'updated_at', 'descargas', 'dataset');
+        return array('__isInitialized__', 'id', 'codigo', 'descripcion', 'url', 'mime', 'size', 'created_at', 'updated_at', 'descargas', 'vistasJunar', 'dataset');
     }
 
     public function __clone()
@@ -192,7 +216,7 @@ class Recurso extends \Entities\Recurso implements \Doctrine\ORM\Proxy\Proxy
             if ($original === null) {
                 throw new \Doctrine\ORM\EntityNotFoundException();
             }
-            foreach ($class->reflFields AS $field => $reflProperty) {
+            foreach ($class->reflFields as $field => $reflProperty) {
                 $reflProperty->setValue($this, $reflProperty->getValue($original));
             }
             unset($this->_entityPersister, $this->_identifier);

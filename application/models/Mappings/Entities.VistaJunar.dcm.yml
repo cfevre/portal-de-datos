@@ -1,0 +1,38 @@
+Entities\VistaJunar:
+  repositoryClass: Repositories\VistaJunar
+  type: entity
+  table: vista_junar
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    junar_guid:
+      type: string
+    title:
+      type: string
+    description:
+      type: text
+    tags:
+      type: string
+    source:
+      type: string
+    category:
+      type: string
+    meta_data:
+      type: string
+    table_id:
+      type: integer
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  manyToOne:
+    recurso:
+      targetEntity: Recurso
+      inversedBy: vistasJunar
+      joinColumn:
+        onDelete: CASCADE
+        name: recurso_id
+        referencedColumnName: id

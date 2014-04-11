@@ -103,7 +103,7 @@
                 $widget_data['cant_reportes_moderacion'] = $cant_reportes_moderacion;
             }
 
-            $cant_reportes = $this->doctrine->em->getRepository('Entities\Dataset')->getDatasetsConReportesPorEstadosUsuario($this->user, array(2,5));
+            $cant_reportes = $this->doctrine->em->getRepository('Entities\Dataset')->getDatasetsConReportesPorEstadosUsuario($this->user, array(2));
             $widget_data['cant_reportes'] = $cant_reportes;
 
             return $this->load->view('widget/backend/reportes', $widget_data, true);

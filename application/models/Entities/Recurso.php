@@ -40,11 +40,6 @@ class Recurso
     private $size;
 
     /**
-     * @var string $junar_guid
-     */
-    private $junar_guid;
-
-    /**
      * @var datetime $created_at
      */
     private $created_at;
@@ -60,6 +55,11 @@ class Recurso
     private $descargas;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $vistasJunar;
+
+    /**
      * @var Entities\Dataset
      */
     private $dataset;
@@ -67,6 +67,7 @@ class Recurso
     public function __construct()
     {
         $this->descargas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->vistasJunar = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -194,28 +195,6 @@ class Recurso
     }
 
     /**
-     * Set junar_guid
-     *
-     * @param string $junar_guid
-     * @return Recurso
-     */
-    public function setJunarGuid($junar_guid)
-    {
-        $this->junar_guid = $junar_guid;
-        return $this;
-    }
-
-    /**
-     * Get junar_guid
-     *
-     * @return string 
-     */
-    public function getJunarGuid()
-    {
-        return $this->junar_guid;
-    }
-
-    /**
      * Set created_at
      *
      * @param datetime $createdAt
@@ -304,6 +283,39 @@ class Recurso
     }
 
     /**
+     * Add vistasJunar
+     *
+     * @param \Entities\VistaJunar $vistasJunar
+     * @return Recurso
+     */
+    public function addVistasJunar(\Entities\VistaJunar $vistasJunar)
+    {
+        $this->vistasJunar[] = $vistasJunar;
+
+        return $this;
+    }
+
+    /**
+     * Remove vistasJunar
+     *
+     * @param \Entities\VistaJunar $vistasJunar
+     */
+    public function removeVistasJunar(\Entities\VistaJunar $vistasJunar)
+    {
+        $this->vistasJunar->removeElement($vistasJunar);
+    }
+
+    /**
+     * Get vistasJunar
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVistasJunar()
+    {
+        return $this->vistasJunar;
+    }
+
+    /**
      * Custom Methods
      */
 
@@ -313,7 +325,6 @@ class Recurso
     	$nuevoRecurso->setUrl($this->getUrl());
     	$nuevoRecurso->setSize($this->getSize());
     	$nuevoRecurso->setMime($this->getMime());
-        $nuevoRecurso->setJunarGuid($this->getJunarGuid());
     	$nuevoRecurso->setCodigo($this->getCodigo());
     	$nuevoRecurso->setCreatedAt(new \DateTime);
     	$nuevoRecurso->setUpdatedAt(new \DateTime);

@@ -190,6 +190,14 @@ class stringsHelper {
     return $text;
 	}
 
+    function truncate_string($text, $limit = 50, $ellipsis = '...'){
+        $text = strip_tags($text);
+        $text = trim(preg_replace('/\s\s+/', ' ', $text));
+        if(strlen($text) >= $limit)
+            $text = substr($text, 0, $limit) . $ellipsis;
+        return $text;
+    }
+
     function getUnitFormat($size, $precision = 2)
     {
         if($size){

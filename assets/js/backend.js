@@ -69,10 +69,11 @@
 					command = elem.data('ajax-command'),
 					params = elem.data('ajax-params')||'',
 					formId = elem.data('ajax-form-id')||false,
-                    disable = elem.data('disable')||false;
+                    disable = elem.data('disable')||false,
+                    messages = $(elem.data('ajax-message-holder')||'');
 
-                if(formId){
-                    var messages = $('#'+formId).find('.messages');
+                if(formId && !messages.length){
+                    messages = $('#'+formId).find('.messages');
                     messages.html('');
                 }
 
@@ -91,6 +92,8 @@
 								if(messages.length){
 									var errorHtml = '<div class="alert alert-error">';
 									$.each(data.errors, function(i, error){
+                                        if(typeof error != "string")
+                                            error = error.error
 										errorHtml += '<p>'+error+'</p>';
 									});
 									errorHtml += '</div>';

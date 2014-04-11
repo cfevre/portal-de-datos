@@ -151,9 +151,6 @@
                 <th>Descripción</th>
                 <th>Tipo</th>
                 <th>Tamaño</th>
-                <?php if ($this->user->hasRol('mantencion')): ?>
-                    <th>Acciones</th>
-                <?php endif ?>
             </tr>
         </thead>
         <tbody>
@@ -166,15 +163,6 @@
                             <span class="label label-warning"><?php echo mimeHelper::get_mime_name($recurso->getMime()); ?></span>
                         </td>
                         <td><?php echo $recurso->getSize(); ?></td>
-                        <?php if ($this->user->hasRol('mantencion')): ?>
-                            <td>
-                                <?php if ($recurso->getJunarGuid()): ?>
-                                    <a href="<?php echo site_url('backend/recurso/junar/'.$recurso->getId()); ?>" class="btn btn-small btn-warning btn-junar ajax-modal" data-modal-header="Actualizar recurso en Junar" data-disable="true"><i class="icon-refresh icon-white"></i> <strong>Junar</strong></a>
-                                <?php else: ?>
-                                    <a href="<?php echo site_url('backend/recurso/junar/'.$recurso->getId()); ?>" class="btn btn-small btn-warning btn-junar ajax-modal" data-modal-header="Enviar recurso a Junar" data-disable="true"><i class="icon-upload icon-white"></i> <strong>Junar</strong></a>
-                                <?php endif ?>
-                            </td>
-                        <?php endif ?>
                     </tr>
                 <?php } ?>
             <?php else: ?>

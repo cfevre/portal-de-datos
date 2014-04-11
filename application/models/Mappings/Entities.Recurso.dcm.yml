@@ -20,9 +20,6 @@ Entities\Recurso:
     mime:
       type: string
       nullable: true
-    junar_guid:
-      type: string
-      nullable: true
     size:
       type: integer
       nullable: true
@@ -36,6 +33,11 @@ Entities\Recurso:
       mappedBy: recurso
       orderBy:
         id: desc
+    vistasJunar:
+      targetEntity: VistaJunar
+      mappedBy: recurso
+      orderBy:
+        id: asc
   manyToOne:
     dataset:
       targetEntity: Dataset

@@ -331,6 +331,22 @@ class Dataset extends CIE_Controller {
 		return true;
 	}
 
+    public function junar($dataset_id = null){
+        $dataset = $this->doctrine->em->find('Entities\Dataset', $dataset_id);
+
+        $dataset->checkUserAccess();
+
+        $this->loadData('dataset', $dataset);
+
+        if($dataset->getMaestro()){
+            $this->loadData('active', 'junar');
+            $this->loadBlock('content-navbar', 'backend/dataset/navbar', $this->data);
+        }
+
+        $this->loadBlock('content', 'backend/dataset/junar', $this->data);
+        $this->renderView('backend/layout');
+    }
+
     public function enviarjunar($dataset_id = null)
     {
         set_time_limit(600);

@@ -135,19 +135,59 @@
 			return $(tr);
 		},
 		removeItem : function(tipo, idItem){
-			var messageContainer = $('#message-'+tipo);
-			$('#tabla-'+tipo+'s tbody').find('#'+tipo+'-'+idItem).remove();
+            var textoMensaje = '<div class="alert alert-success">El '+tipo+' ['+idItem+'] ha sido eliminado.</div>';
+            if(tipo == 'vistaJunar'){
+                var trVista = $('#vista-junar-'+idItem),
+                    messageContainer = trVista.parents('.table-vistas').find('.cont-mensajes-ajax');
+                textoMensaje = '<td colspan="4"><div class="alert alert-success">La '+tipo+' ['+idItem+'] ha sido eliminada.</div></td>';
+                trVista.remove();
+            } else {
+                var messageContainer = $('#message-'+tipo);
+                $('#tabla-'+tipo+'s tbody').find('#'+tipo+'-'+idItem).remove();
+            }
 			messageContainer
-					.html('<div class="alert alert-success">El '+tipo+' ['+idItem+'] ha sido eliminado.</div>')
+					.html(textoMensaje)
 					.fadeIn(200).delay(5000).fadeOut(200);
 		},
-        callbackEnviaJunar : function (recurso_id) {
-            var trRecurso = $('#recurso-'+recurso_id),
-                btnCerrar = '<div class="span2"><button class="btn btn-success" data-dismiss="modal">Cerrar</button></div>',
-                mensaje = '<div class="row-fluid"><div class="span10"><div class="alert alert-success">El recurso ['+recurso_id+'] fue enviado a Junar </div></div>'+btnCerrar+'</div>';
+        callbackEnviaJunar : function (vista_junar_id, errores) {
+            var trVistaJunar = $('#vista-junar-'+vista_junar_id),
+                tdTitleVistaJunar = trVistaJunar.find('.vista-junar-title'),
+                mensaje = '<div class="alert alert-success">La vista ha sido enviada a Junar</div>';
+            tdTitleVistaJunar.append(mensaje);
+            setTimeout(function(){
+                tdTitleVistaJunar.find('.alert').fadeOut(500, function(){
+                    $(this).remove();
+                });
+            }, 5000);
+        },
+        callbackGuardaVistaJunar : function (errors, data){
+            var modal = $('#modal-backend'),
+                self = this;
+            if(!errors.errors){
+                var trVistaJunar = $('#vista-junar-' + data.id);
 
-            trRecurso.find('.icon-upload').removeClass('icon-upload').addClass('icon-refresh');
-            backend.modalBackend.find('.modal-footer').html(mensaje);
+                if(!trVistaJunar.length){
+                    var tablaVistasJunar = $('#tbody-vistas-recurso-'+data.recurso.id);
+                    $.get(this.admin_url + "/recurso/ajax_fila_vista_junar/" + data.id, function(htmlTrVistaJunar){
+                        tablaVistasJunar.append(htmlTrVistaJunar);
+                        self.finalizaGuardadoVistaJunar(data);
+                    });
+                } else {
+                    $.get(this.admin_url + "/recurso/ajax_fila_vista_junar/" + data.id, function(htmlTrVistaJunar){
+                        trVistaJunar.replaceWith(htmlTrVistaJunar);
+                        self.finalizaGuardadoVistaJunar(data);
+                    });
+                }
+            }
+            modal.modal('hide');
+        },
+        finalizaGuardadoVistaJunar : function(data){
+            var trVistaJunar = $('#vista-junar-' + data.id);
+
+            trVistaJunar.addClass('actualizado');
+            setTimeout(function(){
+                trVistaJunar.removeClass('actualizado');
+            },5000);
         }
 	};
 	$(function(){
