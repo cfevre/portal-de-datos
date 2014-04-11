@@ -71,7 +71,7 @@ $(document).ready(function() {
 	
 	function getData(url){
 	  $.ajax({
-	  	  url: "proxy.php?url="+url,
+	  	  url: "csv/"+url,
 	  	  type: "GET",
 	  	  success: function(data){
 	  	  	var d = csv2json4bubbletree(data, {hasHeader: true, delimiter: ";", value: 7, title: 6});
