@@ -213,7 +213,10 @@ class Datasets extends CIE_Controller
                     $content = $this->estadisticas_publicaciones($filtros);
                     break;
                 case 'descargas':
-                    $content = $this->estadisticas_descargas($filtros);
+                    $content = $this->estadisticas_uso($filtros, 'descargas');
+                    break;
+                case 'vistas':
+                    $content = $this->estadisticas_uso($filtros, 'vistas');
                     break;
             }
 
@@ -260,7 +263,7 @@ class Datasets extends CIE_Controller
         return $content;
     }
 
-    private function estadisticas_descargas($filtros)
+    private function estadisticas_uso($filtros, $tipo = 'ambos')
     {
         $content = array();
         $mestros_id = array();
@@ -292,18 +295,28 @@ class Datasets extends CIE_Controller
 
         foreach($meses as $fecha){
             list($ano, $mes) = explode('-',$fecha);
-            $descargas_por_mes[$fecha] = $this->doctrine->em->getRepository('Entities\Dataset')->getDescargasDatasetsPeriodo(array('id_maestros' => $mestros_id, 'fecha_ano' => $ano, 'fecha_mes' => $mes));
-            $vistas_por_mes[$fecha] = $this->doctrine->em->getRepository('Entities\Dataset')->getVistasDatasetsPeriodo(array('id_maestros' => $mestros_id, 'fecha_ano' => $ano, 'fecha_mes' => $mes));
+
+            if($tipo == 'descargas' || $tipo == 'ambos')
+                $descargas_por_mes[$fecha] = $this->doctrine->em->getRepository('Entities\Dataset')->getDescargasDatasetsPeriodo(array('id_maestros' => $mestros_id, 'fecha_ano' => $ano, 'fecha_mes' => $mes));
+
+            if($tipo == 'vistas' || $tipo == 'ambos')
+                $vistas_por_mes[$fecha] = $this->doctrine->em->getRepository('Entities\Dataset')->getVistasDatasetsPeriodo(array('id_maestros' => $mestros_id, 'fecha_ano' => $ano, 'fecha_mes' => $mes));
         }
 
         //Se arma el encabezado
-        $content[] = array_merge(array(
+        $content[] = array(
             'id',
             'título',
             'estado',
             'ministerio',
             'institución',
-        ), $meses, array('total_descargas'), $meses, array('total_vistas'));
+        );
+
+        if($tipo == 'descargas' || $tipo == 'ambos')
+            $content[] = array_merge($content[0], $meses, array('total_descargas'));
+
+        if($tipo == 'vistas' || $tipo == 'ambos')
+            $content[] = array_merge($content[0], $meses, array('total_vistas'));
 
         foreach ($datasets as $dataset) {
             $descargas_meses = array();
@@ -312,25 +325,36 @@ class Datasets extends CIE_Controller
             $vistas = 0;
             //Obtiene las descargas de cada mes
             foreach($meses as $fecha){
-                if(isset($descargas_por_mes[$fecha][$dataset['id']]['total_descargas']))
-                    $descargas = $descargas_por_mes[$fecha][$dataset['id']]['total_descargas'];
-                $descargas_meses[] = $descargas;
+                if($tipo == 'descargas' || $tipo == 'ambos'){
+                    if(isset($descargas_por_mes[$fecha][$dataset['id']]['total_descargas']))
+                        $descargas = $descargas_por_mes[$fecha][$dataset['id']]['total_descargas'];
+                    $descargas_meses[] = $descargas;
+                }
 
-                if(isset($vistas_por_mes[$fecha][$dataset['id']]['total_vistas']))
-                    $vistas = $vistas_por_mes[$fecha][$dataset['id']]['total_vistas'];
-                $vistas_meses[] = $vistas;
+                if($tipo == 'vistas' || $tipo == 'ambos'){
+                    if(isset($vistas_por_mes[$fecha][$dataset['id']]['total_vistas']))
+                        $vistas = $vistas_por_mes[$fecha][$dataset['id']]['total_vistas'];
+                    $vistas_meses[] = $vistas;
+                }
             }
             $descargas_meses[] = array_sum($descargas_meses);
             $vistas_meses[] = array_sum($vistas_meses);
 
-            $content[] = array_merge(array(
+            $content_line = array(
                 $dataset['id'],
                 $dataset['titulo'],
                 ($dataset['publicado'] ? 'publicado' : 'no publicado'),
                 $dataset['servicio']['entidad']['nombre'],
                 $dataset['servicio']['nombre']
-            ), $descargas_meses, $vistas_meses);
+            );
 
+            if($tipo == 'descargas' || $tipo == 'ambos')
+                $content_line = array_merge($content_line, $descargas_meses);
+
+            if($tipo == 'vistas' || $tipo == 'ambos')
+                $content_line = array_merge($content_line, $vistas_meses);
+
+            $content[] = $content_line;
         }
 
         return $content;
