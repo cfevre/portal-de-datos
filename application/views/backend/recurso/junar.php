@@ -64,5 +64,4 @@
 </form>
 <div class="modal-footer">
     <button class="btn btn-primary" data-ajax-form-id="form-recurso-junar" data-ajax-command="guardarvistajunar" data-ajax-controller="recurso" data-disable="true" data-ajax-params="<?php echo $vista_junar->getId(); ?>">Guardar</button>
-    <button class="btn btn-primary" data-ajax-form-id="form-recurso-junar" data-ajax-command="enviarjunar" data-ajax-controller="recurso" data-disable="true" data-ajax-params="<?php echo $vista_junar->getId(); ?>">Enviar</button>
 </div>
