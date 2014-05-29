@@ -270,7 +270,8 @@ class Datasets extends CIE_Controller
         $descargas_por_mes = array();
         $vistas_por_mes = array();
 
-        $datasets = $this->doctrine->em->getRepository('Entities\Dataset')->getDatasetConPublicaciones($filtros);
+        //Para las desacargas y las vistas se obtienen todos los datasets, lo que se filtra por fecha es la cantidad de descargas o visitas
+        $datasets = $this->doctrine->em->getRepository('Entities\Dataset')->getDatasetConPublicaciones();
 
         $fecha_maxima = date('Y-m');
 
@@ -313,10 +314,10 @@ class Datasets extends CIE_Controller
         );
 
         if($tipo == 'descargas' || $tipo == 'ambos')
-            $content[] = array_merge($content[0], $meses, array('total_descargas'));
+            $content[0] = array_merge($content[0], $meses, array('total_descargas'));
 
         if($tipo == 'vistas' || $tipo == 'ambos')
-            $content[] = array_merge($content[0], $meses, array('total_vistas'));
+            $content[0] = array_merge($content[0], $meses, array('total_vistas'));
 
         foreach ($datasets as $dataset) {
             $descargas_meses = array();
