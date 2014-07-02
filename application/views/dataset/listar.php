@@ -77,7 +77,7 @@
               <td style="text-align: center; white-space: nowrap;">
                   <?php echo widgetHelper::rating($dataset); ?>
                   <div class="clearfix"></div>
-                <div class="ndescargas">(<? echo $dataset->getDatasetMaestro()->getNdescargas()?$dataset->getDatasetMaestro()->getNdescargas():'sin'; ?> descargas)</div>
+                <div class="ndescargas">(<?php echo $dataset->getDatasetMaestro()->getNdescargas()?$dataset->getDatasetMaestro()->getNdescargas():'sin'; ?> descargas)</div>
               </td>
                     </tr>
                 <?php } ?>
