@@ -128,6 +128,9 @@ class Datasets extends CIE_Controller
         }
 
         $dataset = $this->doctrine->em->getRepository('Entities\Dataset')->getDatasetPublicado($datasetMaestro->getId());
+        if(!$dataset)
+            show_404();
+
         $this->loadData('dataset', $dataset);
 
         header("Content-Type: application/rdf+xml");
