@@ -42,6 +42,9 @@ class Datasets extends CIE_Controller
             show_404('El dataset no ha sido encontrado.');
 
         $dataset = $this->doctrine->em->getRepository('Entities\Dataset')->getDatasetPublicado($datasetMaestro->getId());
+        if(!$dataset)
+            show_404();
+
         $recursos = $this->doctrine->em->getRepository('Entities\Recurso')->getRecursos($dataset->getId());
         $navItem = $this->doctrine->em->getRepository('Entities\NavItem')->findOneBy(array('customurl' => 'datasets'));
         $tiposReporte = $this->doctrine->em->getRepository('Entities\TipoReporte')->findPublicos();

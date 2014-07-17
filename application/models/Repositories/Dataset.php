@@ -233,7 +233,7 @@ class Dataset extends EntityRepository{
              ->setParameter('maestroid', $idMaestro)
              ->getQuery();
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 
     // Obtiene el total de datasets que se han publicado
