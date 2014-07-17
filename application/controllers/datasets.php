@@ -123,7 +123,7 @@ class Datasets extends CIE_Controller
     {
         $datasetMaestro = $this->doctrine->em->getRepository('Entities\Dataset')->find($maestroId);
 
-        if (!$datasetMaestro->getMaestro()) {
+        if (!$datasetMaestro || !$datasetMaestro->getMaestro()) {
             show_404('El dataset no ha sido encontrado.');
         }
 
