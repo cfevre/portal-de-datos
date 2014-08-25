@@ -7,7 +7,7 @@
 				</h2>
 	 		</div>
 	 		<div class="span3">
-				<time itemprop="dateCreated" datetime="<? echo strftime('%Y-%m-%d', $noticia->getPublicadoAt()->getTimestamp()) ?>"><? echo strftime('%e de %B del %Y', $noticia->getPublicadoAt()->getTimestamp()) ?></time>
+				<time itemprop="dateCreated" datetime="<?= strftime('%Y-%m-%d', $noticia->getPublicadoAt()->getTimestamp()) ?>"><?= strftime('%e de %B del %Y', $noticia->getPublicadoAt()->getTimestamp()) ?></time>
 			</div>
 		</div>
 		<?php echo widgetHelper::compartirRedesSociales(); ?>
@@ -16,10 +16,12 @@
       	<img src="<?php echo base_url('assets/timthumb/timthumb.php?zc=1&w=440&src=uploads/noticias/'.$noticia->getFoto()); ?>" alt="<?php echo $noticia->getTitulo(); ?>" />
       </a>
       <p itemprop="review" class="resumen">
-      	<? echo $noticia->getResumen() ?>
+      	<?= $noticia->getResumen() ?>
       </p>
+
+
       <p itemprop="articleBody">
-      	<? echo $noticia->getContenido() ?>
+      	<?= $noticia->getContenido() ?>
       </p>
     </div>
   </section>
