@@ -17,4 +17,5 @@ Thumbs.db
 nbproject
 .idea
 .DS_Store
+application/models/Proxies/*
 

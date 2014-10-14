@@ -1,7 +1,7 @@
 <div class="cont-widget">
 <?php $i = 0; ?>
 <?php if($showTitle){ ?>
-    <h2 class="catalogo-datos">Catálogo de Datos <small>&nbsp;Datasets publicados: <strong><?php echo number_format($ndatasets,0,',','.'); ?></strong></small></h2>   
+    <h2 class="catalogo-datos">Catálogo<small>&nbsp;Datasets publicados: <strong><?php echo number_format($ndatasets,0,',','.'); ?></strong></small></h2>   
 <?php } ?>
 <div id="widget-catalogos-top">
     <ul id="catalogo-tabs" class="nav nav-pills nav-tabs">
@@ -29,7 +29,7 @@
                                 break;
                         }
                     ?>
-                    <div class="dataset-container span4">
+                    <div class="dataset-container span3">
                         <div class="dataset-container-front">
                             <?php if ($extra): ?>
                                 <div class="extra-info-dataset">
@@ -78,14 +78,14 @@
                             </div>
                         </div>
                     </div>
-                    <?php if(!(($dataset_key+1)%3)){ ?>
-                        </div>
+                    <?php if(!(($dataset_key+1)%4)){ ?>
+                </div>
                         <div class="row-fluid">
                     <?php } ?>
                 <?php } ?>
-                </div>
+                        </div>
             </div>
-            <?php $i++; ?>
+            <?php $i++;?>
         <?php } ?>
     </div>
 </div>
