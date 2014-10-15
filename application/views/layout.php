@@ -38,18 +38,19 @@
 
   </head>
   <body>
-		<div class="navbar navbar-inverse header">
+	<div class="navbar navbar-inverse header">
 			<div class="navbar-inner">
 				<div class="container">
 					<a href="<?php echo site_url(); ?>" class="brand"><span>datos</span>.gob.cl</a>
 					<?php echo widgetHelper::buscador(); ?>
 				</div>
 			</div>
-		</div>
-		<!--MENU-->
-    <div class="navbar menu-principal">
+	</div>
+	<!--MENU-->
+    <div id="movible" class="navbar menu-principal">
       <?php echo $blocks['main_menu']; ?>
     </div>
+    <div class="box-solid"></div>
     <div class="main">
 			<div class="container">
 				<?php if(isset($navItem) && !$navItem->getHomepage()){ ?>

@@ -106,7 +106,17 @@ input.buscar[type="submit"] {
 	max-width: 1170px;
 	margin: 0 auto;
 }
-
+/*Hace que sea movible el menu*/
+.f-nav{
+	z-index: 9999;
+	position: fixed; 
+	top: 0;
+	width: 100%;
+}
+.box-solid{
+	height:66px;
+}
+/*-----------------------------*/
 .menu-principal .nav a {
 	border-bottom: 3px solid transparent;
 }

@@ -444,3 +444,20 @@
         window.datosGob = datosGob.init();
     });
 })(jQuery);
+
+/*Hacer movible el menu*/
+jQuery("document").ready(function($){
+    
+    var nav = $('#movible');
+    var box = $('.box-solid');
+    
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 138) {
+            nav.addClass("f-nav");
+            box.addClass("box-solid");
+        } else {
+            nav.removeClass("f-nav");
+            box.removeClass("box-solid");
+        }
+    });
+});
