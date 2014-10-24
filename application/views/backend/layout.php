@@ -61,6 +61,7 @@
 								<li><a href="<?php echo site_url('backend/page'); ?>">Páginas</a></li>
 								<li><a href="<?php echo site_url('backend/noticia'); ?>">Noticias</a></li>
 								<li><a href="<?php echo site_url('backend/aplicacion'); ?>">Aplicaciones</a></li>
+                <li><a href="<?php echo site_url('backend/visualizacion'); ?>">Visualizaciones</a></li>
 							<?php endif ?>
 							<?php if ($user->hasRol('publicacion') || $user->hasRol('ingreso')): ?>
 								<li class="nav-header">Datasets</li>

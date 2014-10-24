@@ -119,6 +119,7 @@ input.buscar[type="submit"] {
 /*-----------------------------*/
 .menu-principal .nav a {
 	border-bottom: 3px solid transparent;
+	text-align: center;
 }
 
 .menu-principal .nav > .active > a,
@@ -133,6 +134,7 @@ input.buscar[type="submit"] {
 
 .menu-principal .nav > li {
 	border-right: 1px solid #ddd;
+	width: 192px;
 }
 
 .menu-principal .nav > li > a {
@@ -144,7 +146,7 @@ input.buscar[type="submit"] {
 }
 /*iconos menu*/
 #main-menu-item-inicio a {
-	background-image: url(../img/menu/incio.png);
+	background-image: url(../img/menu/inicio.png);
 }
 #main-menu-item-catalogo-de-datos a {
 	background-image: url(../img/menu/catalogo.png);
@@ -822,4 +824,12 @@ span.naranjo {
     padding:5px 10px;
     margin:10px 10px 10px 0;
     border-radius: 5px;
+}
+/*Visualizaciones-Home*/
+.junar-home{
+	border:1px solid #E2E0E0;
+	padding:0;
+	margin:0;
+	width: 100%;
+	min-width: 600px;
 }

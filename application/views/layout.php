@@ -63,7 +63,7 @@
 				<?php echo $blocks['messages']; ?>
 				<div class="row-fluid">
 		    	<?php echo $blocks['content']; ?>
-		    </div>
+		        </div>
 		  </div>
 	  </div>
 	  <footer class="footer">
