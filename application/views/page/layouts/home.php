@@ -47,7 +47,7 @@
             <?php //echo widgetHelper::junarDestacados(); ?>
         </div>
     </div>
--->
+    -->
     <div class="row-fluid">
     	<div class="span8">
     		<?php echo widgetHelper::categoriasConMasDatasets(18); ?>

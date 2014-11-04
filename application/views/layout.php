@@ -50,7 +50,7 @@
     <div id="movible" class="navbar menu-principal">
       <?php echo $blocks['main_menu']; ?>
     </div>
-    <div class="box-solid"></div>
+    <div id="box-solid"></div>
     <div class="main">
 			<div class="container">
 				<?php if(isset($navItem) && !$navItem->getHomepage()){ ?>

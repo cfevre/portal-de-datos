@@ -449,7 +449,7 @@
 jQuery("document").ready(function($){
     
     var nav = $('#movible');
-    var box = $('.box-solid');
+    var box = $('#box-solid');
     
     $(window).scroll(function () {
         if ($(this).scrollTop() > 138) {
@@ -461,3 +461,12 @@ jQuery("document").ready(function($){
         }
     });
 });
+
+$('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+
+$(function () {
+    $('.tabs a:last').tab('show')
+})
