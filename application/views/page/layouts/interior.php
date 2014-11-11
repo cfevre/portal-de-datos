@@ -9,6 +9,4 @@
 </div>
 <div class="span4 side-bar">
     <?php echo widgetHelper::categoriasConMasDatasets(); ?>
-	<?php echo widgetHelper::etiquetasPopulares(); ?>
-	<?php echo widgetHelper::catalogosMasDescargados(10); ?>
 </div>

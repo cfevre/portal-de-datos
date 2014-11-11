@@ -134,7 +134,11 @@ input.buscar[type="submit"] {
 
 .menu-principal .nav > li {
 	border-right: 1px solid #ddd;
-	width: 192px;
+}
+@media (min-width: 979px) {
+	.menu-principal .nav > li {
+		width: 192px;
+	}
 }
 
 .menu-principal .nav > li > a {
@@ -330,6 +334,7 @@ input.buscar[type="submit"] {
 #catalogo-tabs {
 	border: none;
 	margin-bottom: 5px;
+	margin-top: 14px;
 }
 #catalogo-tabs > li {
 	margin-right: 10px;
@@ -340,6 +345,9 @@ input.buscar[type="submit"] {
 #catalogo-tabs > .active > a, 
 #catalogo-tabs > .active > a:hover {
 	background-color: #d66772;
+}
+#catalogo-filter{
+	
 }
 #widget-catalogos-top .dataset-container {
 	position:relative;
@@ -832,4 +840,12 @@ span.naranjo {
 	margin:0;
 	width: 100%;
 	min-width: 600px;
+}
+#publicacion_view{
+	padding-top:27px;
+}
+
+/*Solicitud de Datos*/
+.btn-decoration a{
+	color:#FFF;
 }

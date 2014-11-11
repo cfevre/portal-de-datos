@@ -6,4 +6,5 @@
 </div>
 <div class="span4 side-bar">
     <?php echo widgetHelper::categoriasConMasDatasets(); ?> 
+    <?php echo widgetHelper::catalogosMasDescargados(); ?>
 </div>
