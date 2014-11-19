@@ -6,13 +6,13 @@
                     <!-- Carousel items -->
                     <div class="carousel-inner">
                         <div class="active item" data-item="0">
-                            <a href="http://apps.gob.cl/" target="_blank">
-                                <img src="<?php echo base_url('assets/img/banner/bnnr_datos_apps.png'); ?>" alt="Guía rápida de publicación">
+                            <a href="http://abrecl.datos.gob.cl" target="_blank">
+                                <img src="<?php echo base_url('assets/img/banner/abrecl_banner_modernizacion.jpg'); ?>" alt="AbreCL" target="_blank">
                             </a>
                         </div>
                         <div class="item" data-item="1">
-                            <a href="http://instituciones.gobiernoabierto.cl/documentos-de-ayuda/norma-tecnica-de-publicacion-de-datos-abiertos-de-chile.html" target="_blank">
-                                <img src="<?php echo base_url('assets/img/banner/bnnr_guiapublicacion.png'); ?>" alt="Guía rápida de publicación">
+                            <a href="http://apps.gob.cl/" target="_blank">
+                                <img src="<?php echo base_url('assets/img/banner/bnnr_datos_apps.png'); ?>" alt="Guía rápida de publicación" target="_blank">
                             </a>
                         </div>
                         <div class="item" data-item="2">
