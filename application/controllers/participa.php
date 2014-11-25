@@ -85,7 +85,6 @@ class Participa extends CIE_Controller {
 
         $errors = $participacion->validate();
 
-        /* Descomentar cuando se haga push y pull al servidor
         if(!$errors){
             $this->config->load('recaptcha');
             $this->load->helper('recaptcha');
@@ -95,8 +94,6 @@ class Participa extends CIE_Controller {
                 $errors[] = 'Captcha inválido.';
             }
         }
-        */
-
         if(!$errors){
             $this->doctrine->em->persist($participacion);
             $this->doctrine->em->flush();
