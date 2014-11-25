@@ -80,10 +80,16 @@ class Servicio
      */
     private $entidad;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    private $participacion;
+
     public function __construct()
     {
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dataset = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->participacion = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**

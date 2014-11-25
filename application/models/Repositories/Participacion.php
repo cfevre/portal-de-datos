@@ -3,6 +3,7 @@
 namespace Repositories;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * Participacion
@@ -25,11 +26,12 @@ class Participacion extends EntityRepository{
 
 			$qb->select('p');
             $qb->addOrderBy('p.'.$options['orderby'], $options['orderdir']);
-
 		}
 		
-		if(!isset($options['all']))
-			$qb->where('p.publicado = 1');
+		if(isset($options['publicado'])){
+			//$qb->where('p'.$options['orderby'].'='.$options['publicado']);
+			$qb->where('p.publicado = '.$options['publicado']);
+		}
 
 		if(isset($options['total'])){
 
@@ -45,5 +47,54 @@ class Participacion extends EntityRepository{
 			return $query->getResult();
 
 		}
+	}
+	//Busca a los usuarios que se le deben enviar mail
+	public function userMailSend($institucion){
+		$rsm = new ResultSetMapping;
+		$rsm->addEntityResult('Entities\User', 'u');
+		$rsm->addFieldResult('u', 'id', 'id');
+		$rsm->addFieldResult('u', 'email', 'email');
+
+		$query = $this->_em->createNativeQuery('SELECT u.id, u.email 
+												FROM servicio s, entidad e , users u 
+												WHERE s.entidad_codigo = e.codigo 
+												AND u.servicio_codigo = s.codigo 
+												AND e.codigo = ?', $rsm);
+		$query->setParameter(1, $institucion);
+
+		$users = $query->getResult();
+
+		return $users;
+	}
+	//Indica cual es la cantidad de solicitudes que tienen pendiente el usuario
+	public function solicitudPendiente($codigoUsuario){
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->from('Entities\Participacion', 'p');
+		$qb->select('COUNT(p.publicado)');
+		$qb->where('p.institucion = :codigousuario');
+		$qb->andwhere('p.publicado = 0');
+		$qb->setParameter('codigousuario',$codigoUsuario);
+
+		$query = $qb->getQuery();
+
+		$solicitud=$query->getResult();
+
+		return $solicitud;
+	}
+	//Muestra al usuario cual es la publicación que se encuentra pendiente
+	public function iluminacionPendiente(){
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->from('Entities\Participacion', 'p');
+		$qb->select('p.publicado');
+		$qb->where('p.institucion = :codigousuario');
+		$qb->andwhere('p.publicado = 0');
+		$qb->setParameter('codigousuario',$codigoUsuario);
+
+		$query = $qb->getQuery();
+		$solicitud=$query->getResult();
+
+		return $solicitud;
 	}
 }

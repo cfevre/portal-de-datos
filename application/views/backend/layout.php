@@ -53,9 +53,11 @@
 								<li><a href="<?php echo site_url('backend/licencia'); ?>">Licencias</a></li>
                                 <li><a href="<?php echo site_url('backend/reporte'); ?>">Reportes</a></li>
                                 <li><a href="<?php echo site_url('backend/tiporeporte'); ?>">Tipos de Reporte</a></li>
-								<li class="nav-header">Participación</li>
-								<li><a href="<?php echo site_url('backend/participacion'); ?>">Participaciones</a></li>
 							<?php } ?>
+              <?php if ($user->hasRol('publicacion') || $user->hasRol('ingreso')): ?>
+                <li class="nav-header">Solicitudes</li>
+                <li><a href="<?php echo site_url('backend/participacion'); ?>">Solicita Datos</a></li>
+              <?php endif ?>
 							<?php if ($user->hasRol('cms')): ?>
 								<li class="nav-header">Contenido</li>	
 								<li><a href="<?php echo site_url('backend/page'); ?>">Páginas</a></li>
@@ -73,9 +75,9 @@
         </div>
         <div class="span10">
             <?php echo $blocks['messages']; ?>
-	        <div class="rowl-fluid">
-			 <?php echo isset($blocks['content-navbar'])?$blocks['content-navbar']:''; ?>
-		      <?php echo $blocks['content']; ?>
+	        <div class="row-fluid">
+    			    <?php echo isset($blocks['content-navbar'])?$blocks['content-navbar']:''; ?>
+    		      <?php echo $blocks['content']; ?>
 	        </div>
         </div>
       </div>

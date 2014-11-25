@@ -20,6 +20,13 @@ class Categoria extends EntityRepository{
 
         return $query->getResult();
     }
+    public function getTodasCategorias(){
+        $sql = "SELECT c FROM Entities\Categoria c";
+
+        $query = $this->_em->createQuery($sql);
+
+        return $query->getResult();
+    }
 
     public function getDatasetMasDescargados($categoria_id, $limit = null)
     {

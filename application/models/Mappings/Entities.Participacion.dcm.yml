@@ -14,15 +14,28 @@ Entities\Participacion:
       type: string
     email:
       type: string
-    titulo:
+    edad:
+      type: integer
+    region:
       type: string
-    categoria:
+    ocupacion:
+      type: string
+    titulo:
       type: string
     mensaje:
       type: text
+    institucion:
+      type: string
+    categoria:
+      type: string
     publicado:
-      type: boolean
+      type: integer
     created_at:
       type: datetime
     updated_at:
       type: datetime
+    servicio_codigo:
+      type: string
+      length: 8
+    enlace:
+      type: string

@@ -21,7 +21,7 @@ class Aplicacion extends CIE_Controller {
     $total = $this->doctrine->em->getRepository('Entities\Aplicacion')->findWithOrdering(array('total' => true, 'all' => true), array($orderby => $orderdir), $limit, $offset);
     $aplicaciones = $this->doctrine->em->getRepository('Entities\Aplicacion')->findWithOrdering(array('all' => true), array($orderby => $orderdir), $limit, $offset);
 
-		$pagination_config['base_url'] = site_url('backend/participacion/?orderby='.$orderby.'&orderdir='.$orderdir);
+		$pagination_config['base_url'] = site_url('backend/aplicacion/?orderby='.$orderby.'&orderdir='.$orderdir);
 		$pagination_config['total_rows'] = $total;
 		$pagination_config['per_page'] = $limit;
 

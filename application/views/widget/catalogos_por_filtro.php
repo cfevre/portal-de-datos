@@ -1,13 +1,15 @@
 <div class="cont-widget" id="widget-datasets-por-filtro">
 	<div class="widget-header">
-		<!-- <div class="cont-filtros-datasets pull-right">
+	<!--
+		<div class="cont-filtros-datasets pull-right">
 			<form action="" class="form-inline">		
 				<label for="filtro-datasets">Ordenar por: </label>
 				<select name="filtro-datasets" id="filtro-datasets">
 					<option value="entidad">Por Entidad</option>
 				</select>
 			</form>
-		</div> -->
+		</div>
+	-->
 		<h3>Instituciones publicadoras</h3>
 	</div>
 	<div class="widget-content">

@@ -13,6 +13,18 @@
 			$widget_data['entidades'] = $this->doctrine->em->getRepository('Entities\Entidad')->findWithDataset();
 			return $this->load->view('widget/catalogos_por_filtro', $widget_data, true);
 		}
+		public function listadoCatalogosPorEntidad(){
+			$widget_data['entidades'] = $this->doctrine->em->getRepository('Entities\Entidad')->findWithDataset();
+			return $this->load->view('widget/lista_catalogos', $widget_data, true);
+		}
+		public function listadoEntidades(){
+			$widget_data['entidades'] = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+			return $this->load->view('widget/listado_entidades.php', $widget_data, true);
+		}
+		public function entidadSeleccionada(){
+			$widget_data['entidades'] = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+			return $this->load->view('widget/backend/entidad_seleccionada.php', $widget_data, true);
+		}
 
 		public function catalogosMasDescargados($limit = 5){
 			$widget_data['catalogos']['masdescargados'] = $this->doctrine->em->getRepository('Entities\Dataset')->findWithOrdering(null, array('ndescargas' => 'DESC'), $limit);
@@ -91,6 +103,16 @@
         {
             $widget_data['categorias'] = $this->doctrine->em->getRepository('Entities\Categoria')->getCategoriasConTotales($limit);
             return $this->load->view('widget/categorias', $widget_data, true);
+        }
+         public function totalCategorias()
+        {
+            $widget_data['total_categorias'] = $this->doctrine->em->getRepository('Entities\Categoria')->getTodasCategorias();
+            return $this->load->view('widget/total_categorias', $widget_data, true);
+        }
+         public function categoriasSeleccionadas()
+        {
+            $widget_data['categorias_seleccionadas'] = $this->doctrine->em->getRepository('Entities\Categoria')->getTodasCategorias();
+            return $this->load->view('widget/backend/categorias_seleccionadas', $widget_data, true);
         }
 
         public function reportes()

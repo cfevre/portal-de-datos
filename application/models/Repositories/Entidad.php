@@ -29,6 +29,17 @@ class Entidad extends EntityRepository{
 
 		return $result;
 	}
+	public function findEntidad(){
+
+		$qb= $this->_em->createQueryBuilder();
+
+		$result = $qb->select('e')
+					 ->from('Entities\Entidad','e')
+					 ->getQuery()
+					 ->getResult();;
+
+		return $result;
+	}
 
     public function getEntidadesConTotales($limit = null)
     {

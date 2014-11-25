@@ -26,8 +26,8 @@ class Dataset extends CIE_Controller {
         $options['con_recurso'] = $this->get_post('con_recurso', '');
 
         if($this->user->getInterministerial()){
-            $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findAll();
-            $servicios = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
+       	     $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findAll();
+             $servicios = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
         }elseif($this->user->getMinisterial()){
             $entidades = null;
             $servicios = $this->user->getServicio()->getEntidad()->getServicio();
@@ -295,7 +295,7 @@ class Dataset extends CIE_Controller {
 		if(!$dataset->getDescripcion())
 			$this->addMessage('Debe ingresar una descripción para el dataset.', 'error');
 		if(!$dataset->getServicio())
-			$this->addMessage('Debe seleccionar una institución para el dataset.', 'error');
+			$this->addMessage('Debe seleccionar una participacionón para el dataset.', 'error');
 		if(!$dataset->getLicencia())
 			$this->addMessage('Debe seleccionar una licencia para el dataset.', 'error');
 	}

@@ -4,6 +4,8 @@ class Participa extends CIE_Controller {
 
     public function __construct(){
         parent::__construct();
+
+        $this->loadScript('page', site_url('assets/js/backend/dataset.js'));
     }
 
     public function index(){
@@ -14,8 +16,21 @@ class Participa extends CIE_Controller {
         $options['orderby'] = $this->get_post('orderby', 'created_at');
         $options['orderdir'] = $this->get_post('orderdir', 'DESC');
 
-        if($options['orderby'] == 'titulo'){
-            $options['orderdir'] = 'ASC';
+        /*FILTRO*/
+        if($options['orderby'] == 'procesado'){
+            $options['orderby'] = 'created_at';
+            $options['publicado'] = 1;
+            $options['orderdir'] = 'DESC';
+        }
+                if($options['orderby'] == 'en_proceso'){
+            $options['orderby'] = 'created_at';
+            $options['publicado'] = 2;
+            $options['orderdir'] = 'DESC';
+        }
+                if($options['orderby'] == 'no_procesado'){
+            $options['orderby'] = 'created_at';
+            $options['publicado'] = 0;
+            $options['orderdir'] = 'DESC';
         }
 
         $navItem = $this->doctrine->em->getRepository('Entities\NavItem')->findOneBy(array('customurl'=>'participa'));
@@ -29,7 +44,7 @@ class Participa extends CIE_Controller {
         $pagination_config['per_page'] = $options['limit'];
 
         $this->pagination->initialize($pagination_config);
-          
+        
         $this->loadData('orderby', $options['orderby']);
         $this->loadData('offset', $options['offset']);
         $this->loadData('limit', $options['limit']);
@@ -54,15 +69,23 @@ class Participa extends CIE_Controller {
         $participacion->setNombre($this->input->post('nombre', true));
         $participacion->setApellidos($this->input->post('apellidos', true));
         $participacion->setEmail($this->input->post('email', true));
+
+        $participacion->setEdad($this->input->post('edad', true));
+        $participacion->setRegion($this->input->post('region', true));
+        $participacion->setOcupacion($this->input->post('ocupacion', true));
+
         $participacion->setTitulo($this->input->post('titulo', true));
-        $participacion->setCategoria($this->input->post('categoria', true));
         $participacion->setMensaje($this->input->post('mensaje', true));
-        $participacion->setPublicado(false);
+        $participacion->setInstitucion($this->input->post('institucion', true));
+        $participacion->setCategoria($this->input->post('categoria', true));
+
+        $participacion->setPublicado(0);
         $participacion->setCreatedAt(new DateTime());
         $participacion->setUpdatedAt(new DateTime());
 
         $errors = $participacion->validate();
 
+        /* Descomentar cuando se haga push y pull al servidor
         if(!$errors){
             $this->config->load('recaptcha');
             $this->load->helper('recaptcha');
@@ -72,6 +95,7 @@ class Participa extends CIE_Controller {
                 $errors[] = 'Captcha inválido.';
             }
         }
+        */
 
         if(!$errors){
             $this->doctrine->em->persist($participacion);
@@ -85,11 +109,44 @@ class Participa extends CIE_Controller {
         }
         return true;
     }
+    public function rss(){
+       $this->load->library('pagination');
+
+        $options['limit'] = 20;
+        $options['offset'] = $this->get_post('offset', 0);
+        $options['orderby'] = $this->get_post('orderby', 'created_at');
+        $options['orderdir'] = $this->get_post('orderdir', 'DESC');
+
+        $participaciones = $this->doctrine->em->getRepository('Entities\Participacion')->findWithOrdering($options);
+        $options['total'] = true;
+        $total = $this->doctrine->em->getRepository('Entities\Participacion')->findWithOrdering($options);
+
+        $pagination_config['base_url'] = site_url('participa?orderby='.$options['orderby'].'&orderdir='.$options['orderdir']);
+        $pagination_config['total_rows'] = $total;
+        $pagination_config['per_page'] = $options['limit'];
+
+        $this->pagination->initialize($pagination_config);
+        
+        $this->loadData('orderby', $options['orderby']);
+        $this->loadData('offset', $options['offset']);
+        $this->loadData('limit', $options['limit']);
+        $this->loadData('total', $total);
+
+        $this->loadData('participaciones', $participaciones);
+
+        $this->setPageTitle('RSS');
+
+        $this->load->view('participa/rss', $this->data);
+    }
 
     public function ver($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
+        $servicios = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
+        $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
 
         $this->loadData('participacion', $participacion);
+        $this->loadData('servicios', $servicios);
+        $this->loadData('entidades', $entidades);
 
         $this->load->view('participa/ver', $this->data);
     }
@@ -108,8 +165,6 @@ class Participa extends CIE_Controller {
         $this->email->to($participacion->getEmail());
         $this->email->subject('Gracias por participar');
         $this->email->message($msg);
-        
-
 
         return $this->email->send();
     }

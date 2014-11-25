@@ -4,6 +4,7 @@ class Backend extends CIE_Controller {
 
 	function __construct(){
 		parent::__construct();
+		$this->loadScript('page', site_url('assets/js/backend/dataset.js'));
 	}
 	
 	public function index() {

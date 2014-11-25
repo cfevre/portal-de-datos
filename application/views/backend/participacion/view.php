@@ -1,32 +1,76 @@
-<ul class="breadcrumb">
-  <li><a href="<?php echo site_url('backend/participacion'); ?>">Participaciones</a> <span class="divider">/</span></li>
-   <li class="active"><?php echo $participacion->getTitulo(); ?></li>
-</ul>
-<dl>
-	<dt>Nombre</dt>
-	<dd><?php echo $participacion->getNombre(); ?></dd>
-	<dt>Apellidos</dt>
-	<dd><?php echo $participacion->getApellidos(); ?></dd>
-	<dt>E-mail</dt>
-	<dd><?php echo $participacion->getEmail(); ?></dd>
-	<dt>Título</dt>
-	<dd><?php echo $participacion->getTitulo(); ?></dd>
-	<dt>Mensaje</dt>
-	<dd><?php echo $participacion->getMensaje(); ?></dd>
-	<dt>Categoría</dt>
-	<dd><?php echo $participacion->getCategoria(); ?></dd>
-	<dt>Estado</dt>
-	<dd id="participacion-<?php echo $participacion->getId(); ?>">
-		<?php if(!$participacion->getPublicado()){ ?>
-			<button data-ajax-command="togglePublicado" data-ajax-controller="participacion" data-ajax-params="?id=<?php echo $participacion->getId(); ?>" class="btn btn-mini btn-warning">
-				<i class="icon-ban-circle"></i>
-				<span>No Publicado</span>
-			</button>
-		<?php }else{ ?>
-			<button data-ajax-command="togglePublicado" data-ajax-controller="participacion" data-ajax-params="?id=<?php echo $participacion->getId(); ?>" class="btn btn-mini btn-success">
-				<i class="icon-ok-circle"></i>
-				<span>Publicado</span>
-			</button>
-		<?php } ?>
-	</dd>
-</dl>
+<!--<ul class="breadcrumb">
+  <li><a href="<?php //echo site_url('backend/participacion'); ?>">Participaciones</a> <span class="divider">/</span></li>
+   <li class="active"><?php //echo $participacion->getTitulo(); ?></li>
+</ul> -->
+<legend>Solicitud de Datos: # <?php echo $participacion->getId(); ?> <?php echo $participacion->getTitulo(); ?></legend>
+<table class="table table-striped table-hover">
+		<tbody>
+		<h4>Datos Personales</h4>
+			<tr>
+				<th width="150">Estado</th>
+				<td><?php echo $participacion->publicado_ver(); ?></td>
+			</tr>
+			<tr>
+				<th>Nombre y Apellido</th>
+				<td><?php echo $participacion->getNombre(); ?>  <?php echo $participacion->getApellidos(); ?></td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td><?php echo $participacion->getEmail(); ?></td>
+			</tr>
+			<tr>
+				<th>Edad</th>
+				<td><?php echo $participacion->getEdad(); ?></td>
+			</tr>
+			<tr>
+				<th>Región</th>
+				<?php echo $participacion->regiones_backend($participacion->getRegion(),2); ?>
+			</tr>
+			<tr>
+				<th>Ocupación</th>
+				<td><?php echo $participacion->getOcupacion(); ?></td>
+			</tr>
+		</tbody>
+</table>
+<table class="table table-striped table-hover">
+	<tbody>
+		<h4>Datos Dataset</h4>
+			<tr>
+				<th width="150">Titulo</th>
+				<td><?php echo $participacion->getTitulo(); ?></td>
+			</tr>
+			<tr>
+				<th>Descripción</th>
+				<td><?php echo $participacion->getMensaje(); ?></td>
+			</tr>
+			<tr>
+				<th>Institución</th>
+				<?php foreach ($entidades as $key => $entidad) { ?>
+					<?php if ($entidad->getCodigo() == $participacion->getInstitucion()) { ?>
+						<td><?php echo $entidad->getNombre(); ?></td>
+					<?php }?>
+				<?php } ?>
+			</tr>
+			<tr>
+				<?php if ($participacion->getPublicado()==1 || $participacion->getPublicado()==2) { ?>
+					<th>Fecha Actualización</th>
+					<td><?php echo $participacion->getUpdatedAt()->format('d/m/Y  H:i'); ?></td>
+				<?php } ?>  
+				<?php if($participacion->getPublicado() == 0 ){ ?>
+					<th>Fecha Creación</th>
+					<td><?php echo $participacion->getCreatedAt()->format('d/m/Y  H:i'); ?></td> 
+				<?php } ?>
+			</tr>
+			<tr>
+				<th>Votación</th>
+				<td>O Seguimiento de esta publicación</td>
+			</tr>
+			
+			<?php if ($participacion->getPublicado() == 1) { ?>
+			<tr>
+				<th>Enlace</th>
+				<td><?php echo $participacion->getEnlace(); ?></td>
+			</tr>
+			<?php } ?>	
+	</tbody>
+</table>
