@@ -21,7 +21,3 @@ Entities\Categoria:
     datasets:
       targetEntity: Dataset
       mappedBy: categorias
-  manyToMany:
-    datasets:
-      targetEntity: Participacion
-      mappedBy: categorias

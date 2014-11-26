@@ -37,7 +37,6 @@ class Categoria
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
     private $participaciones;
-
     /**
      * @var integer $total_datasets
      */
@@ -136,7 +135,6 @@ class Categoria
         $this->datasets[] = $datasets;
         return $this;
     }
-
     /**
      * Get datasets
      *
@@ -162,7 +160,7 @@ class Categoria
     /**
      * Add participaciones
      *
-     * @param Entities\Dataset $participaciones
+     * @param Entities\Participacion $participaciones
      * @return Categoria
      */
     public function addParticipacion(\Entities\Participacion $participaciones)
