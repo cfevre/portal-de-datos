@@ -9,3 +9,4 @@ ALTER TABLE users
 ADD CONSTRAINT `fk_users_servicio1` 
 FOREIGN KEY (`servicio_codigo`) 
 REFERENCES `datos`.`servicio` (`codigo`);
+UPDATE participacion SET servicio_codigo = NULL;

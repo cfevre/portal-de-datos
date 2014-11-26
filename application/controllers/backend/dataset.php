@@ -197,6 +197,7 @@ class Dataset extends CIE_Controller {
 
         //Se debe validar que todos los tags existan
         $tags = $this->input->post('tags', true)?$this->input->post('tags', true):array();
+
         foreach($tags as $tag){
             $n_tag = $this->doctrine->em->getRepository('Entities\Tag')->findOneByNombre($tag);
             if(!$n_tag){

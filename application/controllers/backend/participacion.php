@@ -129,7 +129,6 @@ class Participacion extends CIE_Controller {
     }
     /*Cambiar estado de la solicitud*/
     public function cambiarEstado($participacionId , $participacionEstado){
-
         $parti = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $estadoAnterior = $parti->getPublicado();
         $parti->setPublicado($participacionEstado);
@@ -194,7 +193,6 @@ class Participacion extends CIE_Controller {
         $this->loadData('parti', $parti);
 
         foreach ($parti as $key => $participantes) {
-           $msg = 'Estimado(a) '.$participacion->getNombre(). ',<br>'
             . 'Agradecemos tu participación, para nosotros es importante conocer tu opinión, sugerencia y/o solicitud, de manera que mejoremos en conjunto el Portal de Datos Abiertos.<br><br>'
             . 'Te contactaremos en caso de requerir más información.<br><br>'
             . 'Saludos,<br>'

@@ -45,6 +45,9 @@ class Participa extends CIE_Controller {
 
         $this->pagination->initialize($pagination_config);
         
+        $this->loadScript('chosen', site_url('assets/js/chosen/chosen.jquery.min.js'));
+        $this->loadStylesheet('chosen', site_url('assets/js/chosen/chosen.css'));
+        
         $this->loadData('orderby', $options['orderby']);
         $this->loadData('offset', $options['offset']);
         $this->loadData('limit', $options['limit']);
@@ -64,7 +67,8 @@ class Participa extends CIE_Controller {
     }
 
     public function add(){
-        
+        $categorias = $this->doctrine->em->getRepository('Entities\Categoria')->findBy(array('id' => $this->input->post('categoria', true)));
+
         $participacion = new Entities\Participacion;
         $participacion->setNombre($this->input->post('nombre', true));
         $participacion->setApellidos($this->input->post('apellidos', true));
@@ -77,7 +81,7 @@ class Participa extends CIE_Controller {
         $participacion->setTitulo($this->input->post('titulo', true));
         $participacion->setMensaje($this->input->post('mensaje', true));
         $participacion->setInstitucion($this->input->post('institucion', true));
-        $participacion->setCategoria($this->input->post('categoria', true));
+        $participacion->updateCategorias($categorias);
 
         $participacion->setPublicado(0);
         $participacion->setCreatedAt(new DateTime());
@@ -136,7 +140,14 @@ class Participa extends CIE_Controller {
         $this->load->view('participa/rss', $this->data);
     }
 
-    public function ver($participacionId){
+    public function suscripcion($participacionId){
+        $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
+
+        $this->loadData('participacion', $participacion);
+
+        $this->load->view('participa/suscripcion', $this->data);
+    }
+        public function ver($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $servicios = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
         $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();

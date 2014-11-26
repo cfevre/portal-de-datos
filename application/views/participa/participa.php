@@ -1,4 +1,4 @@
-<h2 class="participa">Solicita Datos </h2>
+<h2 class="participa">Solicita Datos</h2> 
 <div class="row-fluid">
 	<div class="span4">
 		<div class="well gris">
@@ -55,7 +55,7 @@
 						</div>
 
 					    <label for="categoria">Categoría</label>
-						  <select tabindex="10" class="input-block-level selectpicker" name="categoria" id="categoria">
+						  <select tabindex="10" multiple data-placeholder="Selecciona algunas categorías" class="input-block-level selectpicker" name="categoria[ ]" id="categoria">
 						  	<?php echo widgetHelper::totalCategorias(); ?>
 						  </select>
 
@@ -73,7 +73,7 @@
 		  <div class="span6">
 		    <h3>Solicitudes</h3>
 		  </div>
-		  <div class="span4 padding15">
+		  <div class="span5">
 				<form class="form-search" id="formOrdenarPor" action="<?php echo current_url(); ?>" method="GET">
 					<label for="orderby">Ordenar por</label>
 					<div class="btn-group btn-decoration" name="orderby" id="orderby" data-auto-submit="change" data-submit-form="formOrdenarPor">
@@ -82,6 +82,9 @@
 					  <a href="<?php echo current_url(); ?>?orderby=no_procesado"class="btn btn-danger">No Procesado</a>
 					</div>
 				</form>
+		  </div>
+		  <div class="span1" style="padding-top:27px;">
+		  	<a href="<?php echo site_url('participa/rss'); ?>"><img src="<?php echo site_url('assets/img/rss.png'); ?>" alt=""></a>
 		  </div>
 		</div>
 		<?php if($participaciones){ ?>
@@ -114,7 +117,7 @@
 					</div>
 					<div class="span1">
 						<article id="publicacion_view">
-							<a href="<?php echo site_url('participa/rss'); ?>"><img src="<?php echo site_url('assets/img/rss.png'); ?>" alt=""></a>
+								<a class="modal-trigger" href="<?php echo site_url('participa/suscripcion/'.$participacion->getId()); ?>" data-target="#modalSuscripcion" ><i class="icon-thumbs-up"></i></a>
 						</article>
 					</div>
 				</div>
@@ -125,5 +128,9 @@
 </div>
 
 <div id="modalParticipacion" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+
+</div>
+
+<div id="modalSuscripcion" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 
 </div>

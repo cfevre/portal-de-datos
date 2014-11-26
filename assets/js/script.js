@@ -63,7 +63,6 @@
             flipBox.init();
             konamicode.init();
         },
-
         bindEvents : function(){
             var self = this;
             if(this.slider.length){
@@ -76,6 +75,7 @@
                     e.preventDefault();
                 });
             }
+            $('#categoria').chosen({max_selected_options: 5});
         },
 
         cambiaSlide : function(){

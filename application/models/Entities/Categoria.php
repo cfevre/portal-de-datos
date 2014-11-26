@@ -33,6 +33,10 @@ class Categoria
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
     private $datasets;
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    private $participaciones;
 
     /**
      * @var integer $total_datasets
@@ -42,6 +46,7 @@ class Categoria
     public function __construct()
     {
         $this->datasets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->participaciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -151,5 +156,28 @@ class Categoria
     public function getTotalDatasets()
     {
         return $this->total_datasets;
+    }
+
+
+    /**
+     * Add participaciones
+     *
+     * @param Entities\Dataset $participaciones
+     * @return Categoria
+     */
+    public function addParticipacion(\Entities\Participacion $participaciones)
+    {
+        $this->participaciones[] = $participaciones;
+        return $this;
+    }
+
+    /**
+     * Get participaciones
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getParticipacion()
+    {
+        return $this->participaciones;
     }
 }
