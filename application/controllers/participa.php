@@ -127,6 +127,7 @@ class Participa extends CIE_Controller {
         $pagination_config['per_page'] = $options['limit'];
 
         $this->pagination->initialize($pagination_config);
+        $this->output->set_header('Content-Type:application/xml');
         
         $this->loadData('orderby', $options['orderby']);
         $this->loadData('offset', $options['offset']);
