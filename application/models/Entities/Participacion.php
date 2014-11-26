@@ -59,6 +59,10 @@ class Participacion
                  */
                 private $institucion;
     /**
+     * @var string $categorias
+     */
+    private $categorias;
+    /**
      * @var string $categoria
      */
     private $categoria;
@@ -79,14 +83,36 @@ class Participacion
      */
     private $servicio;
     /**
-     * @var string $servicio_codigo
-     */
-    private $servicio_codigo;
-    /**
      * @var string $enlace
      */
     private $enlace;
 
+    public function __construct()
+    {
+        $this->categorias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get categoria
+     *
+     * @return string 
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * Set categoria
+     *
+     * @param string $categoria
+     * @return Participacion
+     */
+    public function setCategoria($categoria)
+    {
+        $this->categoria = $categoria;
+        return $this;
+    }
     /**
      * Get id
      *
@@ -185,27 +211,7 @@ class Participacion
         return $this->titulo;
     }
 
-    /**
-     * Set categoria
-     *
-     * @param string $categoria
-     * @return Participacion
-     */
-    public function setCategoria($categoria)
-    {
-        $this->categoria = $categoria;
-        return $this;
-    }
-
-    /**
-     * Get categoria
-     *
-     * @return string 
-     */
-    public function getCategoria()
-    {
-        return $this->categoria;
-    }
+    
 
     /**
      * Set mensaje
@@ -404,27 +410,6 @@ class Participacion
         return $this->servicio;
     }
     /**
-     * Set servicio_codigo
-     *
-     * @param string $servicioCodigo
-     * @return Dataset
-     */
-    public function setServicioCodigo($servicioCodigo)
-    {
-        $this->servicio_codigo = $servicioCodigo;
-        return $this;
-    }
-
-    /**
-     * Get servicio_codigo
-     *
-     * @return string 
-     */
-    public function getServicioCodigo()
-    {
-        return $this->servicio_codigo;
-    }
-    /**
      * Get enlace
      *
      * @return Entities\Participacion 
@@ -446,7 +431,27 @@ class Participacion
         return $this;
     }
 
+    /**
+     * Add categorias
+     *
+     * @param Entities\Categoria $categorias
+     * @return Participacion
+     */
+    public function addCategoria(\Entities\Categoria $categorias)
+    {
+        $this->categorias[] = $categorias;
+        return $this;
+    }
 
+    /**
+     * Get categorias
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCategorias()
+    {
+        return $this->categorias;
+    }
 
     /**
 		 * Custom Methods
@@ -467,7 +472,8 @@ class Participacion
 				$errors[] = 'Debe ingresar un titulo.';
 			if(!$this->getMensaje())
 				$errors[] = 'Debe ingresar un mensaje.';
-
+            if(count($this->getCategorias()) < 1)
+                $errors[] = 'Debe seleccionar a lo menos una categoría para la participacion.';
 			return $errors;
     }
 
@@ -576,10 +582,20 @@ class Participacion
              foreach ($ArrayRegiones as $key => $region) {
                     if ($opcion == $key) {
                         $strRegiones='<td>'.$region.'</td>';
+                    }else{
+                        $strRegiones='<td></td>';
                     }
         }
         break; 
         }
         return $strRegiones;
     }
+    public function updateCategorias($categorias){
+            //Se eliminan las categorias asociadas
+            if($this->categorias)
+                $this->categorias->clear();
+            foreach ($categorias as $key => $categoria) {
+                $this->addCategoria($categoria);
+            }
+        }
 }

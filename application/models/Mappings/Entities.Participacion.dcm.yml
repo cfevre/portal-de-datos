@@ -34,8 +34,18 @@ Entities\Participacion:
       type: datetime
     updated_at:
       type: datetime
-    servicio_codigo:
-      type: string
-      length: 8
     enlace:
       type: string
+  manyToMany:
+    categorias:
+        targetEntity: Categoria
+        inversedBy: participaciones
+        joinTable:
+          name: participacion_has_categoria
+          joinColumns:
+            participacion_id:
+              referencedColumnName: id
+              onDelete: CASCADE
+          inverseJoinColumns:
+            categoria_id:
+              referencedColumnName: id
