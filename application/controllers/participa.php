@@ -189,7 +189,7 @@ class Participa extends CIE_Controller {
         $this->doctrine->em->persist($suscripcion);
         $this->doctrine->em->flush();
 
-        $this->mailSuscripcion($this->input->post('email', true));
+        $this->mailSuscripcion($this->input->get('email', true));
 
         echo json_encode(array('errors' => false, 'message' => 'Hemos recibido su información con exito.'));
         
