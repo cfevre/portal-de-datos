@@ -1,0 +1,14 @@
+Entities\Suscripcion:
+  repositoryClass: Repositories\Suscripcion
+  type: entity
+  table: suscripcion
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    participacion_id:
+      type: integer
+    email:
+      type: string

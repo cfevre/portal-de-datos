@@ -598,4 +598,11 @@ class Participacion
                 $this->addCategoria($categoria);
             }
         }
+    public function hasCategoria(\Entities\Categoria $categoria_to_check){
+            foreach ($this->getCategorias() as $key => $categoria) {
+                if($categoria == $categoria_to_check)
+                    return true;
+            }
+            return false;
+        }
 }

@@ -6,7 +6,7 @@
 		},
 		bindEvents : function(){
                 $('#servicio_codigo').chosen();
-                $('#categoria').chosen();
+                $('#categoria').chosen({max_selected_options: 5});
                 $('#region').chosen();
         },
 		classBtn : {

@@ -61,10 +61,12 @@ class Participacion extends CIE_Controller {
         $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
         $servicios = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
+        $suscripcion = $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionCount($participacionId);
 
         $this->loadData('participacion', $participacion);
         $this->loadData('servicios', $servicios);
         $this->loadData('entidades', $entidades);
+        $this->loadData('suscripcion',$suscripcion);
 
         $this->loadData('active', 'view');
         $this->loadBlock('content-navbar', 'backend/participacion/navbar', $this->data);
@@ -78,11 +80,13 @@ class Participacion extends CIE_Controller {
         $servicios = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
         $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
         $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+        $suscripcion = $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionCount($participacionId);
 
         $this->loadData('participacion', $participacion);
         $this->loadData('servicios', $servicios);
         $this->loadData('parti', $parti);
         $this->loadData('entidades', $entidades);
+        $this->loadData('suscripcion',$suscripcion);
 
         $this->loadScript('chosen', site_url('assets/js/chosen/chosen.jquery.min.js'));
         $this->loadStylesheet('chosen', site_url('assets/js/chosen/chosen.css'));
@@ -152,6 +156,7 @@ class Participacion extends CIE_Controller {
     /*Actualizar solicitud de datos*/
     public function actualizarSolicitud($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion',$participacionId);
+        $categorias = $this->doctrine->em->getRepository('Entities\Categoria')->findBy(array('id' => $this->input->post('categoria', true)));
 
         $participacion->setNombre($this->input->post('nombre', true));
         $participacion->setApellidos($this->input->post('apellido', true));
@@ -164,7 +169,7 @@ class Participacion extends CIE_Controller {
         $participacion->setTitulo($this->input->post('titulo', true));
         $participacion->setMensaje($this->input->post('mensaje', true));
         $participacion->setInstitucion($this->input->post('servicio_codigo', true));
-        $participacion->setCategoria($this->input->post('categoria', true));
+        $participacion->updateCategorias($categorias);
 
         //$participacion->setVotacion($this->input->post('votacion', true));
         $participacion->setEnlace($this->input->post('enlace', true));

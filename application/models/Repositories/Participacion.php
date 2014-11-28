@@ -82,6 +82,21 @@ class Participacion extends EntityRepository{
 
 		return $solicitud;
 	}
+	//Indica la cantidad de usuarios suscritos a la solicitud
+	public function subscriptionCount($ParticipacionId){
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->from('Entities\Suscripcion', 's');
+		$qb->select('COUNT(s.participacion_id)');
+		$qb->where('s.participacion_id = :participacionId');
+		$qb->setParameter('participacionId',$ParticipacionId);
+
+		$query = $qb->getQuery();
+
+		$suscripcion=$query->getResult();
+
+		return $suscripcion;
+	}
 	//Muestra al usuario cual es la publicación que se encuentra pendiente
 	public function iluminacionPendiente(){
 		$qb = $this->_em->createQueryBuilder();

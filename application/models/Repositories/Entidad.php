@@ -36,7 +36,7 @@ class Entidad extends EntityRepository{
 		$result = $qb->select('e')
 					 ->from('Entities\Entidad','e')
 					 ->getQuery()
-					 ->getResult();;
+					 ->getResult();
 
 		return $result;
 	}

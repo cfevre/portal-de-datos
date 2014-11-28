@@ -98,7 +98,7 @@
 				<label for="categoria">Categoría <i class="icon-exclamation-sign"></i></label>
 			</div>
 			<div class="controls">
-				<select name="categoria" id="categoria" class="input-xlarge">
+				<select name="categoria[ ]" id="categoria" multiple  class="input-xlarge selectpicker">
 					<?php echo widgetHelper::categoriasSeleccionadas($participacion->getCategoria()); ?>
 				</select>
 			</div>
@@ -124,7 +124,9 @@
 				<label for="votacion">Votación<i class="icon-exclamation-sign"></i></label>
 			</div>
 			<div class="controls">
-				<input type="text" name="votacion" id="votacion" class="input-xlarge" value="">
+					<?php foreach ($suscripcion as $key => $subscription) { ?>
+						<label for=""><?php echo $subscription[1]; ?></label>
+					<?php } ?>
 			</div>
 		</div>
 		<div class="control-group">
@@ -178,10 +180,17 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
+				<?php $td=''; ?>
 				<?php foreach ($entidades as $key => $entidad) { ?>
 					<?php if ($entidad->getCodigo() == $participacion->getInstitucion()) { ?>
 						<td><?php echo $entidad->getNombre(); ?></td>
-					<?php }?>
+						<?php break; ?>
+					<?php }else {?>
+						<?php $td =null; ?>
+					<?php } ?>
+				<?php } ?>
+				<?php if ($td == null) { ?>
+					<td></td>
 				<?php } ?>
 			</tr>
 			<tr>
@@ -194,7 +203,9 @@
 			</tr>
 			<tr>
 				<th>Votación</th>
-				<td>*Aqui va a ir la votación*</td>
+					<?php foreach ($suscripcion as $key => $subscription) { ?>
+						<td><?php echo $subscription[1]; ?></td>
+					<?php } ?>
 			</tr>
 		</tbody>
 </table>

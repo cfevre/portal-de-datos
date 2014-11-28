@@ -1,6 +1,6 @@
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Participación</h3>
+  <h3 id="myModalLabel">Solicitud de Datos: <?php echo $participacion->getTitulo(); ?></h3>
 </div>
 <div class="modal-body">
 	<table class="table table-striped">
@@ -19,16 +19,30 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
+				<?php $td=''; ?>
 				<?php foreach ($entidades as $key => $entidad) { ?>
 					<?php if ($entidad->getCodigo() == $participacion->getInstitucion()) { ?>
 						<td><?php echo $entidad->getNombre(); ?></td>
-					<?php }?>
+						<?php break; ?>
+					<?php }else {?>
+						<?php $td =null; ?>
+					<?php } ?>
+				<?php } ?>
+				<?php if ($td == null) { ?>
+					<td></td>
 				<?php } ?>
 			</tr>
 			<tr>
-				<th>Categoría</th>
-				<td><?php echo $participacion->getCategoria(); ?></td>
-			</tr>
+	            <th>Categorías</th>
+	            <td>
+	                <?php
+	                    foreach ($participacion->getCategorias() as $key => $categoria){
+	                        $a_categorias[] = $categoria->getNombre();
+	                    }
+	                    echo isset($a_categorias)?implode(', ', $a_categorias):'No hay categorías asociadas a la solicitud';
+	                ?>
+	            </td>
+       		</tr>
 			<tr>
 				<?php if ($participacion->getPublicado()==1 || $participacion->getPublicado()==2) { ?>
 					<th>Fecha Actualización</th>
@@ -41,9 +55,10 @@
 			</tr>
 			<tr>
 				<th>Votación</th>
-				<td>O Seguimiento de esta publicación</td>
-			</tr>
-			
+					<?php foreach ($suscripcion as $key => $subscription) { ?>
+						<td><?php echo $subscription[1]; ?></td>
+					<?php } ?>
+			</tr>		
 			<?php if ($participacion->getPublicado() == 1) { ?>
 			<tr>
 				<th>Enlace</th>

@@ -30,6 +30,17 @@
 				<th>Ocupación</th>
 				<td><?php echo $participacion->getOcupacion(); ?></td>
 			</tr>
+			<tr>
+	            <th>Categorías</th>
+	            <td>
+	                <?php
+	                    foreach ($participacion->getCategorias() as $key => $categoria){
+	                        $a_categorias[] = $categoria->getNombre();
+	                    }
+	                    echo isset($a_categorias)?implode(', ', $a_categorias):'No hay categorías asociadas al Dataset';
+	                ?>
+	            </td>
+       		</tr>
 		</tbody>
 </table>
 <table class="table table-striped table-hover">
@@ -45,10 +56,17 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
+				<?php $td=''; ?>
 				<?php foreach ($entidades as $key => $entidad) { ?>
 					<?php if ($entidad->getCodigo() == $participacion->getInstitucion()) { ?>
 						<td><?php echo $entidad->getNombre(); ?></td>
-					<?php }?>
+						<?php break; ?>
+					<?php }else {?>
+						<?php $td =null; ?>
+					<?php } ?>
+				<?php } ?>
+				<?php if ($td == null) { ?>
+					<td></td>
 				<?php } ?>
 			</tr>
 			<tr>
@@ -63,7 +81,9 @@
 			</tr>
 			<tr>
 				<th>Votación</th>
-				<td>O Seguimiento de esta publicación</td>
+					<?php foreach ($suscripcion as $key => $subscription) { ?>
+						<td><?php echo $subscription[1]; ?></td>
+					<?php } ?>
 			</tr>
 			
 			<?php if ($participacion->getPublicado() == 1) { ?>

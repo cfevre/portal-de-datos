@@ -849,3 +849,10 @@ span.naranjo {
 .btn-decoration a{
 	color:#FFF;
 }
+
+.form-suscripcion{
+	margin-bottom: 0px;
+}
+#save-subscription{
+	color: #FFFFFF;
+}

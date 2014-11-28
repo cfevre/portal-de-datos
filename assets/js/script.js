@@ -7,6 +7,7 @@
 
             this.initPlugins();
             this.bindEvents();
+            this.initSubscription();
             return this;
         },
         initPlugins : function(){
@@ -75,9 +76,37 @@
                     e.preventDefault();
                 });
             }
-            $('#categoria').chosen({max_selected_options: 5});
         },
+        initSubscription:function(){
+            $(document).on('click', "#save-subscription", function(e){
+                e.preventDefault();
 
+                var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+
+                var id = $(this).attr('data-id');
+                var email = $('#email-subscription').val().trim();
+                if (expr.test($('#email-subscription').val().trim())) {
+                    $(this).parent().hide();
+                    $('#email-noValido').hide();
+
+                    var data = {
+                        email : email
+                    }
+
+                    $.getJSON('participa/ingresoSuscripcion/'+id,data)
+                    .then(function(res){
+                        $('#msg-subscription').html(res.message);
+                        setTimeout(function(){
+                            $('#modalParticipacion').modal('hide');
+                        },2500);
+                    });
+                }
+                else {
+                    $('#email-noValido').addClass('alert alert-error');
+                    $('#email-noValido').html('La dirección de correo no es valida');
+                }
+            });
+        },
         cambiaSlide : function(){
             var self = this,
                 activeSlide = this.slider.find('div.item.active');
@@ -202,6 +231,54 @@
                     $formMessages.append($alert);
                     $alert.addClass('in');
                 });
+                e.preventDefault();
+            });
+        },
+        initAjaxCommands:function(){
+            var self = this;
+            $(document).on('click', '[data-ajax-command]', function(e){
+                var elem = $(this),
+                    controller = elem.data('ajax-controller'),
+                    command = elem.data('ajax-command'),
+                    params = elem.data('ajax-params')||'',
+                    formId = elem.data('ajax-form-id')||false,
+                    disable = elem.data('disable')||false,
+                    messages = $(elem.data('ajax-message-holder')||'');
+
+                if(formId && !messages.length){
+                    messages = $('#'+formId).find('.messages');
+                    messages.html('');
+                }
+
+                if((elem.data('confirm') && confirm(elem.data('confirm'))) || !(elem.data('confirm'))){
+                    if(controller && command){
+
+                        if(disable)
+                            elem.attr('disabled',true);
+
+                        sendData = formId?$('#'+formId).serialize():'';
+                        $.getJSON('/'+controller+'/'+command+'/'+params, sendData, function(data){
+                            if(!data.errors || !data.errors.length){
+                                if(data.callback)
+                                    eval(data.callback);
+                            }else{
+                                if(messages.length){
+                                    var errorHtml = '<div class="alert alert-error">';
+                                    $.each(data.errors, function(i, error){
+                                        if(typeof error != "string")
+                                            error = error.error
+                                        errorHtml += '<p>'+error+'</p>';
+                                    });
+                                    errorHtml += '</div>';
+                                    messages.html(errorHtml);
+                                }
+                            }
+                            if(disable){
+                                elem.removeAttr('disabled');
+                            }
+                        });
+                    }
+                }
                 e.preventDefault();
             });
         },

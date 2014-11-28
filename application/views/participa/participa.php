@@ -117,7 +117,7 @@
 					</div>
 					<div class="span1">
 						<article id="publicacion_view">
-								<a class="modal-trigger" href="<?php echo site_url('participa/suscripcion/'.$participacion->getId()); ?>" data-target="#modalSuscripcion" ><i class="icon-thumbs-up"></i></a>
+								<a class="modal-trigger" href="<?php echo site_url('participa/suscripcion/'.$participacion->getId()); ?>" data-target="#modalSuscripcion" ><i style="font-size:20px;" class="icon-download"></i></a>
 						</article>
 					</div>
 				</div>

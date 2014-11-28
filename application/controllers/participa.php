@@ -5,7 +5,7 @@ class Participa extends CIE_Controller {
     public function __construct(){
         parent::__construct();
 
-        $this->loadScript('page', site_url('assets/js/backend/dataset.js'));
+        $this->loadScript('page', site_url('assets/js/participa.js'));
     }
 
     public function index(){
@@ -148,14 +148,16 @@ class Participa extends CIE_Controller {
 
         $this->load->view('participa/suscripcion', $this->data);
     }
-        public function ver($participacionId){
+    public function ver($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $servicios = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
         $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+        $suscripcion = $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionCount($participacionId);
 
         $this->loadData('participacion', $participacion);
         $this->loadData('servicios', $servicios);
         $this->loadData('entidades', $entidades);
+        $this->loadData('suscripcion',$suscripcion);
 
         $this->load->view('participa/ver', $this->data);
     }
@@ -173,6 +175,36 @@ class Participa extends CIE_Controller {
         $this->email->from('datosabiertos@minsegpres.gob.cl');
         $this->email->to($participacion->getEmail());
         $this->email->subject('Gracias por participar');
+        $this->email->message($msg);
+
+        return $this->email->send();
+    }
+    /*Cambiar estado de la solicitud*/
+    public function ingresoSuscripcion($participacionId){
+        $suscripcion = new Entities\Suscripcion;
+
+        $suscripcion->setParticipacionId($participacionId);
+        $suscripcion->setEmail($this->input->get('email', true));
+
+        $this->doctrine->em->persist($suscripcion);
+        $this->doctrine->em->flush();
+
+        $this->mailSuscripcion($this->input->post('email', true));
+
+        echo json_encode(array('errors' => false, 'message' => 'Hemos recibido su información con exito.'));
+        
+        return true;
+    }
+        public function mailSuscripcion($suscripcion)
+    {
+        $this->load->library('email');
+
+        $msg = 'Estimado(a) ,<br>'
+            . 'CHAYA CHAYA BLA BLA BLA';
+
+        $this->email->from('datosabiertos@minsegpres.gob.cl');
+        $this->email->to($suscripcion);
+        $this->email->subject('GRACIAS POR NADA');
         $this->email->message($msg);
 
         return $this->email->send();
