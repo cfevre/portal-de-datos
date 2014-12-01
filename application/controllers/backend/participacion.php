@@ -120,6 +120,7 @@ class Participacion extends CIE_Controller {
         $callback = 'participacion.updatePublicadoButton('.$participacionId.','.$parti->getPublicado().','.$estadoAnterior.')';
 
         $this->envia_mail_solicitudes($participacionId);
+        $this->envia_mail_suscritos($participacionId);
 
         echo json_encode(array(
             'error' => false,
@@ -168,25 +169,13 @@ class Participacion extends CIE_Controller {
     {
         $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
-        $suscripcion = $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionMail($participacionId);
         $suscriptionCount= $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionCount($participacionId);
         $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
 
         $this->load->library('email');
 
         $this->loadData('parti', $parti);
-        $this->loadData('suscripcion', $suscripcion);
         $this->loadData('suscriptionCount', $suscriptionCount);
-
-        foreach ($suscripcion as $key => $suscritos) {
-            $msg = 'Estimado(a),<br>'
-            . 'GRACIAS GRACIAS NO SE MOLESTEN SUSCRITOS.<br><br>';
-
-        $this->email->from('datosabiertos@minsegpres.gob.cl');
-        $this->email->to($suscritos['email']);
-        $this->email->subject('Estas suscrito a la solicitud');
-        $this->email->message($msg);
-        }
 
         foreach ($parti as $key => $participantes) {
             $msg = 'Estimado(a) '.$participacion->getNombre(). ',<br>'
@@ -227,8 +216,28 @@ class Participacion extends CIE_Controller {
         $this->email->to($participantes->getEmail());
         $this->email->subject('Esto es una prueba de cambio de estado');
         $this->email->message($msg);
+
         }
 
+        return $this->email->send();
+    }
+    public function envia_mail_suscritos($participacionId){
+        $suscripcion = $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionMail($participacionId);
+
+        $this->load->library('email');
+
+        $this->loadData('suscripcion', $suscripcion);
+
+        foreach ($suscripcion as $key => $suscritos) {
+            $msg = 'Estimado(a),<br>'
+            . 'GRACIAS GRACIAS NO SE MOLESTEN SUSCRITOS.<br><br>';
+
+        $this->email->from('datosabiertos@minsegpres.gob.cl');
+        $this->email->to($suscritos['email']);
+        $this->email->subject('Estas suscrito a la solicitud');
+        $this->email->message($msg);
+        }
+        exit;
         return $this->email->send();
     }
 }
