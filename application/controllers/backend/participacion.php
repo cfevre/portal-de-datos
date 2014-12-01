@@ -237,7 +237,6 @@ class Participacion extends CIE_Controller {
         $this->email->subject('Estas suscrito a la solicitud');
         $this->email->message($msg);
         }
-        exit;
         return $this->email->send();
     }
 }
