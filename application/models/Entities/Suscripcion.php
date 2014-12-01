@@ -71,7 +71,7 @@ class Suscripcion
     /**
      * Get email
      *
-     * @return date 
+     * @return string 
      */
     public function getEmail()
     {

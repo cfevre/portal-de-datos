@@ -567,7 +567,6 @@ class Participacion
             "14" => "XIV Los Rios",
             "15" => "XV Arica y Parinacota",
         );
-
         switch ($opt) {
             case '1':
             $strRegiones='<option value="">- Seleccione -</option>';
@@ -582,8 +581,6 @@ class Participacion
              foreach ($ArrayRegiones as $key => $region) {
                     if ($opcion == $key) {
                         $strRegiones='<td>'.$region.'</td>';
-                    }else{
-                        $strRegiones='<td></td>';
                     }
         }
         break; 
@@ -605,4 +602,20 @@ class Participacion
             }
             return false;
         }
+    public function institucion($entidades){
+            $strInstitucion='';
+            foreach ($entidades as $key => $entidad) { 
+                     if ($entidad->getCodigo() == $this->getInstitucion()) { 
+                         $strInstitucion=$entidad->getNombre();
+                     }
+                 }
+        return $strInstitucion;
+    }
+    public function votacion($suscripcion){
+        $strVotacion='';
+        foreach ($suscripcion as $key => $subscription){
+                     $strVotacion = $subscription[1];;
+                    }
+        return $strVotacion;
+    }
 }

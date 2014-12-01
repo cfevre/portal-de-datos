@@ -107,30 +107,6 @@ class Participacion extends CIE_Controller {
 
         redirect('backend/participacion');
     }
-
-    /*Ajax Calls*/
-    public function togglePublicado($participacionId = null){
-        if(!$this->isAjax())
-            return false;
-        if(!$participacionId)
-            $participacionId = $this->input->get('id', true);
-
-        $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
-
-        $participacion->setPublicado(!$participacion->getPublicado());
-        $this->doctrine->em->persist($participacion);
-        $this->doctrine->em->flush();
-
-        $callback = 'participacion.updatePublicadoButton('.$participacionId.','.($participacion->getPublicado()).')';
-
-        echo json_encode(array(
-            'error' => false,
-            'message' => 'Estado de publicación actualizado',
-            'callback' => $callback
-        ));
-
-        return true;
-    }
     /*Cambiar estado de la solicitud*/
     public function cambiarEstado($participacionId , $participacionEstado){
         $parti = $this->doctrine->em->find('Entities\Participacion', $participacionId);
@@ -171,7 +147,6 @@ class Participacion extends CIE_Controller {
         $participacion->setInstitucion($this->input->post('servicio_codigo', true));
         $participacion->updateCategorias($categorias);
 
-        //$participacion->setVotacion($this->input->post('votacion', true));
         $participacion->setEnlace($this->input->post('enlace', true));
 
         $participacion->setUpdatedAt(new DateTime());
@@ -193,20 +168,64 @@ class Participacion extends CIE_Controller {
     {
         $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
+        $suscripcion = $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionMail($participacionId);
+        $suscriptionCount= $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionCount($participacionId);
+        $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+
         $this->load->library('email');
 
         $this->loadData('parti', $parti);
+        $this->loadData('suscripcion', $suscripcion);
+        $this->loadData('suscriptionCount', $suscriptionCount);
+
+        foreach ($suscripcion as $key => $suscritos) {
+            $msg = 'Estimado(a),<br>'
+            . 'GRACIAS GRACIAS NO SE MOLESTEN SUSCRITOS.<br><br>';
+
+        $this->email->from('datosabiertos@minsegpres.gob.cl');
+        $this->email->to($suscritos['email']);
+        $this->email->subject('Estas suscrito a la solicitud');
+        $this->email->message($msg);
+        }
 
         foreach ($parti as $key => $participantes) {
             $msg = 'Estimado(a) '.$participacion->getNombre(). ',<br>'
-            . 'Agradecemos tu participación, para nosotros es importante conocer tu opinión, sugerencia y/o solicitud, de manera que mejoremos en conjunto el Portal de Datos Abiertos.<br><br>'
-            . 'Te contactaremos en caso de requerir más información.<br><br>'
-            . 'Saludos,<br>'
-            . 'Equipo Datos Abiertos';
+            . '<table>
+                <tbody>
+                    <tr>
+                        <th width="150">Estado</th>
+                        <td>'.$participacion->publicado_ver() .'</td>
+                    </tr>
+                    <tr>
+                        <th>Titulo Peticion</th>
+                        <td>'. $participacion->getTitulo() .'</td>
+                    </tr>
+                    <tr>
+                        <th>Descripcion</th>
+                        <td>'. $participacion->getMensaje() .'</td>
+                    </tr>
+                    <tr>
+                        <th>Institucion</th>
+                        <td>'.$participacion->institucion($entidades).'</td>
+                    </tr>
+                    <tr>
+                        <th>Categoria</td>
+                        <td>'. $participacion->getCategoria() .'</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de Creacion</th>
+                        <td>'. $participacion->getCreatedAt()->format('d/m/Y  H:i') .'</td>
+                    </tr>
+                    <tr>
+                        <th>Votacion</th>
+                        <td>'. $participacion->votacion($suscriptionCount) .'</td>
+                    </tr>
+                </tbody>
+            </table>';
 
         $this->email->from('datosabiertos@minsegpres.gob.cl');
         $this->email->to($participantes->getEmail());
-        $this->email->subject('Esto es una prueba');
+        $this->email->subject('Esto es una prueba de cambio de estado');
         $this->email->message($msg);
         }
 

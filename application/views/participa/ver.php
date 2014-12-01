@@ -19,18 +19,9 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
-				<?php $td=''; ?>
-				<?php foreach ($entidades as $key => $entidad) { ?>
-					<?php if ($entidad->getCodigo() == $participacion->getInstitucion()) { ?>
-						<td><?php echo $entidad->getNombre(); ?></td>
-						<?php break; ?>
-					<?php }else {?>
-						<?php $td =null; ?>
-					<?php } ?>
-				<?php } ?>
-				<?php if ($td == null) { ?>
-					<td></td>
-				<?php } ?>
+				<td>
+					<?php echo $participacion->institucion($entidades); ?>
+				</td>
 			</tr>
 			<tr>
 	            <th>Categorías</th>
@@ -55,9 +46,7 @@
 			</tr>
 			<tr>
 				<th>Votación</th>
-					<?php foreach ($suscripcion as $key => $subscription) { ?>
-						<td><?php echo $subscription[1]; ?></td>
-					<?php } ?>
+					<td><?php echo $participacion->votacion($suscripcion); ?></td>
 			</tr>		
 			<?php if ($participacion->getPublicado() == 1) { ?>
 			<tr>

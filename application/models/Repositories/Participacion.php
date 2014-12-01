@@ -112,4 +112,17 @@ class Participacion extends EntityRepository{
 
 		return $solicitud;
 	}
+	//Indica los usuarios suscritos a la solicitud 
+	public function subscriptionMail($ParticipacionId){
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->from('Entities\Suscripcion', 's');
+		$qb->select('DISTINCT(s.email)');
+		$qb->where('s.participacion_id = :participacionId');
+		$qb->setParameter('participacionId',$ParticipacionId);
+
+		$query = $qb->getQuery();
+
+		return $query->getResult();
+	}
 }
