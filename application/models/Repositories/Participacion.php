@@ -25,6 +25,42 @@ class Participacion extends EntityRepository{
 		}else{
 
 			$qb->select('p');
+			$qb->where('p.publicado != 3');
+            $qb->addOrderBy('p.'.$options['orderby'], $options['orderdir']);
+		}
+		
+		if(isset($options['publicado'])){
+			//$qb->where('p'.$options['orderby'].'='.$options['publicado']);
+			$qb->where('p.publicado = '.$options['publicado']);
+		}
+
+		if(isset($options['total'])){
+
+			return $qb->getQuery()->getSingleScalarResult();
+
+		}else{
+            if(!isset($options['excel'])){
+                $qb->setFirstResult($options['offset'])
+                    ->setMaxResults($options['limit']);
+            }
+			$query = $qb->getQuery();
+
+			return $query->getResult();
+
+		}
+	}
+		public function findWithOrderingBack($options = null){
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->from('Entities\Participacion', 'p');
+
+		if(isset($options['total'])){
+
+			$qb->select('COUNT(p.id)');
+
+		}else{
+
+			$qb->select('p');
             $qb->addOrderBy('p.'.$options['orderby'], $options['orderdir']);
 		}
 		

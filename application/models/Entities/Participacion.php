@@ -472,6 +472,8 @@ class Participacion
 				$errors[] = 'Debe ingresar un titulo.';
 			if(!$this->getMensaje())
 				$errors[] = 'Debe ingresar un mensaje.';
+            if(!$this->getInstitucion())
+                $errors[] = 'Debe ingresar una institucion.';
             if(count($this->getCategorias()) < 1)
                 $errors[] = 'Debe seleccionar a lo menos una categoría para la participacion.';
 			return $errors;
@@ -537,6 +539,10 @@ class Participacion
                 $btn='btn-warning';
                 $icon='icon-time';
                 $estadoName='En Proceso';
+            }else if($this->getPublicado()==3){
+                $btn='btn-danger';
+                $icon='icon-time';
+                $estadoName='Ingresado';
             }else{
                 $btn='btn-danger';
                 $icon='icon-off';

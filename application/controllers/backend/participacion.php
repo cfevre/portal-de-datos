@@ -20,9 +20,9 @@ class Participacion extends CIE_Controller {
         $options['excel'] = $this->get_post('excel', null);
         $options['all'] = true;
 
-        $participaciones = $this->doctrine->em->getRepository('Entities\Participacion')->findWithOrdering($options);
+        $participaciones = $this->doctrine->em->getRepository('Entities\Participacion')->findWithOrderingBack($options);
         $options['total'] = true;
-        $total = $this->doctrine->em->getRepository('Entities\Participacion')->findWithOrdering($options);
+        $total = $this->doctrine->em->getRepository('Entities\Participacion')->findWithOrderingBack($options);
         $solicitudPendiente = $this->doctrine->em->getRepository('Entities\Participacion')->solicitudPendiente($this->user->getServicio()->getCodigo());
 
         $pagination_config['base_url'] = site_url('backend/participacion/?orderby='.$options['orderby'].'&orderdir='.$options['orderdir']);
@@ -293,7 +293,18 @@ class Participacion extends CIE_Controller {
         return $this->email->send();
     }
 
-    public function test(){
-         echo "YIAOOOOOOOOOOO \n";
+    public function estadoIngreso($participacionId){
+            $participacion = $this->doctrine->em->find('Entities\Participacion',$participacionId);
+
+            $participacion->setPublicado(0);
+
+            $participacion->setUpdatedAt(new DateTime());
+
+            $this->doctrine->em->persist($participacion);
+            $this->doctrine->em->flush();           
+
+            $this->addMessage('Se ha publicado la solicitud #'.$participacionId.'.', 'success');
+
+        redirect('backend/participacion');
     }
 }

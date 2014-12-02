@@ -30,7 +30,6 @@ class Entidad extends EntityRepository{
 		return $result;
 	}
 	public function findEntidad(){
-
 		$qb= $this->_em->createQueryBuilder();
 
 		$result = $qb->select('e')

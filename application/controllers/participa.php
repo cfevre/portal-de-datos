@@ -83,13 +83,13 @@ class Participa extends CIE_Controller {
         $participacion->setInstitucion($this->input->post('institucion', true));
         $participacion->updateCategorias($categorias);
 
-        $participacion->setPublicado(0);
+        $participacion->setPublicado(3);
         $participacion->setCreatedAt(new DateTime());
         $participacion->setUpdatedAt(new DateTime());
 
         $errors = $participacion->validate();
 
-        if(!$errors){
+        /*if(!$errors){
             $this->config->load('recaptcha');
             $this->load->helper('recaptcha');
 
@@ -97,7 +97,7 @@ class Participa extends CIE_Controller {
             if (!$resp->is_valid) {
                 $errors[] = 'Captcha inválido.';
             }
-        }
+        }*/
         if(!$errors){
             $this->doctrine->em->persist($participacion);
             $this->doctrine->em->flush();

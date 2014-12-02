@@ -10,6 +10,7 @@
 			this.initAjaxCommands();
 			this.tableSort();
 			this.ajaxModal();
+			this.initEstadoIngreso();
 
 			return this;
 		},
@@ -61,6 +62,35 @@
                 newTagInputText:'Nueva Etiqueta'
             });
 		},
+		initEstadoIngreso:function(){
+            $(document).on('click', "#cambiars-ingreso", function(e){
+                e.preventDefault();
+
+                var id = $(this).attr('data-id');
+                var email = $('#email-subscription').val().trim();
+                if (expr.test($('#email-subscription').val().trim())) {
+                    $(this).parent().hide();
+                    $('#email-noValido').hide();
+
+                    var data = {
+                        email : email
+                    }
+
+                    $.getJSON('participa/ingresoSuscripcion/'+id,data)
+                    .then(function(res){
+                        $('#email-subscription, #body-suscripcion').hide();
+                        $('#msg-subscription').html(res.message);
+                        setTimeout(function(){
+                            $('#modalParticipacion').modal('hide');
+                        },2500);
+                    });
+                }
+                else {
+                    $('#email-noValido').addClass('alert alert-error');
+                    $('#email-noValido').html('La dirección de correo no es valida');
+                }
+            });
+        },
 		initAjaxCommands:function(){
 			var self = this;
 			$(document).on('click', '[data-ajax-command]', function(e){
