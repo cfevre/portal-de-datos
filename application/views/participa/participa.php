@@ -19,7 +19,7 @@
 						<label for="email">Email <span class="naranjo">*</span></label>
 							<input tabindex="3" class="input-block-level" type="email" id="email" name="email">
 						<label for="edad">Edad</label>
-					    	<input tabindex="4" class="input-block-level" type="text" id="edad" name="edad">
+					    	<input tabindex="4" class="input-block-level" type="text" id="edad" name="edad" onkeypress="ValidaSoloNumeros()" maxlength="3">
 					    <label for="region">Región</label>
 						  <select tabindex="5" class="input-block-level" name="region" id="region">
 						  	<option value="">- Seleccione -</option>

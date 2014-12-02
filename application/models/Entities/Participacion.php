@@ -548,6 +548,18 @@ class Participacion
                             </button>';
         return $strPublicado;
     }
+    public function publicado_mail(){
+        $strPublicado ='';
+         if($this->getPublicado()==1){
+                $estadoName='Procesado';
+            }else if($this->getPublicado()==2){
+                $estadoName='En Proceso';
+            }else{
+                $estadoName='No Procesado';
+            }
+            $strPublicado='<span class="proceso">'.$estadoName.'</span>';
+        return $strPublicado;
+    }
     public function regiones_backend($opcion,$opt){
 
         $ArrayRegiones = array(

@@ -75,5 +75,4 @@ class Aplicaciones extends CIE_Controller {
         header("Content-Type: application/xml; charset=UTF-8");
         $this->load->view('aplicacion/rss', $this->data);
     }
-
 }

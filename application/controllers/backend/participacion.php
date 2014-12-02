@@ -183,7 +183,7 @@ class Participacion extends CIE_Controller {
                 <tbody>
                     <tr>
                         <th width="150">Estado</th>
-                        <td>'.$participacion->publicado_ver() .'</td>
+                        <td>'.$participacion->publicado_mail() .'</td>
                     </tr>
                     <tr>
                         <th>Titulo Peticion</th>
@@ -216,7 +216,6 @@ class Participacion extends CIE_Controller {
         $this->email->to($participantes->getEmail());
         $this->email->subject('Esto es una prueba de cambio de estado');
         $this->email->message($msg);
-
         }
 
         return $this->email->send();
@@ -238,5 +237,63 @@ class Participacion extends CIE_Controller {
         $this->email->message($msg);
         }
         return $this->email->send();
+    }
+     public function recordatorioMail ($participacionId)
+    {
+        $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
+        $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
+        $suscriptionCount= $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionCount($participacionId);
+        $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+
+        $this->load->library('email');
+
+        $this->loadData('parti', $parti);
+        $this->loadData('suscriptionCount', $suscriptionCount);
+
+        foreach ($parti as $key => $participantes) {
+            $msg = 'Estimado(a) '.$participacion->getNombre(). ',<br>'
+            . '<table>
+                <tbody>
+                    <tr>
+                        <th width="150">Estado</th>
+                        <td>'.$participacion->publicado_mail() .'</td>
+                    </tr>
+                    <tr>
+                        <th>Titulo Peticion</th>
+                        <td>'. $participacion->getTitulo() .'</td>
+                    </tr>
+                    <tr>
+                        <th>Descripcion</th>
+                        <td>'. $participacion->getMensaje() .'</td>
+                    </tr>
+                    <tr>
+                        <th>Institucion</th>
+                        <td>'.$participacion->institucion($entidades).'</td>
+                    </tr>
+                    <tr>
+                        <th>Categoria</td>
+                        <td>'. $participacion->getCategoria() .'</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de Creacion</th>
+                        <td>'. $participacion->getCreatedAt()->format('d/m/Y  H:i') .'</td>
+                    </tr>
+                    <tr>
+                        <th>Votacion</th>
+                        <td>'. $participacion->votacion($suscriptionCount) .'</td>
+                    </tr>
+                </tbody>
+            </table>';
+
+        $this->email->from('datosabiertos@minsegpres.gob.cl');
+        $this->email->to($participantes->getEmail());
+        $this->email->subject('Recordatorio de cambio de solicitud');
+        $this->email->message($msg);
+        }
+        return $this->email->send();
+    }
+
+    public function test(){
+         echo "YIAOOOOOOOOOOO \n";
     }
 }
