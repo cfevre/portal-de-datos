@@ -179,8 +179,18 @@ class Participa extends CIE_Controller {
 
         return $this->email->send();
     }
-    /*Cambiar estado de la solicitud*/
+    
     public function ingresoSuscripcion($participacionId){
+        $suscripciones = $this->doctrine->em->getRepository('Entities\Participacion')->selectSubscription($participacionId);
+
+        foreach ($suscripciones as $key => $suscripcion) {
+            if ($suscripcion['email'] == $this->input->get('email', true)) {
+                      echo json_encode(array('errors' => true, 'message' => 'Ya te encuentras suscrito a esta solicitud.'));
+
+                      return false;
+                  }
+        }
+
         $suscripcion = new Entities\Suscripcion;
 
         $suscripcion->setParticipacionId($participacionId);
@@ -195,7 +205,7 @@ class Participa extends CIE_Controller {
         
         return true;
     }
-        public function mailSuscripcion($suscripcion)
+    public function mailSuscripcion($suscripcion)
     {
         $this->load->library('email');
 

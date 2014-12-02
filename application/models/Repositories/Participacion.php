@@ -97,6 +97,21 @@ class Participacion extends EntityRepository{
 
 		return $suscripcion;
 	}
+	//Select a todos los suscritos de la solicitud
+	public function selectSubscription($ParticipacionId){
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->from('Entities\Suscripcion', 's');
+		$qb->select('DISTINCT(s.email)');
+		$qb->where('s.participacion_id = :participacionId');
+		$qb->setParameter('participacionId',$ParticipacionId);
+
+		$query = $qb->getQuery();
+
+		$suscripcion=$query->getResult();
+
+		return $suscripcion;
+	}
 	//Muestra al usuario cual es la publicación que se encuentra pendiente
 	public function iluminacionPendiente(){
 		$qb = $this->_em->createQueryBuilder();

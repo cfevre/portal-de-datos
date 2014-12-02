@@ -95,6 +95,7 @@
 
                     $.getJSON('participa/ingresoSuscripcion/'+id,data)
                     .then(function(res){
+                        $('#email-subscription, #body-suscripcion').hide();
                         $('#msg-subscription').html(res.message);
                         setTimeout(function(){
                             $('#modalParticipacion').modal('hide');
