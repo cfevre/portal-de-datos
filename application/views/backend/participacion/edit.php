@@ -8,7 +8,7 @@
 		<p>
 		Dar de alta la publicación
 		  <a href="<?php echo site_url('backend/participacion/solicitudProcesada/'.$participacion->getId());?>" class="btn btn-large btn-success" type="button">Aceptar <i class="icon-ok icon-white"></i></a>
-		  <a href="<?php echo site_url('backend/participacion/actualizarSolicitud/'.$participacion->getId());?>" class="btn btn-large btn-danger" type="button">Cancelar <i class=" icon-remove icon-white"></i></a>
+		  <a href="<?php echo site_url('backend/participacion/solicitudRechazada/'.$participacion->getId());?>" class="btn btn-large btn-danger" type="button">Cancelar <i class=" icon-remove icon-white"></i></a>
 		</p>
 	</div>
 	<?php endif ?>

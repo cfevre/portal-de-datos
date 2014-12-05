@@ -346,6 +346,9 @@ class Participacion extends CIE_Controller {
         $this->procesadaMail($participacionId);
         $this->procesadaSuscritos($participacionId);
 
+        $this->doctrine->em->persist($participacion);
+        $this->doctrine->em->flush();    
+
         $this->addMessage('La solicitud #'.$participacionId.'. se encuentra procesada.', 'success');
 
         redirect('backend/participacion');
@@ -372,6 +375,7 @@ class Participacion extends CIE_Controller {
     }
     /*Funcion para enviar mail a las personas asociadas a la entidad cuando esta se da por Procesada*/
     public function procesadaMail($participacionId){
+        $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
 
         $this->load->library('email');
@@ -394,14 +398,18 @@ class Participacion extends CIE_Controller {
         $participacion->setPublicado(2);
         $participacion->setUpdatedAt(new DateTime());
 
+        $this->doctrine->em->persist($participacion);
+        $this->doctrine->em->flush();    
+
         $this->noProcesadaMail($participacionId);
 
-        $this->addMessage('La solicitud #'.$participacionId.'. se encuentra procesada.', 'danger');
+        $this->addMessage('La solicitud #'.$participacionId.'. no ha cumplido con los requisitos pasar al estado Procesado.', 'danger');
 
         redirect('backend/participacion');
     }
     /*Funcion para enviar mail a las personas asociadas a la entidad cuando esta se da por Procesada*/
     public function noProcesadaMail($participacionId){
+        $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
 
         $this->load->library('email');
