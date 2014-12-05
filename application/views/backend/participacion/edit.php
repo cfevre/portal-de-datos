@@ -1,3 +1,27 @@
+<?php if ($participacion->getPublicado()==4) { ?>
+	<div class="alert alert-info">
+	    <button type="button" class="close" data-dismiss="alert">&times;</button>
+	    <strong>¡Aviso!</strong> La solicitud de datos esta siendo procesada por nuestros moderadores.
+	</div>
+	<div class="span4 offset8">
+		<p>
+		  <a href="#" class="btn btn-large btn-success" type="button">Aceptar <i class="icon-ok icon-white"></i></a>
+		  <a href="#" class="btn btn-large btn-danger" type="button">Cancelar <i class=" icon-remove icon-white"></i></a>
+		</p>
+	</div>
+<?php }elseif ($participacion->getPublicado()==3) { ?>
+	<div class="alert alert-danger">
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  <strong>¡Aviso!</strong> Solicitud pendiente de revisión.
+	</div>
+<?php }elseif ($participacion->getPublicado()==2) { ?>
+		<?php if (!$participacion->getEnlace()) { ?>
+			<div class="alert alert-warning">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			  	<strong>¡Aviso!</strong> Recuerda ingresar el enlace de la solicitud.
+		  	</div>	
+		<?php } ?>
+<?php } ?>
 <form action="<?php echo site_url('backend/participacion/actualizarSolicitud/'.$participacion->getId());?>" method="POST" class="form-horizontal" id="formDataset">
 	<fieldset>
 		<legend>Editar solicitud de datos: # <?php echo $participacion->getId(); ?> <?php echo $participacion->getTitulo(); ?></legend>
@@ -14,6 +38,7 @@
 				</div>
 			</div>
 		</div>
+		<!--asdadkuwhkjdashkduafjhskuadfhkajsfdhjyafgkjsafdhjgfjgdjkfhajfghdfhgdfjgjfgasfgjhsagfhafgjhfghjafgjhfgjasgfhjasdfgjyagfjasdfghdfgj-->
 		<div class="control-group">
 			<div class="control-label">
 				<label for="nombre">Nombre <i class="icon-exclamation-sign"></i></label>
@@ -129,6 +154,7 @@
 					<?php } ?>
 			</div>
 		</div>
+	<!--asdasdasdasdsadsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
 		<div class="control-group">
 			<div class="control-label">
 				<label for="enlace">Enlace<i class="icon-exclamation-sign"></i></label>
@@ -143,28 +169,15 @@
 	</fieldset>
 </form>
 <!-- Modal -->
-<div id="Procesado" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="EnEspera" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form id="form-suscripcion" action="<?php echo site_url('backend/participacion/cambiarEstadoProceso/'.$participacion->getId().'/4');?>" method="post">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Cambiar Estado de Solicitud</h3>
   </div>
   <div class="modal-body">
-    <p>Aqui podría ir un texto informando que al cambiar de solicitud se enviará un correo a toda la gente que este asociada a la solicitud</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-    <a href="" class="btn btn-primary" data-ajax-command="cambiarEstado" data-ajax-controller="participacion" data-ajax-params="<?php echo $participacion->getId(); ?>/1">Aceptar</a>
-  </div>
-</div>
-<!-- Modal -->
-<div id="EnProceso" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Cambiar Estado de Solicitud</h3>
-  </div>
-  <div class="modal-body">
-  <p>Aqui va a el texto que le indica a la persona que se le va a cambiar desde le estado no procesado a en proceso</p>
-    <table class="table table-striped table-hover">
+  <?php if ($participacion->getEnlace()) { ?>
+  	<table class="table table-striped table-hover">
 		<tbody>
 			<tr>
 				<th width="150">Estado</th>
@@ -180,23 +193,18 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
-				<?php $td=''; ?>
-				<?php foreach ($entidades as $key => $entidad) { ?>
-					<?php if ($entidad->getCodigo() == $participacion->getInstitucion()) { ?>
-						<td><?php echo $entidad->getNombre(); ?></td>
-						<?php break; ?>
-					<?php }else {?>
-						<?php $td =null; ?>
-					<?php } ?>
-				<?php } ?>
-				<?php if ($td == null) { ?>
-					<td></td>
-				<?php } ?>
-			</tr>
+				<td><?php echo $participacion->institucion($entidades) ?></td>
 			<tr>
-				<th>Categoría</td>
-				<td><?php echo $participacion->getCategoria(); ?></td>
-			</tr>
+	            <th>Categorías</th>
+	            <td>
+	                <?php
+	                    foreach ($participacion->getCategorias() as $key => $categoria){
+	                        $a_categorias[] = $categoria->getNombre();
+	                    }
+	                    echo isset($a_categorias)?implode(', ', $a_categorias):'No hay categorías asociadas al Dataset';
+	                ?>
+	            </td>
+       		</tr>
 			<tr>
 				<th>Fecha de Creación</th>
 				<td><?php echo $participacion->getCreatedAt()->format('d/m/Y  H:i'); ?></td>
@@ -208,25 +216,72 @@
 					<?php } ?>
 			</tr>
 		</tbody>
-</table>
-<p>Se enviará un mail informando sobre el cambio a las personas asociadas a la institucion de la solicitud</p>
+	</table>
+	<p>Se enviará un mail informando sobre el cambio a las personas asociadas a la institucion de la solicitud</p>
+  <?php }else{ ?>
+	<p>Debes ingresar la ruta donde se encuentra la respuesta de la solicitud</p>
+		<label for="enlace_modal">Enlace</label>
+		<input type="text" name="enlace_modal" class="input-xlarge" value="<?php echo $participacion->getEnlace(); ?>">
+  <?php } ?>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-    <a href="" class="btn btn-primary" data-ajax-command="cambiarEstado" data-ajax-controller="participacion" data-ajax-params="<?php echo $participacion->getId(); ?>/2">Aceptar</a>
+    <button class="btn btn-primary" type="submit">Aceptar</button>
+</form>
   </div>
 </div>
+
 <!-- Modal -->
-<div id="NoProcesado" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="EnProceso" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Cambiar Estado de Solicitud</h3>
   </div>
   <div class="modal-body">
-    <p>Aqui podría ir un texto informando que al cambiar de solicitud se enviará un correo a toda la gente que este asociada a la solicitud</p>
+  	<p></p>
+  	<table class="table table-striped table-hover">
+		<tbody>
+			<tr>
+				<th width="150">Estado</th>
+				<td><?php echo $participacion->publicado_ver(); ?></td>
+			</tr>
+			<tr>
+				<th>Título Petición</th>
+				<td><?php echo $participacion->getTitulo(); ?></td>
+			</tr>
+			<tr>
+				<th>Descripción</th>
+				<td><?php echo $participacion->getMensaje(); ?></td>
+			</tr>
+			<tr>
+				<th>Institución</th>
+				<td><?php echo $participacion->institucion($entidades) ?></td>
+			<tr>
+	            <th>Categorías</th>
+	            <td>
+	                <?php
+	                    foreach ($participacion->getCategorias() as $key => $categoria){
+	                        $a_categorias[] = $categoria->getNombre();
+	                    }
+	                    echo isset($a_categorias)?implode(', ', $a_categorias):'No hay categorías asociadas al Dataset';
+	                ?>
+	            </td>
+       		</tr>
+			<tr>
+				<th>Fecha de Creación</th>
+				<td><?php echo $participacion->getCreatedAt()->format('d/m/Y  H:i'); ?></td>
+			</tr>
+			<tr>
+				<th>Votación</th>
+					<?php foreach ($suscripcion as $key => $subscription) { ?>
+						<td><?php echo $subscription[1]; ?></td>
+					<?php } ?>
+			</tr>
+		</tbody>
+	</table>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-    <a href="" class="btn btn-primary" data-ajax-command="cambiarEstado" data-ajax-controller="participacion" data-ajax-params="<?php echo $participacion->getId(); ?>/0">Aceptar</a>
+    <a href="<?php echo site_url('backend/participacion/cambiarEstado/'.$participacion->getId().'/2');?>" class="btn btn-primary" >Aceptar</a>
   </div>
 </div>

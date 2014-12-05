@@ -107,29 +107,50 @@ class Participacion extends CIE_Controller {
 
         redirect('backend/participacion');
     }
-    /*Cambiar estado de la solicitud*/
+    /*Cambiar estado de la solicitud a EN PROCESO*/
     public function cambiarEstado($participacionId , $participacionEstado){
         $parti = $this->doctrine->em->find('Entities\Participacion', $participacionId);
-        $estadoAnterior = $parti->getPublicado();
+
         $parti->setPublicado($participacionEstado);
         $parti->setUpdatedAt(new DateTime());
 
         $this->doctrine->em->persist($parti);
         $this->doctrine->em->flush();
 
-        $callback = 'participacion.updatePublicadoButton('.$participacionId.','.$parti->getPublicado().','.$estadoAnterior.')';
+        $this->envia_mail_solicitudes($participacionId);
+        $this->envia_mail_suscritos($participacionId);
+
+        $this->addMessage('Se ha actualizado la solicitud, #'.$participacionId.'.', 'success');
+
+        redirect('backend/participacion');
+    }
+    /*---------------------------------------------*/
+     /*Cambiar estado de la solicitud*/
+    public function cambiarEstadoProceso($participacionId , $participacionEstado){
+        $parti = $this->doctrine->em->find('Entities\Participacion', $participacionId);
+
+        if (!$parti->getEnlace()) {
+            if (!$this->input->post('enlace_modal', true)) {
+                $this->addMessage('Debes ingresar un enlace para la solicitud, #'.$participacionId.'.', 'danger');
+                redirect('backend/participacion');
+            }else{
+                $parti->setEnlace($this->input->post('enlace_modal', true));
+            }
+        }
+
+        $parti->setPublicado($participacionEstado);
+        $parti->setUpdatedAt(new DateTime());
+
+        $this->doctrine->em->persist($parti);
+        $this->doctrine->em->flush();
 
         $this->envia_mail_solicitudes($participacionId);
         $this->envia_mail_suscritos($participacionId);
 
-        echo json_encode(array(
-            'error' => false,
-            'message' => 'Estado de publicación actualizado',
-            'callback' => $callback
-        ));
-        return true;
-    }
+        $this->addMessage('Se ha actualizado la solicitud, #'.$participacionId.'.', 'success');
 
+        redirect('backend/participacion');
+    }
     /*Actualizar solicitud de datos*/
     public function actualizarSolicitud($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion',$participacionId);
@@ -177,6 +198,8 @@ class Participacion extends CIE_Controller {
         $this->loadData('parti', $parti);
         $this->loadData('suscriptionCount', $suscriptionCount);
 
+        $sendMail = array();
+
         foreach ($parti as $key => $participantes) {
             $msg = 'Estimado(a) '.$participacion->getNombre(). ',<br>'
             . '<table>
@@ -216,9 +239,10 @@ class Participacion extends CIE_Controller {
         $this->email->to($participantes->getEmail());
         $this->email->subject('Esto es una prueba de cambio de estado');
         $this->email->message($msg);
+        $sendMail = $this->email->send();
         }
 
-        return $this->email->send();
+        return true;
     }
     public function envia_mail_suscritos($participacionId){
         $suscripcion = $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionMail($participacionId);
@@ -229,14 +253,15 @@ class Participacion extends CIE_Controller {
 
         foreach ($suscripcion as $key => $suscritos) {
             $msg = 'Estimado(a),<br>'
-            . 'GRACIAS GRACIAS NO SE MOLESTEN SUSCRITOS.<br><br>';
+            . 'Este mail se envia cuando se cambia de solicitud de no procesado a procesado.Y solo se le envia a los suscritos a la solicitud.<br><br>';
 
         $this->email->from('datosabiertos@minsegpres.gob.cl');
         $this->email->to($suscritos['email']);
         $this->email->subject('Estas suscrito a la solicitud');
         $this->email->message($msg);
+        $this->email->send();
         }
-        return $this->email->send();
+        return true;
     }
      public function recordatorioMail ($participacionId)
     {
@@ -306,5 +331,21 @@ class Participacion extends CIE_Controller {
             $this->addMessage('Se ha publicado la solicitud #'.$participacionId.'.', 'success');
 
         redirect('backend/participacion');
+    }
+    public function procesadaMail($participacionId){
+        $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
+
+        $this->load->library('email');
+        $this->loadData('parti', $parti);
+
+        foreach ($parti as $key => $participantes) {
+            $msg = 'Estimado(a) '.$participacion->getNombre(). ',<br>';
+
+        $this->email->from('datosabiertos@minsegpres.gob.cl');
+        $this->email->to($participantes->getEmail());
+        $this->email->subject('Solicitud de Datos Procesada');
+        $this->email->message($msg);
+        }
+        return $this->email->send();
     }
 }

@@ -487,27 +487,44 @@ class Participacion
                 $estadoClass = 'btn-success';
                 $estadoName = 'Procesado';
                 $icon = 'icon-ok-circle';
+                $linkEnProceso = '#EnProceso';
+                $linkProcesado = '#';
             }else if($this->getPublicado()==2){
                 $estadoClass = 'btn-warning';
                 $estadoName = 'En Proceso';
                 $icon = 'icon-time';
+                $linkEnProceso = '#';
+                $linkProcesado = '#EnEspera';
+            }else if($this->getPublicado()==3){
+                $estadoClass = 'btn-danger';
+                $estadoName = 'Ingresado';
+                $icon = 'icon-info-sign';
+                $linkEnProceso = '#';
+                $linkProcesado = '#';
+            }else if($this->getPublicado()==4){
+                $estadoClass = 'btn-info';
+                $estadoName = 'En Espera de Aprobación';
+                $icon = 'icon-time';
+                $linkEnProceso = '#';
+                $linkProcesado = '#';
             }else{
                 $estadoClass = 'btn-danger';
                 $estadoName = 'No Procesado';
                 $icon = 'icon-off';
+                $linkEnProceso = '#EnProceso';
+                $linkProcesado = '#';
             }
             $strPublicado='<div class="btn-group">
-                            <button class="btn btn-mini '.$estadoClass.'">
+                            <a class="btn btn-mini '.$estadoClass.'">
                                 <i class="'.$icon.'"></i>
                                 <span class="proceso">'.$estadoName.'</span>
-                            </button>
-                            <button class="btn '.$estadoClass.' btn-mini dropdown-toggle" data-toggle="dropdown">
+                            </a>
+                            <a href="#" class="btn '.$estadoClass.' btn-mini dropdown-toggle" data-toggle="dropdown">
                                 <span class="caret"></span>
-                            </button>
+                            </a>
                               <ul class="dropdown-menu">
-                                <li><a href="#Procesado" data-toggle="modal" role="button">Procesado</a></li>
-                                <li><a href="#EnProceso" data-toggle="modal" role="button">En Proceso</a></li>
-                                <li><a href="#NoProcesado" data-toggle="modal" role="button">No Procesado</a></li>
+                                <li><a href="'.$linkEnProceso.'" data-toggle="modal" role="button">En Proceso</a></li>
+                                <li><a href="'.$linkProcesado.'" data-toggle="modal" role="button">Procesado</a></li>
                               </ul>
                             </div>';
         return $strPublicado;
@@ -520,7 +537,8 @@ class Participacion
                 $btn='btn-success';
             }else if($this->getPublicado()==2){
                 $btn='btn-warning';
-            }else{
+            }
+            else{
                 $btn='btn-danger';
             }
 
@@ -541,8 +559,12 @@ class Participacion
                 $estadoName='En Proceso';
             }else if($this->getPublicado()==3){
                 $btn='btn-danger';
-                $icon='icon-time';
+                $icon='icon-info-sign';
                 $estadoName='Ingresado';
+            }else if($this->getPublicado()==4){
+                $btn = 'btn-info';
+                $estadoName = 'En Espera';
+                $icon = 'icon-time';
             }else{
                 $btn='btn-danger';
                 $icon='icon-off';
