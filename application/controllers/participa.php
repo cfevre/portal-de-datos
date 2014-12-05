@@ -89,7 +89,7 @@ class Participa extends CIE_Controller {
 
         $errors = $participacion->validate();
 
-        /*if(!$errors){
+        if(!$errors){
             $this->config->load('recaptcha');
             $this->load->helper('recaptcha');
 
@@ -97,7 +97,7 @@ class Participa extends CIE_Controller {
             if (!$resp->is_valid) {
                 $errors[] = 'Captcha inválido.';
             }
-        }*/
+        }
         if(!$errors){
             $this->doctrine->em->persist($participacion);
             $this->doctrine->em->flush();
@@ -210,11 +210,11 @@ class Participa extends CIE_Controller {
         $this->load->library('email');
 
         $msg = 'Estimado(a) ,<br>'
-            . 'CHAYA CHAYA BLA BLA BLA';
+            . 'ESTE MAIL SE HA ENVIADO AL MOMENTO DE SUSCRIBIRSE A UNA SOLICITUD DE DATOS';
 
         $this->email->from('datosabiertos@minsegpres.gob.cl');
         $this->email->to($suscripcion);
-        $this->email->subject('GRACIAS POR NADA');
+        $this->email->subject('MAIL ENVIADO POR SUSCRIBIRSE');
         $this->email->message($msg);
 
         return $this->email->send();

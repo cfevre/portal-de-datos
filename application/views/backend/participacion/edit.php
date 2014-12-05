@@ -3,12 +3,15 @@
 	    <button type="button" class="close" data-dismiss="alert">&times;</button>
 	    <strong>¡Aviso!</strong> La solicitud de datos esta siendo procesada por nuestros moderadores.
 	</div>
-	<div class="span4 offset8">
+	<?php if ($user->hasRol('publicacion') && $user->hasRol('ingreso') && $user->hasRol('mantencion') && $user->hasRol('cms')): ?>
+	<div class="span5 offset7">
 		<p>
-		  <a href="#" class="btn btn-large btn-success" type="button">Aceptar <i class="icon-ok icon-white"></i></a>
-		  <a href="#" class="btn btn-large btn-danger" type="button">Cancelar <i class=" icon-remove icon-white"></i></a>
+		Dar de alta la publicación
+		  <a href="<?php echo site_url('backend/participacion/solicitudProcesada/'.$participacion->getId());?>" class="btn btn-large btn-success" type="button">Aceptar <i class="icon-ok icon-white"></i></a>
+		  <a href="<?php echo site_url('backend/participacion/actualizarSolicitud/'.$participacion->getId());?>" class="btn btn-large btn-danger" type="button">Cancelar <i class=" icon-remove icon-white"></i></a>
 		</p>
 	</div>
+	<?php endif ?>
 <?php }elseif ($participacion->getPublicado()==3) { ?>
 	<div class="alert alert-danger">
 	  <button type="button" class="close" data-dismiss="alert">&times;</button>
