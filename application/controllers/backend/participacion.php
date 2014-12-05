@@ -337,7 +337,7 @@ class Participacion extends CIE_Controller {
         redirect('backend/participacion');
     }
     /*Funcion para procesar la solicitud*/
-    public function solicitudProcesada(participacionId){
+    public function solicitudProcesada($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion',$participacionId);
 
         $participacion->setPublicado(1);
@@ -388,7 +388,7 @@ class Participacion extends CIE_Controller {
         return $this->email->send();
     }
     /*Funcion para procesar la solicitud*/
-    public function solicitudRechazada(participacionId){
+    public function solicitudRechazada($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion',$participacionId);
 
         $participacion->setPublicado(2);
