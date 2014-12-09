@@ -219,5 +219,25 @@ class Participa extends CIE_Controller {
 
         return $this->email->send();
     }
+    /*METODO PARA USAR EN CRON. SE RECUERDA CADA 1 SEMANA A LOS CUSTOMERS QUE TIENEN SOLICITUDES PENDIENTES*/
+    public function reminderMail(){
+        $reminder = $this->doctrine->em->getRepository('Entities\Participacion')->reminderMail();
+        $this->load->library('email');
 
+        if(!$this->input->is_cli_request())
+        {
+            echo "Este metodo solo puede ser accesado via comando";
+            return;
+        }
+
+        foreach ($reminder as $key => $usuario) {
+            $msg = 'Estimado(a) ,<br>'
+            . 'SE ENVIA ESTE MAIL PARA LAS PERSONAS QUE LLEVAN MAS DE 1 SEMANA SIN RESPONDER LA SOLICITUD';
+            $this->email->from('datosabiertos@minsegpres.gob.cl');
+            $this->email->to($usuario->getEmail());
+            $this->email->subject('MAIL ENVIADO POR CRON');
+            $this->email->message($msg); 
+        }
+        return true;
+    }
 }

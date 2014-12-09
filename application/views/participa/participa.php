@@ -126,7 +126,6 @@
 		<?php } ?>	
 	</div>
 </div>
-
 <div id="modalParticipacion" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
 
 </div>

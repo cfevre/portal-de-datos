@@ -176,4 +176,21 @@ class Participacion extends EntityRepository{
 
 		return $query->getResult();
 	}
+	//Indica los usuarios suscritos a la solicitud 
+	public function reminderMail(){
+		$rsm = new ResultSetMapping;
+		$rsm->addEntityResult('Entities\User', 'u');
+		$rsm->addFieldResult('u', 'id', 'id');
+		$rsm->addFieldResult('u', 'email', 'email');
+
+		$query = $this->_em->createNativeQuery('SELECT u.id, u.email 
+												FROM servicio s, entidad e , users u, participacion p 
+												WHERE s.entidad_codigo = e.codigo
+												AND u.servicio_codigo = s.codigo
+												AND s.entidad_codigo = p.institucion
+												AND p.publicado = 2', $rsm);
+		$users = $query->getResult();
+
+		return $users;
+	}
 }
