@@ -1,1 +1,0 @@
-@weekly php [application_path]/index.php participa reminderMail

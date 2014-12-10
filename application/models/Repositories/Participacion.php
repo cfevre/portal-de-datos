@@ -193,4 +193,20 @@ class Participacion extends EntityRepository{
 
 		return $users;
 	}
+
+	/*INDICA LOS CAMPOS ASOCIADOS AL REPORTE DIARIO*/
+	public function reminderDaily(){
+		$qb = $this->_em->createQueryBuilder();
+
+		$time = date('Y/m/d');
+
+		$qb->from('Entities\EmailReminder', 'e');
+		$qb->select('e');
+		$qb->where('e.created_at = :time');
+		$qb->setParameter('time',$time);
+
+		$query = $qb->getQuery();
+
+		return $query->getResult();
+	}
 }

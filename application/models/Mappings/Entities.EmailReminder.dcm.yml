@@ -1,0 +1,21 @@
+Entities\EmailReminder:
+  repositoryClass: Repositories\EmailReminder
+  type: entity
+  table: email_reminder
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    id_participacion:
+      type:integer
+    titulo:
+      type: string
+    descripcion:
+      type: string
+    institucion:
+      type: string
+    created_at:
+      type: date
+      nullable: true

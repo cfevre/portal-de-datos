@@ -1,0 +1,2 @@
+@weekly php [application_path]/index.php participa reminderMail
+@daily php [application_path]/index.php participa reminderDaily

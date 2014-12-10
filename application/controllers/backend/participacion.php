@@ -141,9 +141,10 @@ class Participacion extends CIE_Controller {
         $parti->setPublicado($participacionEstado);
         $parti->setUpdatedAt(new DateTime());
 
-        $this->doctrine->em->persist($parti);
-        $this->doctrine->em->flush();
+        //$this->doctrine->em->persist($parti);
+        //$this->doctrine->em->flush();
 
+        $this->addParticipacionEmail($participacionId);
         $this->envia_mail_solicitudes($participacionId);
         $this->envia_mail_suscritos($participacionId);
 
@@ -424,5 +425,23 @@ class Participacion extends CIE_Controller {
         $this->email->message($msg);
         }
         return $this->email->send();
+    }
+    /*Funcion para dejar almacenado las personas que han ingresado*/
+    public function addParticipacionEmail($participacionId){
+        $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
+
+        $email_reminder = new Entities\EmailReminder;
+
+        $email_reminder->setIdParticipacion($participacion->getId());
+        $email_reminder->setTitulo($participacion->getTitulo());
+        $email_reminder->setDescripcion($participacion->getMensaje());
+        $email_reminder->setInstitucion($participacion->getInstitucion());
+
+        $email_reminder->setCreatedAt(new DateTime());
+
+        $this->doctrine->em->persist($email_reminder);
+        $this->doctrine->em->flush();
+
+        return true;
     }
 }

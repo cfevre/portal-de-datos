@@ -240,4 +240,44 @@ class Participa extends CIE_Controller {
         }
         return true;
     }
+    /*FUNCION PARA USAR EN CRON. SE ENVIA AL FINAL DEL DÍA UN REPORTE VÍA MAIL AL ADMINISTRADOR INFORMANDO
+    DE LAS PERSONAS QUE EFECTIVAMENTE INGRESARON LA URL DE LA SOLICITUD*/
+    public function reminderDaily(){
+        $reminder = $this->doctrine->em->getRepository('Entities\Participacion')->reminderDaily();
+        $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+        $this->load->library('email');
+
+        if(!$this->input->is_cli_request())
+        {
+            echo "Este metodo solo puede ser accesado via comando";
+            return;
+        }
+        $msg = 'Estimado(a) ,<br>'
+            . 'REPORTE DIARIO PARA EL ADMINISTRADOR <br>'
+            . '<table>
+                <thead>
+                  <tr>
+                     <th width="100">ID Participacion</th>
+                     <th>Titulo</th>
+                     <th>Descripcion</th>
+                     <th>Institucion</th>
+                  </tr>
+                </thead>
+                <tbody>';
+        foreach ($reminder as $key => $usuario) {  
+           $msg.= ' <tr>
+                        <td>'. $usuario->getIdParticipacion() .'</td
+                        <td>'. $usuario->getTitulo() .'</td>
+                        <td>'. $usuario->getDescripcion() .'</td>
+                        <td>'. $usuario->institucion($entidades) .'</td>
+                    </tr>';
+            }
+            $msg .='</tbody>'
+                  .'</table>';
+            $this->email->to('maildeladministrador');
+            $this->email->subject('MAIL ENVIADO POR CRON');
+            $this->email->message($msg); 
+            
+         $this->email->send();
+    }
 }
