@@ -237,6 +237,7 @@ class Participa extends CIE_Controller {
             $this->email->to($usuario->getEmail());
             $this->email->subject('MAIL ENVIADO POR CRON');
             $this->email->message($msg); 
+            $this->email->send();
         }
         return true;
     }
@@ -245,6 +246,7 @@ class Participa extends CIE_Controller {
     public function reminderDaily(){
         $reminder = $this->doctrine->em->getRepository('Entities\Participacion')->reminderDaily();
         $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+
         $this->load->library('email');
 
         if(!$this->input->is_cli_request())
@@ -274,10 +276,12 @@ class Participa extends CIE_Controller {
             }
             $msg .='</tbody>'
                   .'</table>';
-            $this->email->to('maildeladministrador');
+
+            $this->email->from('datosabiertos@minsegpres.gob.cl');
+            $this->email->to('');
             $this->email->subject('MAIL ENVIADO POR CRON');
             $this->email->message($msg); 
-            
-         $this->email->send();
+
+            return $this->email->send();
     }
 }
