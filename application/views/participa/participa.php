@@ -75,11 +75,11 @@
 		  </div>
 		  <div class="span5">
 				<form class="form-search" id="formOrdenarPor" action="<?php echo current_url(); ?>" method="GET">
-					<label for="orderby">Ordenar por</label>
+					<label for="orderby">Filtrar por</label>
 					<div class="btn-group btn-decoration" name="orderby" id="orderby" data-auto-submit="change" data-submit-form="formOrdenarPor">
-					  <a href="<?php echo current_url(); ?>?orderby=procesado" class="btn btn-success">Procesado</a>
-					  <a href="<?php echo current_url(); ?>?orderby=en_proceso" class="btn btn-warning">En Proceso</a>
-					  <a href="<?php echo current_url(); ?>?orderby=no_procesado"class="btn btn-danger">No Procesado</a>
+					  <a href="<?php echo current_url(); ?>?filterby=procesado" class="btn btn-success">Procesado</a>
+					  <a href="<?php echo current_url(); ?>?filterby=en_proceso" class="btn btn-warning">En Proceso</a>
+					  <a href="<?php echo current_url(); ?>?filterby=no_procesado"class="btn btn-danger">No Procesado</a>
 					</div>
 				</form>
 		  </div>
@@ -117,7 +117,7 @@
 					</div>
 					<div class="span1">
 						<article id="publicacion_view">
-								<a class="modal-trigger" href="<?php echo site_url('participa/suscripcion/'.$participacion->getId()); ?>" data-target="#modalSuscripcion" ><i style="font-size:20px;" class="icon-download"></i></a>
+								<a class="modal-trigger" href="<?php echo site_url('participa/suscripcion/'.$participacion->getId()); ?>" data-target="#modalSuscripcion" ><i class="icon-bell"></i></a>
 						</article>
 					</div>
 				</div>

@@ -15,19 +15,20 @@ class Participa extends CIE_Controller {
         $options['offset'] = $this->get_post('offset', 0);
         $options['orderby'] = $this->get_post('orderby', 'created_at');
         $options['orderdir'] = $this->get_post('orderdir', 'DESC');
+        $options['filterby'] = $this->get_post('filterby', false);
 
         /*FILTRO*/
-        if($options['orderby'] == 'procesado'){
+        if($options['filterby'] == 'procesado'){
             $options['orderby'] = 'created_at';
             $options['publicado'] = 1;
             $options['orderdir'] = 'DESC';
         }
-                if($options['orderby'] == 'en_proceso'){
+        if($options['filterby'] == 'en_proceso'){
             $options['orderby'] = 'created_at';
             $options['publicado'] = 2;
             $options['orderdir'] = 'DESC';
         }
-                if($options['orderby'] == 'no_procesado'){
+        if($options['filterby'] == 'no_procesado'){
             $options['orderby'] = 'created_at';
             $options['publicado'] = 0;
             $options['orderdir'] = 'DESC';
@@ -39,7 +40,7 @@ class Participa extends CIE_Controller {
         $options['total'] = true;
         $total = $this->doctrine->em->getRepository('Entities\Participacion')->findWithOrdering($options);
 
-        $pagination_config['base_url'] = site_url('participa?orderby='.$options['orderby'].'&orderdir='.$options['orderdir']);
+        $pagination_config['base_url'] = site_url('participa?orderby='.$options['orderby'].'&orderdir='.$options['orderdir'].'&filterby='.$options['filterby']);
         $pagination_config['total_rows'] = $total;
         $pagination_config['per_page'] = $options['limit'];
 
