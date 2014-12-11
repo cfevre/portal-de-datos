@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<th>Región</th>
-				<?php echo $participacion->regiones_backend($participacion->getRegion(),2); ?>
+				<td><?php echo $participacion->regiones_backend($participacion->getRegion(),2); ?></td> 
 			</tr>
 			<tr>
 				<th>Ocupación</th>

@@ -7,7 +7,7 @@
 		<tbody>
 			<tr>
 				<th width="120">Estado</th>
-				<td><?php echo $participacion->publicado_ver(); ?></td>
+				<td><?php echo $participacion->publicado_ver(2); ?></td>
 			</tr>
 			<tr>
 				<th width="120">Titulo</th>

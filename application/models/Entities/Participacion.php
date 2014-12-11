@@ -530,9 +530,7 @@ class Participacion
         return $strPublicado;
     }
         public function publicado_view(){
-
-        $strPublicado = '';
-
+            $strPublicado = '';
             if($this->getPublicado()==1){
                 $btn='btn-success';
             }else if($this->getPublicado()==2){
@@ -542,14 +540,16 @@ class Participacion
                 $btn='btn-danger';
             }
 
-            $strPublicado='<button data-ajax-controller="participacion" class="btn btn-mini '.$btn.'"> 
+            $strPublicado='<a class="btn btn-mini '.$btn.'"> 
                                     &nbsp;
-                                </button>'; 
+                                </a>'; 
         return $strPublicado;
     }
-    public function publicado_ver(){
+    public function publicado_ver($opt){
         $strPublicado ='';
-         if($this->getPublicado()==1){
+        switch ($opt) {
+            case '1':
+               if($this->getPublicado()==1){
                 $btn='btn-success';
                 $icon='icon-ok-circle';
                 $estadoName='Procesado';
@@ -570,10 +570,28 @@ class Participacion
                 $icon='icon-off';
                 $estadoName='No Procesado';
             }
-            $strPublicado='<button class="btn btn-mini '.$btn.'"> 
-                                   <i class="'.$icon.'"></i>
-                                    <span class="proceso">'.$estadoName.'</span>
-                            </button>';
+            break;
+            
+            case '2':
+                if($this->getPublicado()==1){
+                $btn='btn-success';
+                $icon='icon-ok-circle';
+                $estadoName='Procesado';
+            }else if($this->getPublicado()==2 || $this->getPublicado()==4){
+                $btn='btn-warning';
+                $icon='icon-time';
+                $estadoName='En Proceso';
+            }else{
+                $btn='btn-danger';
+                $icon='icon-off';
+                $estadoName='No Procesado';
+            }
+                break;
+        }
+        $strPublicado='<button class="btn btn-mini '.$btn.'"> 
+                            <i class="'.$icon.'"></i>
+                            <span class="proceso">'.$estadoName.'</span>
+                       </button>';
         return $strPublicado;
     }
     public function publicado_mail(){
@@ -620,7 +638,10 @@ class Participacion
             case '2':
              foreach ($ArrayRegiones as $key => $region) {
                     if ($opcion == $key) {
-                        $strRegiones='<td>'.$region.'</td>';
+                        $strRegiones=$region;
+                        return $strRegiones;
+                    }else{
+                        $strRegiones='';
                     }
         }
         break; 

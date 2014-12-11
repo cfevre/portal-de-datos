@@ -41,7 +41,7 @@
 						<td><?php echo $participacion->getId(); ?></td>
 						<td width="400"><a href="<?php echo site_url('backend/participacion/view/'.$participacion->getId()); ?>"><?php echo $participacion->getTitulo(); ?></a></td>
 						<td width="150"><?php echo $participacion->getNombre(); ?> <?php echo $participacion->getApellidos(); ?></td>
-						<td><?php echo $participacion->publicado_ver(); ?>
+						<td><?php echo $participacion->publicado_ver(1); ?>
 	                    </td>
 						<td><?php echo $participacion->getUpdatedAt()->format('d/m/Y H:i'); ?></td>
 						<td>
