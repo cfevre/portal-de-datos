@@ -14,7 +14,7 @@
 		<h4>Datos Personales</h4>
 			<tr>
 				<th width="150">Estado</th>
-				<td><?php echo $participacion->publicado_ver(); ?></td>
+				<td><?php echo $participacion->publicado_ver(1); ?></td>
 			</tr>
 			<tr>
 				<th>Nombre y Apellido</th>

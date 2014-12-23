@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Language" content="es-CL" />
     <meta name="google-site-verification" content="a5NvwGQOwtqJ-SrJqFqvb4FXKt9pFlVzs70rY56Nk-o" />
     <meta name="keywords" content="datos, transparencia, open data, ogov, gobierno abierto, mapas, instituciones, Estado, Gobierno de Chile" />
-    <meta name="author" content="Ministerio Secretaría General de la Presidencia de la República de Chile, Unidad de Modernización y Gobierno Digital" />
+        
     <meta name="viewport" content="width=device-width" />
 
     <title><?php echo $data['page_title']; ?></title>

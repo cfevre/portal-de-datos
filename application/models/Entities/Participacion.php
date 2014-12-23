@@ -533,7 +533,7 @@ class Participacion
             $strPublicado = '';
             if($this->getPublicado()==1){
                 $btn='btn-success';
-            }else if($this->getPublicado()==2){
+            }else if($this->getPublicado()==2 || $this->getPublicado()==4){
                 $btn='btn-warning';
             }
             else{
@@ -573,7 +573,7 @@ class Participacion
             break;
             
             case '2':
-                if($this->getPublicado()==1){
+            if($this->getPublicado()==1){
                 $btn='btn-success';
                 $icon='icon-ok-circle';
                 $estadoName='Procesado';
@@ -586,7 +586,7 @@ class Participacion
                 $icon='icon-off';
                 $estadoName='No Procesado';
             }
-                break;
+            break;
         }
         $strPublicado='<button class="btn btn-mini '.$btn.'"> 
                             <i class="'.$icon.'"></i>

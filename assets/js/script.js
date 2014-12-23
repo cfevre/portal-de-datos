@@ -64,7 +64,7 @@
             flipBox.init();
             konamicode.init();
         },
-        bindEvents : function(){
+        bindEvents:function(){
             var self = this;
             if(this.slider.length){
                 this.slider.on('slid', function(e){
@@ -108,19 +108,17 @@
                 }
             });
         },
-        cambiaSlide : function(){
+        cambiaSlide:function(){
             var self = this,
                 activeSlide = this.slider.find('div.item.active');
             self.cambiaSlideMark(activeSlide.data('item'));
         },
-
         cambiaSlideMark : function(item){
             var self = this,
                 markers = this.slider.find('li.marker');
             markers.filter('.active').removeClass('active');
             markers.filter('[data-item="'+item+'"]').addClass('active');
         },
-
         initHighchartsDescargas : function(datasetId){
             Highcharts.setOptions({
                 lang: {
@@ -181,7 +179,7 @@
             });
         },
 
-        initAutoSubmit : function(){
+        initAutoSubmit:function(){
             var autoSubmitInputs = $('[data-auto-submit]');
             autoSubmitInputs.each(function(i, elem){
                 var input = $(elem),
