@@ -229,6 +229,12 @@
                     }
                     $formMessages.append($alert);
                     $alert.addClass('in');
+                    var scroll_to = 0;
+                    scroll_to = $(".participa").offset().top; 
+                            
+                    if($(window).scrollTop() != scroll_to) {
+                        $('html, body').animate({scrollTop: scroll_to}, 1000);
+                    }
                 });
                 e.preventDefault();
             });
@@ -522,7 +528,7 @@
 })(jQuery);
 
 /*Hacer movible el menu*/
-jQuery("document").ready(function($){
+$("document").ready(function($){
     
     var nav = $('#movible');
     var box = $('#box-solid');
@@ -541,8 +547,8 @@ jQuery("document").ready(function($){
 $('#myTab a').click(function (e) {
   e.preventDefault();
   $(this).tab('show');
-})
+});
 
 $(function () {
     $('.tabs a:last').tab('show')
-})
+});

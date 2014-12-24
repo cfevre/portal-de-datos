@@ -105,6 +105,7 @@ class Participa extends CIE_Controller {
 
             $this->_envia_mail_participacion($participacion);
 
+
             echo json_encode(array('errors' => false, 'message' => 'Hemos recibido su información.'));
         }else{
             echo json_encode(array('errors' => $errors, 'message' => 'Ha ocurrido un error al ingresar sus datos.'));

@@ -289,7 +289,15 @@ input.buscar[type="submit"] {
 	right:0px;
 	left:auto;
 }
-
+#texto-centrado{
+	text-align: center;
+}
+#texto-table{
+	clear: both;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	font-weight: normal;font-weight: 
+}
 .home-main {
 	padding: 5px 0;
 }

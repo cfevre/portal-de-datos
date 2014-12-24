@@ -2,12 +2,14 @@
   <li><a href="<?php //echo site_url('backend/participacion'); ?>">Participaciones</a> <span class="divider">/</span></li>
    <li class="active"><?php //echo $participacion->getTitulo(); ?></li>
 </ul> -->
-<?php if ($participacion->getPublicado() == 3) { ?>
+<?php if ($user->hasRol('publicacion') && $user->hasRol('ingreso') 
+          && $user->hasRol('mantencion') && $user->hasRol('cms') 
+          && $participacion->getPublicado()==3): ?>
 	<div class="alert-ingreso alert-success div-alert span4 offset7" style="padding: 8px 35px 8px 14px;
 	text-align: right;">
  	Cambiar estado <a class="btn btn-success "href="<?php echo site_url('backend/participacion/estadoIngreso/'.$participacion->getId());?>"><i class=" icon-ok icon-white"></i></a>
 </div>
-<?php } ?>
+<?php endif ?>
 <legend>Solicitud de Datos: # <?php echo $participacion->getId(); ?> <?php echo $participacion->getTitulo(); ?></legend>
 <table class="table table-striped table-hover">
 		<tbody>
