@@ -157,7 +157,6 @@
 					<?php } ?>
 			</div>
 		</div>
-	<!--asdasdasdasdsadsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
 		<div class="control-group">
 			<div class="control-label">
 				<label for="enlace">Enlace<i class="icon-exclamation-sign"></i></label>
@@ -196,7 +195,7 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
-				<td><?php echo $participacion->institucion($entidades) ?></td>
+				<td><?php echo $participacion->getServicio()->getNombre(); ?></td>
 			<tr>
 	            <th>Categorías</th>
 	            <td>
@@ -258,7 +257,7 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
-				<td><?php echo $participacion->institucion($entidades) ?></td>
+				<td><?php echo $participacion->getServicio()->getNombre(); ?></td>
 			<tr>
 	            <th>Categorías</th>
 	            <td>

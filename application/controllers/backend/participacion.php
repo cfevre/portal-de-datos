@@ -19,6 +19,12 @@ class Participacion extends CIE_Controller {
         $options['orderdir'] = $this->get_post('orderdir', 'DESC');
         $options['excel'] = $this->get_post('excel', null);
         $options['all'] = true;
+        $options['servicio'] = $this->user->getServicio()->getCodigo();
+        $options['admin'] = false;
+        if ($this->user->hasRol('publicacion')&&$this->user->hasRol('cms')
+            &&$this->user->hasRol('ingreso')&&$this->user->hasRol('mantencion')) {
+           $options['admin'] = true;
+        }
 
         $participaciones = $this->doctrine->em->getRepository('Entities\Participacion')->findWithOrderingBack($options);
         $options['total'] = true;
@@ -156,6 +162,7 @@ class Participacion extends CIE_Controller {
     public function actualizarSolicitud($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion',$participacionId);
         $categorias = $this->doctrine->em->getRepository('Entities\Categoria')->findBy(array('id' => $this->input->post('categoria', true)));
+        $servicio = $this->doctrine->em->getRepository('Entities\Servicio')->findOneByCodigo($this->input->post('servicio_codigo', true));
 
         $participacion->setNombre($this->input->post('nombre', true));
         $participacion->setApellidos($this->input->post('apellido', true));
@@ -167,7 +174,7 @@ class Participacion extends CIE_Controller {
 
         $participacion->setTitulo($this->input->post('titulo', true));
         $participacion->setMensaje($this->input->post('mensaje', true));
-        $participacion->setInstitucion($this->input->post('servicio_codigo', true));
+        $participacion->setServicio($servicio);
         $participacion->updateCategorias($categorias);
 
         $participacion->setEnlace($this->input->post('enlace', true));

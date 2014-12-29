@@ -18,11 +18,11 @@
 			return $this->load->view('widget/lista_catalogos', $widget_data, true);
 		}
 		public function listadoEntidades(){
-			$widget_data['entidades'] = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+			$widget_data['servicios'] = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
 			return $this->load->view('widget/listado_entidades.php', $widget_data, true);
 		}
 		public function entidadSeleccionada(){
-			$widget_data['entidades'] = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+			$widget_data['entidades'] = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
 			return $this->load->view('widget/backend/entidad_seleccionada.php', $widget_data, true);
 		}
 

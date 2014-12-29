@@ -49,3 +49,10 @@ Entities\Participacion:
           inverseJoinColumns:
             categoria_id:
               referencedColumnName: id
+  manyToOne:
+    servicio:
+      targetEntity: Servicio
+      inversedBy: participacion
+      joinColumn:
+        name: institucion
+        referencedColumnName: codigo

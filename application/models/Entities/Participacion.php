@@ -663,15 +663,6 @@ class Participacion
             }
             return false;
         }
-    public function institucion($entidades){
-            $strInstitucion='';
-            foreach ($entidades as $key => $entidad) { 
-                     if ($entidad->getCodigo() == $this->getInstitucion()) { 
-                         $strInstitucion=$entidad->getNombre();
-                     }
-                 }
-        return $strInstitucion;
-    }
     public function votacion($suscripcion){
         $strVotacion='';
         foreach ($suscripcion as $key => $subscription){

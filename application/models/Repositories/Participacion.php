@@ -49,6 +49,7 @@ class Participacion extends EntityRepository{
 
 		}
 	}
+	/*Obtiene el listado de solicitudes por rol de cada institución en el backend*/
 		public function findWithOrderingBack($options = null){
 		$qb = $this->_em->createQueryBuilder();
 
@@ -63,9 +64,13 @@ class Participacion extends EntityRepository{
 			$qb->select('p');
             $qb->addOrderBy('p.'.$options['orderby'], $options['orderdir']);
 		}
-		
+		if($options['admin']==false){
+			$qb->where('p.institucion = :institucion');
+			$qb->andwhere('p.publicado != 1');
+			$qb->andwhere('p.publicado != 3');
+			$qb->setParameter('institucion', $options['servicio']);
+		}
 		if(isset($options['publicado'])){
-			//$qb->where('p'.$options['orderby'].'='.$options['publicado']);
 			$qb->where('p.publicado = '.$options['publicado']);
 		}
 
@@ -80,7 +85,9 @@ class Participacion extends EntityRepository{
             }
 			$query = $qb->getQuery();
 
-			return $query->getResult();
+			$result = $query->getResult();
+			
+			return $result;
 
 		}
 	}
