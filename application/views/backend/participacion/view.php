@@ -64,7 +64,10 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
-				<td> <?php echo $participacion->getServicio()->getNombre(); ?></td>
+				<td> <?php if ($participacion->getServicio()) {
+						echo $participacion->getServicio()->getNombre();
+						}?>
+				</td>
 			</tr>
 			<tr>
 				<?php if ($participacion->getPublicado()==1 || $participacion->getPublicado()==2) { ?>

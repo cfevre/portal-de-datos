@@ -195,7 +195,9 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
-				<td><?php echo $participacion->getServicio()->getNombre(); ?></td>
+				<td><?php if ($participacion->getServicio()) {
+						echo $participacion->getServicio()->getNombre();
+						}?></td>
 			<tr>
 	            <th>Categorías</th>
 	            <td>
@@ -257,7 +259,9 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
-				<td><?php echo $participacion->getServicio()->getNombre(); ?></td>
+				<td><?php if ($participacion->getServicio()) {
+						echo $participacion->getServicio()->getNombre();
+						}?></td>
 			<tr>
 	            <th>Categorías</th>
 	            <td>

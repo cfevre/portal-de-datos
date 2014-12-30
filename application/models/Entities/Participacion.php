@@ -472,7 +472,7 @@ class Participacion
 				$errors[] = 'Debe ingresar un titulo.';
 			if(!$this->getMensaje())
 				$errors[] = 'Debe ingresar un mensaje.';
-            if(!$this->getInstitucion())
+            if(!$this->getServicio())
                 $errors[] = 'Debe ingresar una institucion.';
             if(count($this->getCategorias()) < 1)
                 $errors[] = 'Debe seleccionar a lo menos una categoría para la participacion.';

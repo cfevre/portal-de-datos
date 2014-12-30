@@ -20,7 +20,9 @@
 			<tr>
 				<th>Institución</th>
 				<td>
-					<?php echo $participacion->getServicio()->getNombre(); ?>
+					<?php if ($participacion->getServicio()) {
+						echo $participacion->getServicio()->getNombre();
+						}?>
 				</td>
 			</tr>
 			<tr>
