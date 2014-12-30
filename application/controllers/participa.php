@@ -69,6 +69,7 @@ class Participa extends CIE_Controller {
 
     public function add(){
         $categorias = $this->doctrine->em->getRepository('Entities\Categoria')->findBy(array('id' => $this->input->post('categoria', true)));
+        $servicio = $this->doctrine->em->getRepository('Entities\Servicio')->findOneByCodigo($this->input->post('institucion', true));
 
         $participacion = new Entities\Participacion;
         $participacion->setNombre($this->input->post('nombre', true));
@@ -81,7 +82,7 @@ class Participa extends CIE_Controller {
 
         $participacion->setTitulo($this->input->post('titulo', true));
         $participacion->setMensaje($this->input->post('mensaje', true));
-        $participacion->setInstitucion($this->input->post('institucion', true));
+        $participacion->setServicio($servicio);
         $participacion->updateCategorias($categorias);
 
         $participacion->setPublicado(3);
