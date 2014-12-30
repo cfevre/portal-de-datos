@@ -247,7 +247,7 @@
 		<tbody>
 			<tr>
 				<th width="150">Estado</th>
-				<td><?php echo $participacion->publicado_ver(); ?></td>
+				<td><?php echo $participacion->publicado_ver(1); ?></td>
 			</tr>
 			<tr>
 				<th>Título Petición</th>

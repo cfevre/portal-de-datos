@@ -227,11 +227,7 @@ class Participacion extends CIE_Controller {
                     </tr>
                     <tr>
                         <th>Institucion</th>
-                        <td>'.$participacion->institucion($entidades).'</td>
-                    </tr>
-                    <tr>
-                        <th>Categoria</td>
-                        <td>'. $participacion->getCategoria() .'</td>
+                        <td>'.$participacion->getServicio()->getNombre().'</td>
                     </tr>
                     <tr>
                         <th>Fecha de Creacion</th>
@@ -304,11 +300,7 @@ class Participacion extends CIE_Controller {
                     </tr>
                     <tr>
                         <th>Institucion</th>
-                        <td>'.$participacion->institucion($entidades).'</td>
-                    </tr>
-                    <tr>
-                        <th>Categoria</td>
-                        <td>'. $participacion->getCategoria() .'</td>
+                        <td>'.$participacion->getServicio()->getNombre().'</td>
                     </tr>
                     <tr>
                         <th>Fecha de Creacion</th>
