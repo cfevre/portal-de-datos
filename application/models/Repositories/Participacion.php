@@ -91,24 +91,6 @@ class Participacion extends EntityRepository{
 
 		}
 	}
-	//Busca a los usuarios que se le deben enviar mail
-	public function userMailSend($institucion){
-		$rsm = new ResultSetMapping;
-		$rsm->addEntityResult('Entities\User', 'u');
-		$rsm->addFieldResult('u', 'id', 'id');
-		$rsm->addFieldResult('u', 'email', 'email');
-
-		$query = $this->_em->createNativeQuery('SELECT u.id, u.email 
-												FROM servicio s, entidad e , users u 
-												WHERE s.entidad_codigo = e.codigo 
-												AND u.servicio_codigo = s.codigo 
-												AND e.codigo = ?', $rsm);
-		$query->setParameter(1, $institucion);
-
-		$users = $query->getResult();
-
-		return $users;
-	}
 	//Indica cual es la cantidad de solicitudes que tienen pendiente el usuario
 	public function solicitudPendiente($codigoUsuario){
 		$qb = $this->_em->createQueryBuilder();
@@ -200,7 +182,22 @@ class Participacion extends EntityRepository{
 
 		return $users;
 	}
+	//Busca a los usuarios que se le deben enviar mail
+	public function userMailSend($institucion){
+		$rsm = new ResultSetMapping;
+		$rsm->addEntityResult('Entities\User', 'u');
+		$rsm->addFieldResult('u', 'id', 'id');
+		$rsm->addFieldResult('u', 'email', 'email');
 
+		$query = $this->_em->createNativeQuery('SELECT DISTINCT(u.id), u.email 
+												FROM servicio s, users u 
+												WHERE u.servicio_codigo = ?', $rsm);
+		$query->setParameter(1, $institucion);
+
+		$users = $query->getResult();
+
+		return $users;
+	}
 	/*INDICA LOS CAMPOS ASOCIADOS AL REPORTE DIARIO*/
 	public function reminderDaily(){
 		$qb = $this->_em->createQueryBuilder();

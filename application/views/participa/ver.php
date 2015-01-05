@@ -19,8 +19,7 @@
 			</tr>
 			<tr>
 				<th>Institución</th>
-				<td>
-					<?php if ($participacion->getServicio()) {
+				<td> <?php if ($participacion->getServicio()) {
 						echo $participacion->getServicio()->getNombre();
 						}?>
 				</td>
@@ -53,7 +52,7 @@
 			<?php if ($participacion->getPublicado() == 1) { ?>
 			<tr>
 				<th>Enlace</th>
-				<td>Aqui debería ir el enlace donde se encuentra publicado</td>
+				<td><?php echo $participacion->getEnlace(); ?></td>
 			</tr>
 			<?php } ?>
 		</tbody>
