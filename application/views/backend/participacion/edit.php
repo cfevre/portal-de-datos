@@ -41,7 +41,6 @@
 				</div>
 			</div>
 		</div>
-		<!--asdadkuwhkjdashkduafjhskuadfhkajsfdhjyafgkjsafdhjgfjgdjkfhajfghdfhgdfjgjfgasfgjhsagfhafgjhfghjafgjhfgjasgfhjasdfgjyagfjasdfghdfgj-->
 		<div class="control-group">
 			<div class="control-label">
 				<label for="nombre">Nombre <i class="icon-exclamation-sign"></i></label>

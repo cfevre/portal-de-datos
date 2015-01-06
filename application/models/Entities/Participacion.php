@@ -600,6 +600,9 @@ class Participacion
                 $estadoName='Procesado';
             }else if($this->getPublicado()==2){
                 $estadoName='En Proceso';
+            }
+            else if($this->getPublicado()==4){
+                $estadoName='En espera de Aprobación';
             }else{
                 $estadoName='No Procesado';
             }

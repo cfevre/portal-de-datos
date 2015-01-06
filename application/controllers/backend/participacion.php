@@ -125,7 +125,7 @@ class Participacion extends CIE_Controller {
         $this->doctrine->em->flush();
 
         $this->envia_mail_solicitudes($participacionId);
-        $this->envia_mail_suscritos($participacionId);
+        $this->envia_mail_solicitante($participacionId);
 
         $this->addMessage('Se ha actualizado la solicitud, #'.$participacionId.'.', 'success');
 
@@ -152,7 +152,6 @@ class Participacion extends CIE_Controller {
 
         $this->addParticipacionEmail($participacionId);
         $this->envia_mail_solicitudes($participacionId);
-        $this->envia_mail_suscritos($participacionId);
 
         $this->addMessage('Se ha actualizado la solicitud, #'.$participacionId.'.', 'success');
 
@@ -194,7 +193,7 @@ class Participacion extends CIE_Controller {
 
         redirect('backend/participacion');
     }
-    /*Se envia un mail a todas las personas asociadas a las entidades de la solicitud*/
+    /*Se envia un mail a todas las personas asociadas al servicio de la solicitud*/
     public function envia_mail_solicitudes($participacionId)
     {
         $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
@@ -210,7 +209,7 @@ class Participacion extends CIE_Controller {
         $sendMail = array();
 
         foreach ($parti as $key => $participantes) {
-            $msg = 'Estimado(a) '.$participacion->getNombre(). ',<br>'
+            $msg = 'Estimado(a) '.$participacion->getNombre(). ',<br/>'
             . '<table>
                 <tbody>
                     <tr>
@@ -249,24 +248,22 @@ class Participacion extends CIE_Controller {
 
         return true;
     }
-    /*Se envia un mail a todas las personas suscritas. Cambio de estado de No Procesado a En Proceso*/
-    public function envia_mail_suscritos($participacionId){
-        $suscripcion = $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionMail($participacionId);
+    /*Se envia un mail al ciudadano solicitante.*/
+    public function envia_mail_solicitante($participacionId){
+       $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
 
         $this->load->library('email');
+        $this->loadData('participacion', $participacion);
 
-        $this->loadData('suscripcion', $suscripcion);
-
-        foreach ($suscripcion as $key => $suscritos) {
-            $msg = 'Estimado(a),<br>'
-            . 'Este mail se envia cuando se cambia de solicitud de no procesado a procesado.Y solo se le envia a los suscritos a la solicitud.<br><br>';
+        $msg = 'Estimado(a),<br>'
+        . 'Este mail se envia a la persona que hizo la solicitud de datos<br><br>';
 
         $this->email->from('datosabiertos@minsegpres.gob.cl');
-        $this->email->to($suscritos['email']);
-        $this->email->subject('Estas suscrito a la solicitud');
+        $this->email->to($participacion->getEmail());
+        $this->email->subject('Mail que se le envia al solicitante');
         $this->email->message($msg);
         $this->email->send();
-        }
+
         return true;
     }
     /*Funcion para recordar semanalmente que la solicitud se encuentra en estado En Proceso*/
@@ -373,7 +370,7 @@ class Participacion extends CIE_Controller {
         }
         return true;
     }
-    /*Funcion para enviar mail a las personas asociadas a la entidad cuando esta se da por Procesada*/
+    /*Funcion para enviar mail a las personas asociadas al servicio cuando esta se da por Procesada*/
     public function procesadaMail($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
@@ -391,7 +388,22 @@ class Participacion extends CIE_Controller {
         }
         return $this->email->send();
     }
-    /*Funcion para procesar la solicitud*/
+    /* Función para enviar mail al solicitante que la publicación se encuentra Procesada */
+    public function procesadaSolicitante(){
+        $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
+
+        $this->load->library('email');
+        $this->loadData('participacion', $participacion);
+
+        $msg = 'Estimado(a) '.$participacion->getNombre().' ,<br> La solicitud se ha aceptado con éxito, gracias por hacer la solicitud.';
+
+        $this->email->from('datosabiertos@minsegpres.gob.cl');
+        $this->email->to($participacion->getEmail());
+        $this->email->subject('Solicitud de Datos Procesada');
+        $this->email->message($msg);
+        return $this->email->send(); 
+    }
+    /* Funcion para procesar la solicitud y rechazarla */
     public function solicitudRechazada($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion',$participacionId);
 
@@ -407,7 +419,7 @@ class Participacion extends CIE_Controller {
 
         redirect('backend/participacion');
     }
-    /*Funcion para enviar mail a las personas asociadas a la entidad cuando esta se da por Procesada*/
+    /*Funcion para enviar mail a las personas asociadas al servicio cuando esta se da por NO Procesada*/
     public function noProcesadaMail($participacionId){
         $participacion = $this->doctrine->em->find('Entities\Participacion', $participacionId);
         $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
@@ -416,7 +428,7 @@ class Participacion extends CIE_Controller {
         $this->loadData('parti', $parti);
 
         foreach ($parti as $key => $participantes) {
-            $msg = 'Estimado(a) '.$participacion->getNombre().' ,<br> La solicitud no cumple con los requisitos, hagala de nuevo.';
+            $msg = 'Estimado(a) '.$participacion->getNombre().' ,<br> La solicitud no cumple con los requisitos';
 
         $this->email->from('datosabiertos@minsegpres.gob.cl');
         $this->email->to($participantes->getEmail());
