@@ -10,6 +10,23 @@
  	Cambiar estado <a class="btn btn-success "href="<?php echo site_url('backend/participacion/estadoIngreso/'.$participacion->getId());?>"><i class=" icon-ok icon-white"></i></a>
 </div>
 <?php endif ?>
+<?php /* 
+	$data = file_get_contents ('https://apis.modernizacion.cl/instituciones/api/instituciones');
+	$json = json_decode($data, TRUE);
+
+	echo ('<br/> print the json <br/>');
+    //print_r ($json);
+    echo ('</pre>');
+
+    echo '<br>output:</br>';
+
+    foreach ($json['items'] as $key => $value)
+    {	
+    	print_r($key.' '.$value['nombre']);
+    	//var_dump($value['nombre']);
+    	echo '<br>';
+	}*/
+ ?>
 <legend>Solicitud de Datos: # <?php echo $participacion->getId(); ?> <?php echo $participacion->getTitulo(); ?></legend>
 <table class="table table-striped table-hover">
 		<tbody>

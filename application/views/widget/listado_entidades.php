@@ -1,4 +1,5 @@
+
 <option value="">- Seleccione -</option>
-<?php foreach ($servicios as $key => $servicio) { ?>              
-    <option value="<?php echo $servicio->getCodigo(); ?>"><?php echo $servicio->getNombre(); ?></option>
+<?php foreach ($servicios['items'] as $key => $value) { ?>              
+    <option value="<?php echo $value['codigo'] ?>"><?php echo $value['nombre'] ?></option>
 <?php } ?>

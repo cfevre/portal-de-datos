@@ -18,11 +18,15 @@
 			return $this->load->view('widget/lista_catalogos', $widget_data, true);
 		}
 		public function listadoEntidades(){
-			$widget_data['servicios'] = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
+			$data = file_get_contents ('https://apis.modernizacion.cl/instituciones/api/instituciones');
+			$json = json_decode($data, TRUE);
+			$widget_data['servicios'] = $json;
 			return $this->load->view('widget/listado_entidades.php', $widget_data, true);
 		}
 		public function entidadSeleccionada(){
-			$widget_data['entidades'] = $this->doctrine->em->getRepository('Entities\Servicio')->findAll();
+			$data = file_get_contents ('https://apis.modernizacion.cl/instituciones/api/instituciones');
+			$json = json_decode($data, TRUE);
+			$widget_data['servicios'] = $json;
 			return $this->load->view('widget/backend/entidad_seleccionada.php', $widget_data, true);
 		}
 

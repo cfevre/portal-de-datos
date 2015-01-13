@@ -2,6 +2,7 @@
 	var participacion = {
 		init : function(){
 			this.bindEvents();
+			this.validateField();
             return this;
 		},
 		bindEvents : function(){
@@ -23,6 +24,55 @@
 			'0' : 'icon-off',
 			'1' : 'icon-ok-circle',
 			'2' : 'icon-time'
+		},
+		validateField : function(){
+			$("#enlace").keydown(function(){
+        		var url = $("#enlace").val();
+
+        		var str = 'http://datos.gob.cl';
+    			var n = str.indexOf(url);
+
+        		if (url) {
+        			$(".status").show();
+        			if (n==0) {
+        				$(".status").css("color", "green");
+        				$("#guardar").removeClass('disabled');
+        				$("#guardar").removeAttr('disabled', 'disabled');
+        			}else{
+        				$(".status").css("color", "red");
+        				$("#guardar").addClass('disabled');
+        				$("#guardar").attr('disabled', 'disabled');
+        			};	
+        		}else{
+        			$(".status").hide();
+        		};	
+
+    			$(".status").html('Escribir una dirección que corresponda a : datos.gob.cl');
+			});
+
+			$("#enlace_modal").keydown(function(){
+        		var url = $("#enlace_modal").val();
+
+        		var str = 'http://datos.gob.cl';
+    			var n = str.indexOf(url);
+
+        		if (url) {
+        			$(".status_modal").show();
+        			if (n==0) {
+        				$(".status_modal").css("color", "green");
+        				$("#guardar_modal").removeClass('disabled');
+        				$("#guardar_modal").removeAttr('disabled', 'disabled');
+        			}else{
+        				$(".status_modal").css("color", "red");
+        				$("#guardar_modal").addClass('disabled');
+        				$("#guardar_modal").attr('disabled', 'disabled');
+        			};	
+        		}else{
+        			$(".status_modal").hide();
+        		};	
+
+    			$(".status_modal").html('Escribir una dirección que corresponda a : datos.gob.cl');
+			});
 		},
 		updatePublicadoButton : function(id, publicado, estadoAnterior){
 			$('#Procesado').modal('hide');
@@ -57,4 +107,3 @@ function eliminarSolicitud(id, url) {
 	    	window.location = url;
 	    	}
 }
-

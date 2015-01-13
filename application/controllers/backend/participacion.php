@@ -7,6 +7,7 @@ class Participacion extends CIE_Controller {
         $this->sectionRols = array('publicacion||ingreso');
 
         parent::__construct();
+        
         $this->loadScript('page', site_url('assets/js/backend/participacion.js'));
     }
     
@@ -94,6 +95,10 @@ class Participacion extends CIE_Controller {
         $this->loadData('entidades', $entidades);
         $this->loadData('suscripcion',$suscripcion);
 
+        $this->loadScript('redactor', site_url('assets/js/redactor/redactor.min.js'));
+        $this->loadScript('fineuploader', site_url('assets/js/fineuploader/jquery.fineuploader-3.0.min.js'));
+        $this->loadStylesheet('redactor', site_url('assets/css/redactor/redactor.css'));
+        $this->loadStylesheet('fineuploader', site_url('assets/js/fineuploader/fineuploader.css'));
         $this->loadScript('chosen', site_url('assets/js/chosen/chosen.jquery.min.js'));
         $this->loadStylesheet('chosen', site_url('assets/js/chosen/chosen.css'));
 
@@ -135,7 +140,9 @@ class Participacion extends CIE_Controller {
     public function cambiarEstadoProceso($participacionId , $participacionEstado){
         $parti = $this->doctrine->em->find('Entities\Participacion', $participacionId);
 
-        if (!$parti->getEnlace()) {
+        
+
+        if (!$parti->getEnlace() || $parti->getEnlace()=='') {
             if (!$this->input->post('enlace_modal', true)) {
                 $this->addMessage('Debes ingresar un enlace para la solicitud, #'.$participacionId.'.', 'danger');
                 redirect('backend/participacion');

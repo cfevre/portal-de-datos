@@ -6,6 +6,7 @@
 	background-color: #fff;
 }
 
+
 body .redactor_air {
 	position: absolute;
 	border: 1px solid #ddd;
@@ -491,6 +492,7 @@ body .redactor_toolbar li a.redactor_btn_horizontalrule 	{ background-position: 
 	cursor: pointer;
 	max-width: 100px;
 }
+
 #redactor_tabs {
 	margin-bottom: 18px;
 }

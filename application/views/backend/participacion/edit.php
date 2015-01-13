@@ -25,7 +25,7 @@
 		  	</div>	
 		<?php } ?>
 <?php } ?>
-<form action="<?php echo site_url('backend/participacion/actualizarSolicitud/'.$participacion->getId());?>" method="POST" class="form-horizontal" id="formDataset">
+<form action="<?php echo site_url('backend/participacion/actualizarSolicitud/'.$participacion->getId());?>" method="POST" class="form-horizontal" id="myForm">
 	<fieldset>
 		<legend>Editar solicitud de datos: # <?php echo $participacion->getId(); ?> <?php echo $participacion->getTitulo(); ?></legend>
 		<div class="control-group">
@@ -152,7 +152,7 @@
 			</div>
 			<div class="controls">
 					<?php foreach ($suscripcion as $key => $subscription) { ?>
-						<label for=""><?php echo $subscription[1]; ?></label>
+						<label><?php echo $subscription[1]; ?></label>
 					<?php } ?>
 			</div>
 		</div>
@@ -161,11 +161,12 @@
 				<label for="enlace">Enlace<i class="icon-exclamation-sign"></i></label>
 			</div>
 			<div class="controls">
-				<input type="text" name="enlace" id="enlace" class="input-xlarge" value="<?php echo $participacion->getEnlace(); ?>">
+				<input type="text" class="input-xlarge" name="enlace" id="enlace" value="<?php echo $participacion->getEnlace(); ?>"/>
+				<span class="status"></span>
 			</div>
 		</div>
 		<div class="form-actions">
-			<button class="btn btn-primary" type="submit">Guardar</button>
+			<button id="guardar" class="btn btn-primary" type="submit">Guardar</button>
 		</div>
 	</fieldset>
 </form>
@@ -224,12 +225,13 @@
   <?php }else{ ?>
 	<p>Debes ingresar la ruta donde se encuentra la respuesta de la solicitud</p>
 		<label for="enlace_modal">Enlace</label>
-		<input type="text" name="enlace_modal" class="input-xlarge" value="<?php echo $participacion->getEnlace(); ?>">
+		<input type="text" id="enlace_modal" name="enlace_modal" class="input-xlarge" value="<?php echo $participacion->getEnlace(); ?>"><br/>
+		<span class="status_modal"></span>
   <?php } ?>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-    <button class="btn btn-primary" type="submit">Aceptar</button>
+    <button id="guardar_modal" class="btn btn-primary" type="submit">Aceptar</button>
 </form>
   </div>
 </div>

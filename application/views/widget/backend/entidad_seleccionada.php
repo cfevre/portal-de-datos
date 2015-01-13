@@ -1,8 +1,8 @@
 <option value="">- Seleccione -</option>
-<?php foreach ($servicios as $key => $servicio){ ?>
-	<?php if ($participacion->getInstitucion() == $servicio->getCodigo()) { ?>
-                <option value="<?php echo $servicio->getCodigo(); ?>" selected><?php echo $servicio->getNombre(); ?></option>
+<?php foreach ($servicios['items'] as $key => $value){ ?>
+	<?php if ($participacion->getInstitucion() == $value['codigo']) { ?>
+                <option value="<?php echo $value['codigo'] ?>" selected><?php echo $value['nombre'] ?></option>
               <?php }else{ ?>
-                <option value="<?php echo $servicio->getCodigo(); ?>"><?php echo $servicio->getNombre(); ?></option>
+                <option value="<?php echo $value['codigo'] ?>"><?php echo $value['nombre'] ?></option>
          <?php } ?>
 <?php } ?>
