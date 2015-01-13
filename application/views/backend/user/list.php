@@ -20,11 +20,15 @@
             <label for="servicio">Servicio</label>
         </div>
         <div class="controls">
+        <?php 
+            $data = file_get_contents ('https://apis.modernizacion.cl/instituciones/api/instituciones');
+            $json = json_decode($data, TRUE);
+         ?>
             <select name="servicio" id="servicio" class="input-xxlarge">
-                <option value=""> - Todos - </option>
-            <?php foreach ($servicios as $key => $servicio){ ?>
-                <option <?php echo $servicio->getCodigo()==$serviciocodigo?'selected="selected"':''; ?> value="<?php echo $servicio->getCodigo(); ?>"><?php echo $servicio->getNombre(); ?></option>
-            <?php } ?>
+                <option value=""> - Seleccione - </option>
+                    <?php foreach ($json['items'] as $key => $value){ ?>
+                        <option value="<?php echo $value['codigo'] ?>"><?php echo $value['nombre'] ?></option>
+                    <?php } ?>
             </select>
         </div>
     </div>
