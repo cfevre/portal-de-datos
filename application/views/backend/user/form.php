@@ -63,7 +63,11 @@
                     <select name="servicio" id="servicio" class="input-xxlarge">
                         <option value=""> - Seleccione - </option>
                     <?php foreach ($json['items'] as $key => $servicio){ ?>
-                        <option <?php echo $servicio['codigo']==$userForm->getServicio()->getCodigo()?'selected="selected"':''; ?> value="<?php echo $servicio['codigo'] ?>"><?php echo $servicio['nombre'] ?></option>
+                        <?php if ($userForm->getServicio()) { ?>
+                            <option <?php echo $servicio['codigo']==$userForm->getServicio()->getCodigo() ?'selected="selected"':''; ?> value="<?php echo $servicio['codigo'] ?>"><?php echo $servicio['nombre'] ?></option>
+                        <?php }else{?>
+                            <option value="<?php echo $servicio['codigo'] ?>"><?php echo $servicio['nombre'] ?></option>
+                        <?php } ?>
                     <?php } ?>
                     </select>
                 </div>
