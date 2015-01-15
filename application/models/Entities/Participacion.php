@@ -588,10 +588,10 @@ class Participacion
             }
             break;
         }
-        $strPublicado='<button class="btn btn-mini '.$btn.'"> 
+        $strPublicado='<span class="label '.$btn.'"> 
                             <i class="'.$icon.'"></i>
                             <span class="proceso">'.$estadoName.'</span>
-                       </button>';
+                       </span>';
         return $strPublicado;
     }
     public function publicado_mail(){
