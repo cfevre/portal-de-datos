@@ -52,7 +52,7 @@
 			<?php if ($participacion->getPublicado() == 1) { ?>
 			<tr>
 				<th>Enlace</th>
-				<td><?php echo $participacion->getEnlace(); ?></td>
+				<td><a href="<?php echo $participacion->getEnlace(); ?>"><?php echo $participacion->getEnlace(); ?></a></td>
 			</tr>
 			<?php } ?>
 		</tbody>

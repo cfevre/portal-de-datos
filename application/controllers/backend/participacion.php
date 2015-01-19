@@ -185,7 +185,11 @@ class Participacion extends CIE_Controller {
 
         $participacion->setEnlace($this->input->post('enlace', true));
 
-        $participacion->setUpdatedAt(new DateTime());
+        if ($participacion->getPublicado()==1) {
+            $participacion->setUpdatedAt($participacion->getUpdatedAt());
+        }else{
+            $participacion->setUpdatedAt(new DateTime());
+        }
 
         $errors = $participacion->validate();
 

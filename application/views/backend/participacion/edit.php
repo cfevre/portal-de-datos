@@ -135,7 +135,7 @@
 				<label for="creacion">Fecha Creación<i class="icon-exclamation-sign"></i></label>
 			</div>
 			<div class="controls">
-				<input type="text" name="creacion" id="creacion" class="input-xlarge" value="<?php echo $participacion->getCreatedAt()->format('d/m/Y H:i'); ?>">
+				<label for="creacion"><?php echo $participacion->getCreatedAt()->format('d/m/Y H:i'); ?></label>
 			</div>
 		</div>
 		<div class="control-group">
@@ -143,7 +143,7 @@
 				<label for="actualizacion">Fecha Última Actualización<i class="icon-exclamation-sign"></i></label>
 			</div>
 			<div class="controls">
-				<input type="text" name="actualizacion" id="actualizacion" class="input-xlarge" value="<?php echo $participacion->getUpdatedAt()->format('d/m/Y H:i'); ?>">
+				<label for="actualizacion"><?php echo $participacion->getUpdatedAt()->format('d/m/Y H:i'); ?></label>
 			</div>
 		</div>
 		<div class="control-group">
