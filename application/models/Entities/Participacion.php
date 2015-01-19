@@ -540,9 +540,9 @@ class Participacion
                 $btn='btn-danger';
             }
 
-            $strPublicado='<a class="btn btn-mini '.$btn.'"> 
-                                    &nbsp;
-                                </a>'; 
+            $strPublicado='<span class="label '.$btn.'"> 
+                                &nbsp;&nbsp;&nbsp;
+                            </span>'; 
         return $strPublicado;
     }
     public function publicado_ver($opt){
