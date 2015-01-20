@@ -211,6 +211,7 @@ class Participacion extends CIE_Controller {
         $parti = $this->doctrine->em->getRepository('Entities\Participacion')->userMailSend($participacion->getInstitucion());
         $suscriptionCount= $this->doctrine->em->getRepository('Entities\Participacion')->subscriptionCount($participacionId);
         $entidades = $this->doctrine->em->getRepository('Entities\Entidad')->findEntidad();
+        $categorias = $this->doctrine->em->getRepository('Entities\Categoria')->getTodasCategorias();
 
         $this->load->library('email');
 
@@ -218,6 +219,7 @@ class Participacion extends CIE_Controller {
         $this->loadData('suscriptionCount', $suscriptionCount);
 
         $sendMail = array();
+        $category='';
 
         foreach ($parti as $key => $participantes) {
             $msg = 'Estimado(a) '.$participacion->getNombre(). ',<br/>'
@@ -229,17 +231,26 @@ class Participacion extends CIE_Controller {
                     </tr>
                     <tr>
                         <th>Titulo Peticion</th>
-                        <td>'. $participacion->getTitulo() .'</td>
+                        <td>'.$participacion->getTitulo().'</td>
                     </tr>
                     <tr>
                         <th>Descripcion</th>
-                        <td>'. $participacion->getMensaje() .'</td>
+                        <td>'.$participacion->getMensaje().'</td>
                     </tr>
                     <tr>
                         <th>Institucion</th>
                         <td>'.$participacion->getServicio()->getNombre().'</td>
-                    </tr>
-                    <tr>
+                    </tr>';
+            foreach ($categorias as $key => $categoria) {
+                if ($participacion->hasCategoria($categoria)) {
+                        $category.=$categoria->getNombre().'  ';
+                    }
+            }
+            $msg.= '<tr>
+                        <th>Categorías</th>
+                        <td>'.$category.'</td>
+                    </tr>';
+            $msg.='<tr>
                         <th>Fecha de Creacion</th>
                         <td>'. $participacion->getCreatedAt()->format('d/m/Y  H:i') .'</td>
                     </tr>
@@ -249,10 +260,11 @@ class Participacion extends CIE_Controller {
                     </tr>
                 </tbody>
             </table>';
+        $subject='<span>'.$participacion->getTitulo().'</span>';
 
         $this->email->from('datosabiertos@minsegpres.gob.cl');
         $this->email->to($participantes->getEmail());
-        $this->email->subject('Esto es una prueba de cambio de estado');
+        $this->email->subject($subject);
         $this->email->message($msg);
         $sendMail = $this->email->send();
         }
@@ -309,6 +321,10 @@ class Participacion extends CIE_Controller {
                     <tr>
                         <th>Institucion</th>
                         <td>'.$participacion->getServicio()->getNombre().'</td>
+                    </tr>
+                     <tr>
+                        <th>Categorías</th>
+                        <td>'.$participacion->getCategoria().'</td>
                     </tr>
                     <tr>
                         <th>Fecha de Creacion</th>
