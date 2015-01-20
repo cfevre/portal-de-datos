@@ -6,8 +6,8 @@
                     <!-- Carousel items -->
                     <div class="carousel-inner">
                         <div class="active item" data-item="0">
-                            <a href="http://abrecl.datos.gob.cl" target="_blank">
-                                <img src="<?php echo base_url('assets/img/banner/abrecl_banner_modernizacion.jpg'); ?>" alt="AbreCL" target="_blank">
+                            <a href="http://condatos.org/" target="_blank">
+                                <img src="<?php echo base_url('assets/img/banner/bnnr_condatos_.png'); ?>" alt="Con Datos" target="_blank">
                             </a>
                         </div>
                         <div class="item" data-item="1">
