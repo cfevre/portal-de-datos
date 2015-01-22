@@ -99,7 +99,6 @@
     	<script type="text/javascript" src="<?php echo $script; ?>"></script>
     <?php } ?>
     <script type="text/javascript">
-
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '<?php echo $this->config->item("ga_account"); ?>']);
         _gaq.push(['_setDomainName', '<?php echo $this->config->item("ga_domain_name"); ?>']);

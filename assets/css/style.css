@@ -77,6 +77,24 @@ body {
 	font-size: 35px;
 	margin-left: 35px;
 }
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+	
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	.header .brand{
+		font-size: 27px;
+	}
+	.navbar .brand span {
+	font-size: 27px;
+	margin-left: 20px;
+	}
+	.main h2 small {
+		float:left;
+	}
+}
 
 input.buscar[type="submit"] {
 	background-image: url(../img/lupa.png);
@@ -307,7 +325,7 @@ input.buscar[type="submit"] {
 	line-height: 18px;
 	border-bottom: 1px solid #ddd;
 	color: #534e63;
-	padding:2px 0 10px 30px;
+	padding:2px 0 19px  30px;
 	margin: 25px 0 15px 0;
 }
 .cont-widget h2.catalogo-datos{
