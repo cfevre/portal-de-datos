@@ -11,13 +11,11 @@ application/config/recaptcha.php
 application/config/database.php
 application/cache
 application/logs
-application/models/Proxies
 uploads
 tmp
 Thumbs.db
 nbproject
 .idea
 .DS_Store
-application/models/Proxies/*
-
+application/models/Proxies/*.php
 assets/js/chosen/chosen.jquery.min.js
