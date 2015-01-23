@@ -153,9 +153,12 @@ input.buscar[type="submit"] {
 .menu-principal .nav > li {
 	border-right: 1px solid #ddd;
 }
+.navbar .nav{
+	width: 100%;
+}
 @media (min-width: 979px) {
 	.menu-principal .nav > li {
-		width: 192px;
+		width: 16%;
 	}
 }
 
