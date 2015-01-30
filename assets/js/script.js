@@ -1,4 +1,5 @@
 (function($){
+    var isSpider = /bot|googlebot|crawler|spider|slurp|robot|crawling/i.test(navigator.userAgent);
     var datosGob = {
         init : function(){
             this.site_url = $('#site_url').val();
@@ -312,7 +313,9 @@
             this.loaderRecursos = this.contFicha.find('.loader-recursos');
             this.contEmbed = $('.cont-widget-junar');
 
-            this.loadRecursos();
+            if(!isSpider){
+                this.loadRecursos();
+            }
             return this;
         },
         loadRecursos : function(){
