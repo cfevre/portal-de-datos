@@ -54,7 +54,7 @@
                                 <li><a href="<?php echo site_url('backend/reporte'); ?>">Reportes</a></li>
                                 <li><a href="<?php echo site_url('backend/tiporeporte'); ?>">Tipos de Reporte</a></li>
 							<?php } ?>
-              <?php if ($user->hasRol('publicacion') || $user->hasRol('ingreso')): ?>
+              <?php if ($user->hasRol('publicacion')): ?>
                 <li class="nav-header">Solicitudes</li>
                 <li><a href="<?php echo site_url('backend/participacion'); ?>">Solicita Datos</a></li>
               <?php endif ?>
